@@ -10,6 +10,7 @@ import HomeManaiadiSection from '../components/HomeManaiadiSection'
 import FootprintMapSection from '../components/FootprintMapSection'
 import HomeProjectsSection from '../components/HomeProjectsSection'
 import UnifiedFooter from '../components/UnifiedFooter'
+import ProcessSection from '../components/ProcessSection'
 import { Helmet } from 'react-helmet-async'
 
 const Home = () => {
@@ -36,6 +37,11 @@ const Home = () => {
  {/* ── Welcome / About intro ── */}
  <section id="about">
  <WelcomeSection />
+ </section>
+
+ {/* ── Our Process: Initial → KARR → CHOLAI → Final ── */}
+ <section id="process">
+ <ProcessSection />
  </section>
 
  {/* ── Divisions ── */}

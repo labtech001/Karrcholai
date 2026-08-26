@@ -4,9 +4,7 @@ import Navbar from '../components/Navbar'
 import UnifiedFooter from '../components/UnifiedFooter'
 import {
   FaHardHat, FaClock, FaDollarSign, FaShieldAlt, FaQuoteLeft,
-  FaProjectDiagram, FaHandHoldingUsd, FaStar, FaLeaf, FaHome,
-  FaTools, FaClipboardCheck, FaHandshake, FaBuilding, FaLayerGroup,
-  FaBriefcase, FaChartLine
+  FaProjectDiagram, FaHandHoldingUsd, FaStar, FaLeaf,
 } from 'react-icons/fa'
 
 import founderImg from '../../assets/Founder.jpeg'
@@ -19,7 +17,6 @@ import { Helmet } from 'react-helmet-async'
 const SECTIONS = {
   story: 'our-story',
   founder: 'founder-thoughts',
-  experience: 'our-experience',
   process: 'our-process',
 }
 
@@ -29,22 +26,6 @@ const AboutUs = () => {
     target: containerRef,
     offset: ['start start', 'end end'],
   })
-
-  /* ── Experience items from the document ── */
-  const experienceItems = [
-    { icon: <FaHome />, label: 'Residential Building Construction' },
-    { icon: <FaBuilding />, label: 'New Home Construction' },
-    { icon: <FaTools />, label: 'Renovation & Alteration Work' },
-    { icon: <FaLayerGroup />, label: 'Structural & Civil Works' },
-    { icon: <FaClipboardCheck />, label: 'Project Planning & Execution' },
-    { icon: <FaChartLine />, label: 'Quantity & Material Management' },
-    { icon: <FaShieldAlt />, label: 'Quality Inspection & Control' },
-    { icon: <FaHandshake />, label: 'Contractor & Team Coordination' },
-    { icon: <FaDollarSign />, label: 'Budget-Conscious Construction' },
-    { icon: <FaBriefcase />, label: 'Client Coordination & Communication' },
-    { icon: <FaHardHat />, label: 'Finishing & Handover' },
-    { icon: <FaLeaf />, label: 'Post-Construction Support & Maintenance' },
-  ]
 
   /* ── Process steps from the document ── */
   const processSteps = [
@@ -176,775 +157,863 @@ const AboutUs = () => {
         {/* ══════════════════════════════════════════
             2. OUR STORY
         ══════════════════════════════════════════ */}
-        <section id={SECTIONS.story} className="py-24 md:py-36 px-6 bg-[#fcfbfa]">
-          <div className="container mx-auto max-w-6xl">
+        <section id={SECTIONS.story} className="overflow-hidden">
 
-            {/* Section label */}
+          {/* ── PANEL A: Hero Intro — editorial split ── */}
+          <div className="relative w-full flex flex-col lg:flex-row">
+            {/* Left — large typographic statement */}
             <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, x: -40 }}
+              whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
-              className="mb-16 md:mb-20"
+              transition={{ duration: 1, ease: 'easeOut' }}
+              className="relative w-full lg:w-1/2 bg-[#0e0e0e] flex flex-col justify-between px-6 md:px-16 lg:px-20 py-16 md:py-24 lg:py-28 overflow-hidden"
             >
-              <p className="text-secondary text-xs font-bold uppercase tracking-[0.35em] flex items-center gap-3 mb-4">
-                <span className="w-6 h-[1px] bg-secondary" />
-                Our Story
-              </p>
-              <h2 className="text-3xl md:text-5xl font-light text-dark tracking-tight max-w-2xl">
-                From Stone to <span className="font-semibold">Oasis</span>
-              </h2>
-            </motion.div>
-
-            {/* Split layout: quote left, text right */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-start">
-
-              {/* Left — Manifesto quote block */}
-              <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.9 }}
-                className="sticky top-32"
-              >
-                <div className="relative p-10 md:p-12 bg-dark text-white rounded-[2rem] overflow-hidden">
-                  {/* decorative blob */}
-                  <div className="absolute -top-12 -right-12 w-48 h-48 bg-secondary/20 rounded-full blur-3xl pointer-events-none" />
-                  <FaQuoteLeft className="text-secondary/30 text-5xl mb-6" />
-                  <p className="text-xl md:text-2xl font-light leading-[1.7] text-white/85 mb-8">
-                    Every home begins with a dream. But turning that dream into a beautiful, strong and comfortable home requires more than bricks and drawings.{' '}
-                    <span className="text-secondary font-semibold">It requires trust.</span>
-                  </p>
-                  <div className="flex gap-6 mt-8 pt-8 border-t border-white/10">
-                    <div>
-                      <div className="text-3xl font-black text-secondary">12+</div>
-                      <div className="text-[10px] uppercase tracking-[0.25em] text-white/40 mt-1">Years Professional Experience</div>
-                    </div>
-                    <div className="w-[1px] bg-white/10" />
-                    <div>
-                      <div className="text-3xl font-black text-secondary">40+</div>
-                      <div className="text-[10px] uppercase tracking-[0.25em] text-white/40 mt-1">Projects Completed</div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Karr + Cholai etymology */}
-                <div className="mt-6 grid grid-cols-2 gap-4">
-                  {[
-                    { word: 'Karr', meaning: 'Stone' },
-                    { word: 'Cholai', meaning: 'Oasis' },
-                  ].map((item) => (
-                    <motion.div
-                      key={item.word}
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.6, delay: 0.2 }}
-                      className="p-5 bg-white border border-dark/5 rounded-2xl"
-                    >
-                      <div className="text-2xl font-black text-secondary mb-1">{item.word}</div>
-                      <div className="text-xs font-bold uppercase tracking-widest text-dark/40">{item.meaning}</div>
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
-
-              {/* Right — Story body */}
-              <motion.div
-                initial={{ opacity: 0, x: 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.9, delay: 0.15 }}
-                className="space-y-7 text-[15px] md:text-[17px] text-dark/75 font-medium leading-[1.85]"
-              >
-                <p>
-                  Building a dream home should be exciting, not overwhelming. With over <strong className="text-dark">12 years of experience in MNCs and private construction firms</strong>, our founder saw the constant struggles homeowners face: budget overruns, material waste, poor quality control, and chaotic vendor coordination.
-                </p>
-                <p>
-                  We knew there had to be a better way. In 2021, we founded <strong className="text-[#C9754A]">KARRCHOLAI</strong> to bring structure, transparency, and peace of mind to residential construction.
-                </p>
-
-                {/* What We Do */}
-                <div>
-                  <p className="text-[11px] font-black uppercase tracking-[0.35em] text-secondary mb-3">What We Do</p>
-                  <p>
-                    We offer end-to-end <strong className="text-dark">Residential Construction and Project Management Consultancy</strong>, guiding you from initial design to final handover with clear processes and smart cost management.
-                  </p>
-                </div>
-
-                {/* KARR + CHOLAI meaning */}
-                <div className="space-y-3">
-                  <p>
-                    <strong className="text-dark">KARR (Strength &amp; Structure):</strong> Uncompromising construction quality, tight project management, and solid execution.
-                  </p>
-                  <p>
-                    <strong className="text-dark">CHOLAI (Greenery &amp; Sustainability):</strong> Eco-friendly solutions that turn houses into lasting, responsible homes.
-                  </p>
-                </div>
-
-                {/* CHOLAI Approach */}
-                <div className="mt-2 p-7 border-l-2 border-secondary bg-secondary/5 rounded-r-2xl space-y-3">
-                  <p className="text-[11px] font-black uppercase tracking-[0.35em] text-secondary">The CHOLAI Approach</p>
-                  <p className="text-base text-dark/75 leading-relaxed">
-                    We help you build smarter for the future by seamlessly integrating sustainable features into your home:
-                  </p>
-                  <ul className="space-y-1 text-sm text-dark/70">
-                    <li className="flex items-start gap-2"><span className="text-secondary mt-1">›</span> Landscaping &amp; Greenery for healthier living spaces</li>
-                    <li className="flex items-start gap-2"><span className="text-secondary mt-1">›</span> Rainwater Harvesting to secure water independence</li>
-                    <li className="flex items-start gap-2"><span className="text-secondary mt-1">›</span> Solar Energy Integration to slash energy bills</li>
-                    <li className="flex items-start gap-2"><span className="text-secondary mt-1">›</span> Waste Management to minimize build-site impact</li>
-                  </ul>
-                </div>
-
-                {/* Tag line */}
-                <div className="pt-4 space-y-1">
-                  <p className="text-xs text-dark/40 uppercase tracking-widest">From Stone to Oasis — We Build Better Living.</p>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </section>
-
-        {/* ══════════════════════════════════════════
-            3. FOUNDER — MY THOUGHTS
-        ══════════════════════════════════════════ */}
-        <section id={SECTIONS.founder} className="py-24 md:py-36 px-6 bg-white">
-          <div className="container mx-auto max-w-6xl">
-
-            {/* Section label */}
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
-              className="mb-16 md:mb-20"
-            >
-              <p className="text-secondary text-xs font-bold uppercase tracking-[0.35em] flex items-center gap-3 mb-4">
-                <span className="w-6 h-[1px] bg-secondary" />
-                Founder
-              </p>
-              <h2 className="text-3xl md:text-5xl font-light text-dark tracking-tight">
-                Founder's <span className="font-semibold">Message</span>
-              </h2>
-            </motion.div>
-
-            {/* ── Founder identity row ── */}
-            <div className="flex flex-col md:flex-row gap-12 md:gap-20 items-start mb-24">
-
-              {/* Photo + credentials */}
-              <div className="w-full md:w-5/12">
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 1.1, ease: 'easeOut' }}
-                  className="aspect-[4/5] overflow-hidden relative group rounded-[2rem] shadow-2xl"
-                >
-                  <motion.img
-                    initial={{ scale: 1.08 }}
-                    whileInView={{ scale: 1 }}
-                    transition={{ duration: 1.2, ease: 'easeOut' }}
-                    src={founderImg}
-                    alt="Saravanakumar B., founder of Karrcholai Construction"
-                    className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-dark/60 via-transparent to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-8">
-                    <h3 className="text-2xl font-bold text-white mb-1">Saravanakumar B.</h3>
-                    <p className="text-sm text-white/70 font-medium">BE Civil Engineer · Founder, Karrcholai Construction</p>
-                  </div>
-                </motion.div>
+              {/* Big decorative number */}
+              <div className="absolute -bottom-10 -left-6 text-[140px] md:text-[280px] font-black text-white/[0.03] leading-none select-none pointer-events-none">
+                01
               </div>
-
-              {/* Founder intro letter */}
-              <motion.div
-                initial={{ opacity: 0, x: 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.9, delay: 0.2 }}
-                className="w-full md:w-7/12 space-y-6 text-[15px] md:text-[17px] text-dark/75 font-medium leading-[1.85]"
-              >
-                <p>
-                  Hello, I'm <strong className="text-dark">Saravanakumar B.</strong>, a BE Civil Engineer and the founder of <strong className="text-dark">Karrcholai Construction.</strong>
+              <div className="relative z-10">
+                <p className="text-secondary text-[10px] font-black uppercase tracking-[0.45em] flex items-center gap-3 mb-8">
+                  <span className="w-8 h-[1px] bg-secondary" />
+                  Our Story
                 </p>
-                <p>
-                  With more than <strong className="text-dark">12 years of professional experience</strong> in the construction industry, my journey has been shaped by practical site experience, disciplined project execution and a strong belief in honest and responsible building practices. I have also gained valuable exposure working with <strong className="text-dark">MNC and Private Limited companies</strong>, where I was involved in structured project environments, quality standards, and large-scale execution processes. In addition, my experience with an <strong className="text-dark">Architectural firm</strong> helped me develop a stronger understanding of design intent, space planning, aesthetics, and the importance of integrating architecture with practical construction.
-                </p>
-                <p>
-                  For me, construction is not simply about creating structures — it is about creating spaces for life.
-                </p>
-                <p>
-                  A good home should have a strong foundation, thoughtful planning, practical execution and a comfortable environment for the people who live in it. This belief became the foundation for starting{' '}
-                  <span className="text-[#C9754A] font-semibold">Karrcholai Construction in 2021.</span>
-                </p>
-                <p>The name <strong className="text-dark">KARRCHOLAI</strong> comes from two ideas:</p>
-                <ul className="space-y-1 pl-1">
-                  <li className="flex items-start gap-2"><span className="text-secondary mt-1">›</span><span><strong className="text-dark">KARR</strong> — representing stone, strength and construction.</span></li>
-                  <li className="flex items-start gap-2"><span className="text-secondary mt-1">›</span><span><strong className="text-dark">CHOLAI</strong> — representing an oasis, greenery and peaceful living.</span></li>
-                </ul>
-                <p>
-                  Together, <strong className="text-dark">KARRCHOLAI</strong> represents my vision of combining strong construction with better and more responsible living.
-                </p>
-                <p>
-                  My focus is on custom residential construction, <strong className="text-dark">Project Management Consultancy</strong> and responsible building practices, with an emphasis on quality, transparency, cost-conscious planning and long-term value for every client.
-                </p>
-                <div className="mt-2 p-6 border-l-2 border-secondary bg-secondary/5 rounded-r-2xl">
-                  <p className="text-base text-dark/80 leading-relaxed">
-                    At Karrcholai, our goal is not simply to build a house. Our goal is to help create a <strong className="text-dark">well-planned home</strong> that people can confidently live in for years to come.
-                  </p>
-                </div>
-                <div className="pt-4 space-y-1">
-                  <p className="text-dark/50">With regards,</p>
-                  <p className="font-bold text-dark text-lg">Saravanakumar B.</p>
-                  <p className="text-sm text-dark/50">Founder &amp; Civil Engineer</p>
-                  <p className="text-sm text-dark/50">Karrcholai Construction</p>
-                </div>
-              </motion.div>
-            </div>
-
-            {/* ── Founder — My Thoughts on Construction ── */}
-            <div className="relative rounded-[2.5rem] overflow-hidden bg-[#fcfbfa] border border-dark/5 flex flex-col md:flex-row">
-              {/* Accent stripe */}
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-secondary via-primary to-secondary z-10" />
-
-              {/* Left: image — fills full height via background-image */}
-              <div
-                className="w-full md:w-1/2 min-h-[300px] shrink-0"
-                style={{
-                  backgroundImage: `url(${courtyardImg})`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                }}
-              />
-
-              {/* Right: text */}
-              <motion.div
-                initial={{ opacity: 0, x: 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.9, delay: 0.2 }}
-                className="w-full md:w-1/2 p-10 md:p-14 flex flex-col justify-center"
-              >
-                <p className="text-secondary text-xs font-bold uppercase tracking-[0.35em] flex items-center gap-3 mb-5">
-                  <span className="w-5 h-[1px] bg-secondary" />
-                  My Thoughts on Construction
-                </p>
-                <div className="space-y-5 text-[15px] md:text-[16px] text-dark/75 font-medium leading-[1.85]">
-                  <p>
-                    Construction is not just about building a structure. It is about creating a space where life happens.
-                  </p>
-                  <p>
-                    A good house should not depend only on design. It must have a <strong className="text-dark">strong foundation, proper planning, correct materials, and disciplined execution.</strong>
-                  </p>
-                  <p>
-                    Through my experience in residential construction, I have learned that most problems come from poor planning and lack of supervision. Because of that, I always follow a systematic approach in every project.
-                  </p>
-                  <p>
-                    I believe in <strong className="text-dark">practical buildings</strong> rather than decorative buildings. A home should be strong, functional, comfortable and peaceful for the people who live in it.
-                  </p>
-                  <div className="pt-3 border-t border-dark/10">
-                    <p className="text-sm font-semibold text-secondary">
-                      My goal in every project — build with responsibility, clarity, and long-term thinking.
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </section>
-
-        {/* ══════════════════════════════════════════
-            4. STATS STRIP
-        ══════════════════════════════════════════ */}
-        <section className="py-12 md:py-16 bg-dark text-white border-y border-white/5 relative overflow-hidden">
-          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20" />
-          <div className="container mx-auto px-6 max-w-6xl relative z-10">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 divide-x-0 md:divide-x divide-white/10">
-              {[
-                { number: '12+', label: 'Years Professional Experience' },
-                { number: '40+', label: 'Projects Completed' },
-                { number: '100%', label: 'Client Satisfaction' },
-                { number: '24/7', label: 'Project Support' },
-              ].map((stat, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1, duration: 0.5 }}
-                  className="text-center md:text-left pl-0 md:pl-10 first:pl-0 flex flex-col items-center md:items-start"
-                >
-                  <div className="text-3xl md:text-5xl font-light text-secondary mb-2 md:mb-3 tracking-tighter">{stat.number}</div>
-                  <div className="text-[8px] md:text-[9px] uppercase tracking-[0.2em] md:tracking-[0.3em] text-white/50 font-semibold">{stat.label}</div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ══════════════════════════════════════════
-            5. OUR EXPERIENCE
-        ══════════════════════════════════════════ */}
-        <section id={SECTIONS.experience} className="py-24 md:py-36 px-6 bg-[#fafafa]">
-          <div className="container mx-auto max-w-6xl">
-
-            {/* Header */}
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
-              className="mb-16 md:mb-20"
-            >
-              <p className="text-secondary text-xs font-bold uppercase tracking-[0.35em] flex items-center gap-3 mb-4">
-                <span className="w-6 h-[1px] bg-secondary" />
-                Our Experience
-              </p>
-              <div className="flex flex-col md:flex-row md:items-end gap-6 md:gap-16">
-                <h2 className="text-3xl md:text-5xl font-light text-dark tracking-tight">
-                  12+ Years of <span className="font-semibold">Residential Construction</span>
+                <h2 className="text-5xl md:text-8xl xl:text-[7rem] font-black text-white tracking-tighter leading-[0.88] mb-8">
+                  From<br />
+                  <span className="text-transparent" style={{ WebkitTextStroke: '2px #C9754A' }}>Stone</span><br />
+                  to Oasis
                 </h2>
-                <p className="text-dark/40 text-xs uppercase tracking-widest font-semibold md:mb-2">
-                  Built on Practical Knowledge
+                <p className="text-white/40 text-sm font-light leading-relaxed max-w-sm">
+                  A story of discipline, purpose and the belief that every family deserves a home built with clarity and care.
                 </p>
               </div>
-            </motion.div>
-
-            {/* Intro body */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
-              className="space-y-6 text-[15px] md:text-[17px] text-dark/70 font-medium leading-[1.85] mb-16 md:mb-20"
-            >
-              <p>
-                Building a home is a responsibility that requires experience, attention to detail and disciplined execution at every stage.
-              </p>
-              <p>
-                With more than <strong className="text-dark">12 years of professional experience</strong> in the construction industry, our founder has developed practical knowledge of the residential construction process — from planning and initial groundwork to structural execution, finishing and final handover.
-              </p>
-              <p>
-                Over the years, we have experienced the real challenges that come with building a home — understanding client requirements, coordinating different teams and professionals, controlling material usage, maintaining quality, managing budgets and ensuring that work progresses according to plan.
-              </p>
-              <p>
-                Our experience has taught us that a successful project is not simply about completing construction. It is about <strong className="text-dark">planning carefully before execution</strong>, identifying potential problems early, using materials responsibly and maintaining quality throughout every stage of the project.
-              </p>
-              <p>
-                Our professional experience across <strong className="text-dark">MNCs, private limited companies and architectural environments</strong>, together with hands-on residential construction experience, has helped us develop a practical understanding of both technical requirements and real-world project execution.
-              </p>
-              <p>
-                That is why our approach combines technical knowledge, practical site experience and project management to help homeowners make informed decisions and manage their projects more effectively.
-              </p>
-
-              {/* Closing belief strip */}
-              <div className="mt-4 p-7 border-l-2 border-secondary bg-secondary/5 rounded-r-2xl space-y-3">
-                <p>
-                  Every project adds to our experience. Every challenge improves our approach. Every completed home strengthens our commitment to building better.
-                </p>
-                <p className="text-base font-semibold text-dark">
-                  At Karrcholai, we believe that experience is not just measured in years — it is measured by what we learn, how we solve problems and the value we create for every client.
-                </p>
-              </div>
-            </motion.div>
-
-            {/* Experience grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {experienceItems.map((item, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: i * 0.05 }}
-                  className="group flex items-center gap-4 p-5 bg-white border border-dark/5 rounded-2xl hover:border-secondary/30 hover:shadow-md transition-all duration-300"
-                >
-                  <div className="w-10 h-10 rounded-xl bg-secondary/10 flex items-center justify-center text-secondary group-hover:bg-secondary group-hover:text-white transition-all duration-300 shrink-0 text-[15px]">
-                    {item.icon}
+              <div className="relative z-10 flex gap-8 mt-12 pt-8 border-t border-white/10">
+                {[
+                  { num: '12+', label: 'Years Experience' },
+                  { num: '40+', label: 'Projects' },
+                  { num: '2021', label: 'Founded' },
+                ].map((s) => (
+                  <div key={s.num}>
+                    <div className="text-2xl md:text-4xl font-black text-secondary tracking-tighter">{s.num}</div>
+                    <div className="text-[9px] uppercase tracking-[0.25em] text-white/30 mt-1.5">{s.label}</div>
                   </div>
-                  <span className="text-sm font-semibold text-dark/75 group-hover:text-dark leading-snug transition-colors duration-300">
-                    {item.label}
-                  </span>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Commitment tagline */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.5, duration: 0.7 }}
-              className="mt-14 text-center"
-            >
-              <p className="text-secondary text-xs font-black uppercase tracking-[0.4em]">
-                12+ Years of Experience. One Commitment — Better Living.
-              </p>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* ══════════════════════════════════════════
-            6. OUR PROCESS
-        ══════════════════════════════════════════ */}
-        <section id={SECTIONS.process} className="py-24 md:py-36 px-6 bg-white overflow-hidden">
-          <div className="container mx-auto max-w-5xl">
-
-            {/* Header */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="mb-20 md:mb-24"
-            >
-              <p className="text-secondary text-xs font-bold uppercase tracking-[0.35em] flex items-center gap-3 mb-4">
-                <span className="w-6 h-[1px] bg-secondary" />
-                Our Process
-              </p>
-              <div className="flex flex-col md:flex-row md:items-end gap-6">
-                <h2 className="text-3xl md:text-5xl font-light text-dark tracking-tight">
-                  From Your Dream <span className="font-semibold">to Your Home</span>
-                </h2>
-              </div>
-              <p className="mt-5 text-dark/50 text-base md:text-lg font-light max-w-xl leading-relaxed">
-                Building a home should be an organised and transparent journey — not a confusing one. We follow a systematic process to understand your requirements, plan carefully, execute responsibly and deliver a home that meets your expectations.
-              </p>
-
-              {/* Flow strip */}
-              <div className="mt-8 flex flex-wrap gap-2 items-center text-[11px] font-semibold uppercase tracking-widest text-dark/40">
-                {['Listen', 'Plan', 'Execute', 'Monitor', 'Deliver'].map((word, i, arr) => (
-                  <React.Fragment key={word}>
-                    <span className="text-secondary">{word}</span>
-                    {i < arr.length - 1 && <span className="text-dark/20">→</span>}
-                  </React.Fragment>
                 ))}
               </div>
             </motion.div>
 
-            {/* Timeline */}
-            <div className="relative">
-              {/* Vertical line */}
-              <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-[2px] bg-dark/5 -translate-x-1/2" />
-              <motion.div
-                initial={{ height: 0 }}
-                whileInView={{ height: '100%' }}
-                transition={{ duration: 3.5, ease: [0.16, 1, 0.3, 1] }}
-                viewport={{ once: true, margin: '-20%' }}
-                className="absolute left-8 md:left-1/2 top-0 w-[2px] bg-gradient-to-b from-secondary to-primary -translate-x-1/2 origin-top"
-              />
+            {/* Right — quote + narrative */}
+            <motion.div
+              initial={{ opacity: 0, x: 40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, ease: 'easeOut', delay: 0.15 }}
+              className="w-full lg:w-1/2 bg-[#f8f6f3] flex flex-col justify-center px-6 md:px-16 lg:px-20 py-16 md:py-24 lg:py-28"
+            >
+              {/* Pull quote */}
+              <div className="relative mb-10">
+                <FaQuoteLeft className="text-secondary/20 text-4xl md:text-6xl absolute -top-3 -left-1 pointer-events-none" />
+                <blockquote className="relative z-10 text-xl md:text-3xl font-light text-dark leading-[1.6] pl-4">
+                  Every home begins with a dream. But turning that dream into reality requires more than bricks and drawings.{' '}
+                  <span className="text-secondary font-semibold italic">It requires trust.</span>
+                </blockquote>
+              </div>
+              <div className="space-y-4 text-[14px] md:text-[16px] text-dark/65 leading-[1.9]">
+                <p>
+                  Building a dream home should be exciting, not overwhelming. A home is one of the most important investments a family makes — it should be built with <strong className="text-dark">confidence, care and clarity</strong>.
+                </p>
+                <p>
+                  With over <strong className="text-dark">12 years of experience in MNCs and private construction firms</strong>, our founder gained deep knowledge of construction practices, technical standards, quality control, work sequencing and project management — the kind of discipline that most residential projects never see.
+                </p>
+                <p>
+                  Working in MNC environments taught us the value of planning, systematic execution and completing projects within timeline. But residential construction showed us something different — that every family is unique, and every home must be too.
+                </p>
+              </div>
+            </motion.div>
+          </div>
 
-              {processSteps.map((item, i) => (
+          {/* ── PANEL B: The Problem — cinematic dark grid ── */}
+          <div className="relative w-full bg-[#111] overflow-hidden py-16 md:py-28 px-6">
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(201,117,74,0.08),_transparent_60%)] pointer-events-none" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_rgba(201,117,74,0.06),_transparent_60%)] pointer-events-none" />
+
+            <div className="container mx-auto max-w-7xl">
+              {/* Header row */}
+              <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 md:mb-20 gap-5">
                 <motion.div
-                  key={i}
-                  initial={{ opacity: 0, x: i % 2 === 0 ? 50 : -50, y: 20 }}
-                  whileInView={{ opacity: 1, x: 0, y: 0 }}
-                  viewport={{ once: true, margin: '-10%' }}
-                  transition={{ duration: 0.7, delay: 0.08, type: 'spring', bounce: 0.3 }}
-                  className={`relative flex items-center justify-between mb-16 md:mb-20 last:mb-0 group ${i % 2 === 0 ? 'md:flex-row-reverse' : ''}`}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.7 }}
                 >
-                  <div className="hidden md:block w-5/12" />
+                  <p className="text-secondary text-[10px] font-black uppercase tracking-[0.45em] mb-4">Why KARRCHOLAI Began</p>
+                  <h3 className="text-3xl md:text-6xl font-black text-white tracking-tighter leading-[0.9]">
+                    We saw <br />
+                    <span className="text-secondary">the problem.</span>
+                  </h3>
+                </motion.div>
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.7, delay: 0.15 }}
+                  className="text-white/40 text-sm max-w-xs leading-relaxed"
+                >
+                  Homeowners were being let down — not by lack of money, but by lack of structure, discipline and accountability.
+                </motion.p>
+              </div>
 
-                  {/* Node */}
-                  <div className="absolute left-8 md:left-1/2 w-12 h-12 bg-white border-4 border-[#fafafa] rounded-full flex items-center justify-center -translate-x-1/2 z-10 shadow-xl group-hover:scale-125 transition-transform duration-500">
-                    <div className="w-full h-full rounded-full border-2 border-secondary/30 flex items-center justify-center group-hover:border-secondary transition-colors duration-500">
-                      <motion.div
-                        animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
-                        transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
-                        className="w-3 h-3 bg-secondary rounded-full"
-                      />
+              {/* Problem cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10 md:mb-16">
+                {[
+                  { num: '01', label: 'Budget Overruns', desc: 'Families lost control of costs mid-project with no clear explanation or accountability.' },
+                  { num: '02', label: 'Material Wastage', desc: 'Poor planning caused avoidable wastage — a direct loss to both wallets and the environment.' },
+                  { num: '03', label: 'Inconsistent Quality', desc: 'Rework and poor workmanship created homes that needed fixing from day one.' },
+                  { num: '04', label: 'Chaotic Coordination', desc: 'Multiple vendors with no unified oversight left homeowners overwhelmed and helpless.' },
+                ].map((item, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: i * 0.1 }}
+                    className="group relative p-6 border border-white/8 rounded-2xl bg-white/[0.02] hover:bg-white/[0.05] hover:border-secondary/30 transition-all duration-500 overflow-hidden"
+                  >
+                    <div className="absolute top-0 right-0 w-full h-[2px] bg-gradient-to-l from-secondary/0 via-secondary/0 to-secondary/0 group-hover:via-secondary/60 transition-all duration-700" />
+                    <div className="text-4xl font-black text-white/5 group-hover:text-white/10 transition-colors duration-500 mb-3 tracking-tighter select-none">{item.num}</div>
+                    <div className="text-secondary font-bold text-sm mb-2 tracking-wide">{item.label}</div>
+                    <div className="text-white/45 text-[13px] leading-relaxed">{item.desc}</div>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Solution statement */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7 }}
+                className="relative p-6 md:p-12 rounded-2xl bg-secondary/10 border border-secondary/20 overflow-hidden"
+              >
+                <div className="absolute -right-10 -top-10 w-60 h-60 bg-secondary/10 rounded-full blur-3xl pointer-events-none" />
+                <p className="text-secondary text-[10px] font-black uppercase tracking-[0.45em] mb-4">The Answer</p>
+                <p className="text-white text-base md:text-xl font-light leading-[1.8]">
+                  In <strong className="text-secondary font-semibold">2021</strong>, KARRCHOLAI was founded with a simple purpose — to bring together the <strong className="text-white">discipline of professional construction</strong> with the flexibility, practicality and individuality required for residential homes. An approach where technical knowledge and Indian construction practices work together, while giving full importance to each client's unique requirements.
+                </p>
+              </motion.div>
+            </div>
+          </div>
+
+          {/* ── PANEL C: KARR vs CHOLAI — full-bleed split ── */}
+          <div className="relative w-full">
+            {/* Section intro strip */}
+            <div className="w-full bg-[#f0ede8] px-6 py-8 md:py-12 border-b border-dark/8">
+              <div className="container mx-auto max-w-7xl flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
+                <div>
+                  <p className="text-secondary text-[10px] font-black uppercase tracking-[0.45em] mb-2">What We Stand For</p>
+                  <h3 className="text-2xl md:text-4xl font-black text-dark tracking-tight">
+                    Two names. One vision.
+                  </h3>
+                </div>
+                <p className="text-dark/45 text-sm max-w-sm md:text-right leading-relaxed hidden md:block">
+                  KARR and CHOLAI aren't just words — they are the two principles that guide every decision we make on every project.
+                </p>
+              </div>
+            </div>
+
+            {/* KARR + CHOLAI split panels */}
+            <div className="grid grid-cols-1 lg:grid-cols-2">
+
+              {/* KARR */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+                className="relative bg-[#1a1a1a] px-6 md:px-16 lg:px-20 py-12 md:py-20 overflow-hidden group"
+              >
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_rgba(201,117,74,0.12),_transparent_60%)] pointer-events-none" />
+                <div className="absolute -right-8 top-1/2 -translate-y-1/2 text-[140px] md:text-[220px] font-black text-white/[0.025] leading-none select-none pointer-events-none tracking-tighter">K</div>
+
+                <div className="relative z-10">
+                  <div className="flex items-center gap-4 mb-7">
+                    <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-secondary flex items-center justify-center shrink-0 shadow-lg shadow-secondary/20">
+                      <span className="text-white font-black text-xl md:text-2xl">K</span>
+                    </div>
+                    <div>
+                      <div className="text-secondary text-[10px] font-black uppercase tracking-[0.4em]">KARR</div>
+                      <div className="text-white text-xl md:text-2xl font-bold mt-0.5">Strength &amp; Structure</div>
                     </div>
                   </div>
 
-                  {/* Card */}
-                  <div className="w-full pl-24 md:pl-0 md:w-5/12">
-                    <motion.div
-                      whileHover={{ y: -8 }}
-                      transition={{ duration: 0.35, ease: 'easeOut' }}
-                      className="relative p-8 md:p-10 bg-[#fafafa] border border-dark/5 rounded-[2rem] shadow-sm hover:shadow-xl transition-shadow duration-500 overflow-hidden"
-                    >
-                      <div className="absolute -top-8 -right-8 w-28 h-28 bg-gradient-to-br from-secondary/10 to-primary/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700" />
-                      <div className="relative z-10">
-                        <div className="flex items-center gap-4 mb-5">
-                          <span className="text-4xl md:text-5xl font-black text-secondary/15 group-hover:text-secondary/30 transition-colors duration-500 select-none">
-                            {item.step}
-                          </span>
-                          <h4 className="text-lg md:text-xl font-semibold text-dark tracking-wide leading-snug">{item.title}</h4>
-                        </div>
-                        <p className="text-sm md:text-[15px] text-dark/60 font-light leading-relaxed">{item.desc}</p>
-                      </div>
-                      <div className="absolute bottom-0 left-0 h-[3px] bg-gradient-to-r from-secondary to-primary w-0 group-hover:w-full transition-all duration-700 ease-in-out" />
-                    </motion.div>
+                  <p className="text-white/55 text-[14px] leading-relaxed mb-7 max-w-md">
+                    KARR represents the stone — the foundation, the discipline, the unwavering commitment to getting every structural detail right. Good construction comes from planning, coordination, quality control and consistent execution at every stage.
+                  </p>
+
+                  <div className="grid grid-cols-1 gap-0 divide-y divide-white/8">
+                    {[
+                      'Quality-focused construction',
+                      'Proper work sequencing',
+                      'Technical standards & specifications',
+                      'Disciplined project management',
+                      'Transparent execution',
+                      'Responsible material usage',
+                      'Reducing unnecessary rework & wastage',
+                    ].map((item, i) => (
+                      <motion.div
+                        key={i}
+                        initial={{ opacity: 0, x: -12 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.4, delay: 0.05 + i * 0.06 }}
+                        className="flex items-center gap-4 py-3 group/item"
+                      >
+                        <span className="w-1.5 h-1.5 rounded-full bg-secondary shrink-0" />
+                        <span className="text-[13px] text-white/60 group-hover/item:text-white/90 transition-colors duration-300">{item}</span>
+                      </motion.div>
+                    ))}
                   </div>
-                </motion.div>
-              ))}
-            </div>
+                </div>
+              </motion.div>
 
-            {/* Approach tagline */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3, duration: 0.7 }}
-              className="mt-20 text-center"
-            >
-              <p className="text-xs text-dark/30 uppercase tracking-[0.4em] font-semibold">
-                From the First Conversation to the Final Handover
-              </p>
-              <p className="mt-2 text-sm font-bold text-secondary uppercase tracking-[0.25em]">
-                KARRCHOLAI — From Stone to Oasis, We Build Better Living.
-              </p>
-            </motion.div>
+              {/* CHOLAI */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.1 }}
+                className="relative bg-[#f8f6f0] px-6 md:px-16 lg:px-20 py-12 md:py-20 overflow-hidden"
+              >
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_rgba(201,117,74,0.08),_transparent_60%)] pointer-events-none" />
+                <div className="absolute -left-8 top-1/2 -translate-y-1/2 text-[140px] md:text-[220px] font-black text-dark/[0.04] leading-none select-none pointer-events-none tracking-tighter">C</div>
+
+                <div className="relative z-10">
+                  <div className="flex items-center gap-4 mb-7">
+                    <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-dark flex items-center justify-center shrink-0 shadow-xl shadow-dark/10">
+                      <span className="text-secondary font-black text-xl md:text-2xl">C</span>
+                    </div>
+                    <div>
+                      <div className="text-secondary text-[10px] font-black uppercase tracking-[0.4em]">CHOLAI</div>
+                      <div className="text-dark text-xl md:text-2xl font-bold mt-0.5">Greenery &amp; Sustainability</div>
+                    </div>
+                  </div>
+
+                  <p className="text-dark/60 text-[14px] leading-relaxed mb-7 max-w-md">
+                    CHOLAI represents the oasis — life, nature and the environment around the home. Sustainability is not an optional feature to be added at the end. It should be woven into every decision from the very beginning of a project.
+                  </p>
+
+                  <div className="grid grid-cols-1 gap-3 mb-7">
+                    {[
+                      { icon: '🌿', label: 'Landscaping & Greenery', desc: 'Creating healthier, more pleasant living spaces' },
+                      { icon: '💧', label: 'Rainwater Harvesting', desc: 'Conserving and managing water responsibly' },
+                      { icon: '☀️', label: 'Solar Energy', desc: 'Reducing dependence on conventional energy' },
+                      { icon: '♻️', label: 'Waste Management', desc: 'Minimising construction impact on the environment' },
+                    ].map((item, i) => (
+                      <motion.div
+                        key={i}
+                        initial={{ opacity: 0, y: 10 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.4, delay: 0.05 + i * 0.08 }}
+                        className="flex items-center gap-3 p-3 bg-white rounded-xl border border-dark/6 hover:border-secondary/30 hover:shadow-md transition-all duration-300 group/card"
+                      >
+                        <span className="text-xl shrink-0">{item.icon}</span>
+                        <div>
+                          <div className="text-sm font-bold text-dark group-hover/card:text-secondary transition-colors duration-300">{item.label}</div>
+                          <div className="text-[11px] text-dark/45 mt-0.5">{item.desc}</div>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+
+                  <div className="p-4 bg-secondary/8 rounded-xl border-l-2 border-secondary">
+                    <p className="text-[12px] text-dark/60 italic leading-relaxed">
+                      We also honour traditional Indian construction — red oxide flooring, tile roofing, <em>Marabu Kattumanam</em> — thoughtfully combined with modern standards where appropriate.
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
           </div>
-        </section>
 
-        {/* ══════════════════════════════════════════
-            7. CORE PHILOSOPHY (SLEEK GRID) — unchanged
-        ══════════════════════════════════════════ */}
-        <section className="py-24 md:py-32 px-6 bg-[#fafafa]">
-          <div className="container mx-auto max-w-6xl">
-            <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
-              <div>
-                <p className="text-secondary text-xs font-bold uppercase tracking-[0.3em] mb-4 flex items-center gap-4">
-                  <span className="w-6 h-[1px] bg-secondary" />
-                  How We Operate
-                </p>
-                <h3 className="text-3xl md:text-5xl font-light text-dark tracking-tight">
-                  Our Core <span className="font-medium">Philosophy</span>
+          {/* ── PANEL D: Responsibility — full-width cinematic ── */}
+          <div className="relative w-full bg-[#0a0a0a] overflow-hidden py-16 md:py-28 px-6">
+            <div className="absolute top-0 left-1/4 w-72 md:w-96 h-72 md:h-96 bg-secondary/6 rounded-full blur-[100px] pointer-events-none" />
+            <div className="absolute bottom-0 right-1/4 w-72 md:w-96 h-72 md:h-96 bg-secondary/5 rounded-full blur-[100px] pointer-events-none" />
+
+            <div className="container mx-auto max-w-7xl">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+                className="text-center mb-12 md:mb-20"
+              >
+                <p className="text-secondary text-[10px] font-black uppercase tracking-[0.5em] mb-4">Our Responsibility</p>
+                <h3 className="text-3xl md:text-6xl lg:text-7xl font-black text-white tracking-tighter leading-[0.9]">
+                  More than <span className="text-secondary">building</span><br className="hidden md:block" /> a house.
                 </h3>
-              </div>
-              <p className="text-dark/40 text-xs uppercase tracking-widest font-semibold">Three principles we stand by</p>
-            </div>
+              </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-              {[
-                { icon: <FaHardHat size={24} />, title: 'Structured Planning', desc: 'Every successful project begins with thorough pre-construction planning. We review drawings, budgets, and timelines with you before work begins — ensuring clarity and alignment from the start.' },
-                { icon: <FaShieldAlt size={24} />, title: 'Stage-wise Quality Control', desc: 'Quality is verified at each critical stage — foundation, structure, roofing, and finishing. Our team maintains on-site supervision to ensure materials and workmanship meet agreed standards.' },
-                { icon: <FaDollarSign size={24} />, title: 'Transparent Cost Management', desc: 'We provide detailed cost breakdowns and proactive updates on any variations. Our clients always know where their investment is going, with no unexpected charges mid-project.' },
-              ].map((item, i) => (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10 md:mb-14">
+                {[
+                  { title: 'Resources & Earth', body: 'Every building consumes resources from the Earth. Materials are extracted, processed and transported before they reach a site. Some natural resources cannot simply be recreated.' },
+                  { title: 'Waste is Real Loss', body: 'Unnecessary material wastage and avoidable rework are not just financial losses — they are losses to our environment. Every wasted material represents a cost paid twice.' },
+                  { title: 'Building for Tomorrow', body: 'For us, sustainability means thinking about society and future generations. The resources we use today are connected to tomorrow — that responsibility guides every decision we make.' },
+                ].map((item, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 24 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: i * 0.12 }}
+                    className="relative p-6 md:p-8 rounded-2xl border border-white/8 bg-white/[0.02] overflow-hidden group hover:border-secondary/25 transition-all duration-500"
+                  >
+                    <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-secondary to-secondary/30 group-hover:w-full transition-all duration-700 ease-out" />
+                    <div className="w-8 h-[2px] bg-secondary mb-5" />
+                    <h4 className="text-white font-bold text-base mb-3 tracking-wide">{item.title}</h4>
+                    <p className="text-white/45 text-[13px] leading-relaxed">{item.body}</p>
+                  </motion.div>
+                ))}
+              </div>
+
+              <motion.div
+                initial={{ opacity: 0, scale: 0.97 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7 }}
+                className="relative text-center px-5 md:px-6 py-8 md:py-10 rounded-2xl overflow-hidden border border-secondary/20 bg-gradient-to-r from-secondary/10 via-secondary/5 to-secondary/10"
+              >
+                <p className="text-white/30 text-[10px] uppercase tracking-[0.5em] mb-3">This is the responsibility we carry</p>
+                <p className="text-white text-base md:text-2xl font-light leading-relaxed max-w-3xl mx-auto">
+                  We want to build homes that are <strong className="text-secondary">strong in structure</strong>, practical in living, thoughtful in resource use and respectful of nature — because we are not simply building for today.
+                </p>
+                <p className="text-secondary font-bold text-sm uppercase tracking-[0.3em] mt-5">We are building with tomorrow in mind.</p>
+              </motion.div>
+            </div>
+          </div>
+
+          {/* ── PANEL E: Closing — minimal light statement ── */}
+          <div className="relative w-full bg-[#f5f2ee] overflow-hidden px-4 md:px-6 py-12 md:py-20">
+            <div className="relative z-10 container mx-auto max-w-7xl">
+              <div className="flex flex-col md:flex-row items-stretch gap-3 rounded-2xl overflow-hidden border border-dark/8">
+
+                {/* Karr tile */}
                 <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: i * 0.15 }}
-                  className="group relative p-8 border border-dark/5 hover:border-secondary/30 transition-colors duration-500 bg-white hover:bg-white"
+                  transition={{ duration: 0.7 }}
+                  className="flex-1 bg-white px-6 md:px-8 py-8 md:py-10 flex flex-col justify-between md:border-r border-b md:border-b-0 border-dark/8"
                 >
-                  <div className="text-secondary mb-8 transition-transform duration-500 group-hover:-translate-y-2">{item.icon}</div>
-                  <h4 className="text-lg font-semibold text-dark mb-4 tracking-wide">{item.title}</h4>
-                  <p className="text-sm text-dark/60 leading-relaxed font-light">{item.desc}</p>
-                  <div className="absolute bottom-0 left-0 h-[2px] bg-secondary w-0 group-hover:w-full transition-all duration-700 ease-out" />
+                  <div>
+                    <div className="text-3xl md:text-6xl font-black text-dark tracking-tighter mb-2">Karr</div>
+                    <div className="text-dark/30 text-[9px] font-bold uppercase tracking-[0.4em]">Stone · Strength · Structure</div>
+                  </div>
+                  <p className="text-dark/45 text-sm leading-relaxed mt-6">
+                    Gives the home its <strong className="text-dark">strength.</strong>
+                  </p>
                 </motion.div>
-              ))}
+
+                {/* Center — brand statement */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.7, delay: 0.1 }}
+                  className="flex-[2] bg-[#f5f2ee] px-6 md:px-14 py-8 md:py-10 flex flex-col items-center justify-center text-center md:border-r border-b md:border-b-0 border-dark/8"
+                >
+                  <p className="text-dark/30 text-[9px] font-black uppercase tracking-[0.5em] mb-3">Together</p>
+                  <h4 className="text-lg md:text-2xl font-black text-dark tracking-tight leading-tight mb-3">
+                    A home should be more than a structure.
+                  </h4>
+                  <p className="text-dark/45 text-[13px] leading-relaxed max-w-sm mb-6">
+                    A place where people and nature can exist together responsibly — built with tomorrow in mind.
+                  </p>
+                  <div className="px-5 py-2.5 border border-dark/15 text-dark/40 text-[9px] font-black uppercase tracking-[0.35em] rounded-full hover:border-secondary/50 hover:text-secondary transition-all duration-300 cursor-default text-center">
+                    From Stone to Oasis — We Build Better Living
+                  </div>
+                </motion.div>
+
+                {/* Cholai tile */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.7, delay: 0.2 }}
+                  className="flex-1 bg-white px-6 md:px-8 py-8 md:py-10 flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="text-3xl md:text-6xl font-black text-dark tracking-tighter mb-2">Cholai</div>
+                    <div className="text-dark/30 text-[9px] font-bold uppercase tracking-[0.4em]">Oasis · Life · Sustainability</div>
+                  </div>
+                  <p className="text-dark/45 text-sm leading-relaxed mt-6">
+                    Gives the home its <strong className="text-dark">life.</strong>
+                  </p>
+                </motion.div>
+
+              </div>
             </div>
           </div>
+
         </section>
 
         {/* ══════════════════════════════════════════
-            8. EXPERTISE IMPACT — unchanged
+            3. MEET THE FOUNDER
         ══════════════════════════════════════════ */}
-        <section className="py-20 md:py-28 px-6 bg-[#0a0a0a] text-white relative overflow-hidden">
-          <div className="absolute inset-0 z-0">
-            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-[0.03]" />
+        <section id={SECTIONS.founder} className="overflow-hidden">
+
+          {/* ── Founder Hero — full-bleed split ── */}
+          <div className="relative w-full flex flex-col lg:flex-row items-stretch">
+
+            {/* Left — photo panel */}
             <motion.div
-              animate={{ opacity: [0.05, 0.1, 0.05] }}
-              transition={{ duration: 10, repeat: Infinity }}
-              className="absolute -top-1/4 -right-1/4 w-[60vw] h-[60vw] bg-secondary/10 rounded-full blur-[120px] pointer-events-none"
-            />
+              initial={{ opacity: 0, scale: 1.04 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.1, ease: 'easeOut' }}
+              className="relative w-full lg:w-5/12 min-h-[55vw] md:min-h-[50vh] lg:min-h-full lg:self-stretch overflow-hidden"
+            >
+              <img
+                src={founderImg}
+                alt="Saravanakumar B., founder of Karrcholai Construction"
+                className="absolute inset-0 w-full h-full object-cover object-center"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0e0e0e] via-[#0e0e0e]/20 to-transparent lg:bg-gradient-to-r lg:from-transparent lg:via-transparent lg:to-[#0e0e0e]" />
+              {/* Name badge — mobile only */}
+              <div className="absolute bottom-6 left-6 lg:hidden">
+                <h3 className="text-xl font-black text-white tracking-tight">Saravanakumar B.</h3>
+                <p className="text-secondary text-[10px] font-bold uppercase tracking-[0.3em] mt-1">Founder & Civil Engineer</p>
+              </div>
+            </motion.div>
+
+            {/* Right — content panel */}
+            <motion.div
+              initial={{ opacity: 0, x: 40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.9, ease: 'easeOut', delay: 0.15 }}
+              className="relative w-full lg:w-7/12 bg-[#0e0e0e] flex flex-col justify-center px-6 md:px-16 lg:px-20 py-14 md:py-24 lg:py-28 overflow-hidden"
+            >
+              <div className="absolute right-0 top-1/2 -translate-y-1/2 text-[120px] md:text-[260px] font-black text-white/[0.02] leading-none select-none pointer-events-none tracking-tighter">02</div>
+
+              <div className="relative z-10">
+                <p className="text-secondary text-[10px] font-black uppercase tracking-[0.45em] flex items-center gap-3 mb-6">
+                  <span className="w-8 h-[1px] bg-secondary" />
+                  Meet the Founder
+                </p>
+
+                {/* Name — desktop only */}
+                <div className="hidden lg:block mb-8">
+                  <h2 className="text-5xl xl:text-6xl font-black text-white tracking-tighter leading-[0.9]">Saravanakumar B.</h2>
+                  <p className="text-secondary text-sm font-bold uppercase tracking-[0.3em] mt-3">BE Civil Engineer · Founder, Karrcholai Construction</p>
+                </div>
+
+                <div className="space-y-4 text-[14px] text-white/55 leading-[1.9]">
+                  <p>
+                    With more than <strong className="text-white">12 years of professional experience</strong>, my journey has been shaped by practical site experience, disciplined project execution and a strong belief in honest, responsible building practices.
+                  </p>
+                  <p>
+                    Exposure to <strong className="text-white">MNC and Private Limited companies</strong> gave me structured project environments, quality standards and large-scale execution experience. Work with an <strong className="text-white">Architectural firm</strong> deepened my understanding of design intent, space planning and the integration of architecture with construction reality.
+                  </p>
+                  <p>
+                    For me, construction is not simply about creating structures — it is about creating <strong className="text-white">spaces for life.</strong>
+                  </p>
+                  <p>
+                    This belief became the foundation for starting <span className="text-secondary font-semibold">Karrcholai Construction in 2021</span> — with a focus on quality, transparency, cost-conscious planning and long-term value for every client.
+                  </p>
+                </div>
+
+                {/* Credential pills */}
+                <div className="flex flex-wrap gap-2 mt-8">
+                  {['12+ Years Experience', 'BE Civil Engineer', 'MNC Background', 'Architectural Exposure', 'Project Management'].map((tag) => (
+                    <span key={tag} className="px-3 py-1.5 border border-white/10 rounded-full text-[10px] text-white/40 font-semibold uppercase tracking-wide hover:border-secondary/40 hover:text-secondary/70 transition-colors duration-300">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Signature */}
+                <div className="mt-10 pt-7 border-t border-white/8">
+                  <p className="text-white/25 text-[10px] uppercase tracking-[0.3em] mb-1">With regards,</p>
+                  <p className="text-white font-black text-xl tracking-tight">Saravanakumar B.</p>
+                  <p className="text-secondary text-[10px] font-bold uppercase tracking-[0.25em] mt-0.5">Founder & Civil Engineer</p>
+                </div>
+              </div>
+            </motion.div>
           </div>
 
-          <div className="container mx-auto max-w-6xl relative z-10">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-              <div className="lg:col-span-5">
+          {/* ── Founder Thoughts — full-width cinematic ── */}
+          <div className="relative w-full overflow-hidden">
+            <div
+              className="absolute inset-0 bg-cover bg-center"
+              style={{ backgroundImage: `url(${courtyardImg})` }}
+            />
+            <div className="absolute inset-0 bg-[#0a0a0a]/82" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(201,117,74,0.08),_transparent_70%)]" />
+
+            <div className="relative z-10 container mx-auto max-w-7xl px-6 py-16 md:py-28">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-center">
+
                 <motion.div
-                  initial={{ opacity: 0, x: -30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.8 }}
                 >
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-8 h-[1px] bg-secondary" />
-                    <span className="text-secondary text-[9px] font-black uppercase tracking-[0.4em]">The Advantage</span>
-                  </div>
-                  <h3 className="text-4xl md:text-5xl font-light leading-[1.1] mb-8 tracking-tighter">
-                    Engineering expertise <br />
-                    <span className="font-bold text-white">you can trust</span> <br />
-                    <span className="text-secondary">from day one.</span>
+                  <p className="text-secondary text-[10px] font-black uppercase tracking-[0.45em] mb-4">My Thoughts on Construction</p>
+                  <h3 className="text-3xl md:text-5xl font-black text-white tracking-tighter leading-[0.92] mb-6">
+                    A home is where <br /><span className="text-secondary">life happens.</span>
                   </h3>
-                  <div className="p-6 bg-white/[0.02] border-l border-secondary/40 backdrop-blur-md rounded-r-xl">
-                    <p className="text-sm md:text-base text-white/50 font-light leading-relaxed">
-                      Karrcholai was built on the belief that residential construction requires engineering discipline and consistent site supervision. With over 12 years of experience, we deliver structured project management, transparent communication, and quality execution at every stage.
+                  <p className="text-white/40 text-sm leading-relaxed max-w-sm">
+                    Every decision on a construction site has consequences — for the family, for the budget, and for the environment.
+                  </p>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, delay: 0.15 }}
+                  className="space-y-4"
+                >
+                  {[
+                    'Construction is not just about building a structure. It is about creating a space where life happens.',
+                    'A good house must have a strong foundation, proper planning, correct materials, and disciplined execution — not just good looks.',
+                    'Most problems in construction come from poor planning and lack of supervision. That is why I always follow a systematic approach in every project.',
+                  ].map((text, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, x: 20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: 0.1 + i * 0.1 }}
+                      className="flex items-start gap-3 p-4 rounded-xl border border-white/8 bg-white/[0.03] hover:border-secondary/25 hover:bg-white/[0.05] transition-all duration-300"
+                    >
+                      <span className="w-1.5 h-1.5 rounded-full bg-secondary mt-2 shrink-0" />
+                      <p className="text-white/60 text-[13px] md:text-[14px] leading-relaxed">{text}</p>
+                    </motion.div>
+                  ))}
+                  <div className="pt-3 pl-4">
+                    <p className="text-secondary font-bold text-sm uppercase tracking-[0.3em]">
+                      Build with responsibility, clarity, and long-term thinking.
                     </p>
                   </div>
                 </motion.div>
+
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+        {/* ══════════════════════════════════════════
+            4. OUR PROCESS
+        ══════════════════════════════════════════ */}
+        <section id={SECTIONS.process} className="overflow-hidden bg-[#f8f6f3]">
+
+          {/* Process header band */}
+          <div className="w-full bg-[#f8f6f3] px-6 pt-16 md:pt-28 pb-10 md:pb-14">
+            <div className="container mx-auto max-w-7xl">
+              <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 md:gap-8">
+                <motion.div
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.7 }}
+                >
+                  <p className="text-secondary text-[10px] font-black uppercase tracking-[0.45em] flex items-center gap-3 mb-3">
+                    <span className="w-8 h-[1px] bg-secondary" />
+                    Our Process
+                  </p>
+                  <h2 className="text-4xl md:text-7xl font-black text-dark tracking-tighter leading-[0.9]">
+                    From Dream<br /><span className="text-secondary">to Home.</span>
+                  </h2>
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.7, delay: 0.15 }}
+                  className="max-w-md"
+                >
+                  <p className="text-dark/50 text-[14px] md:text-[15px] leading-relaxed mb-5">
+                    Building a home should be an organised, transparent journey — not a confusing one. We follow a systematic process from your first enquiry to final handover.
+                  </p>
+                  <div className="flex flex-wrap gap-2 items-center text-[10px] font-black uppercase tracking-[0.3em]">
+                    {['Listen', 'Plan', 'Execute', 'Monitor', 'Deliver'].map((word, i, arr) => (
+                      <React.Fragment key={word}>
+                        <span className="text-secondary">{word}</span>
+                        {i < arr.length - 1 && <span className="text-dark/20 font-normal">→</span>}
+                      </React.Fragment>
+                    ))}
+                  </div>
+                </motion.div>
+              </div>
+            </div>
+          </div>
+
+          {/* Process steps — horizontal card scroll on mobile, 4-col grid on desktop */}
+          <div className="w-full px-6 pb-20 md:pb-28 bg-[#f8f6f3]">
+            <div className="container mx-auto max-w-7xl">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                {processSteps.map((item, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.55, delay: i * 0.06 }}
+                    className="group relative bg-white rounded-2xl p-7 border border-dark/5 hover:border-secondary/25 hover:shadow-xl transition-all duration-500 overflow-hidden"
+                  >
+                    {/* Hover fill */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-secondary/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    {/* Bottom accent */}
+                    <div className="absolute bottom-0 left-0 h-[3px] w-0 bg-gradient-to-r from-secondary to-secondary/40 group-hover:w-full transition-all duration-600 ease-out" />
+
+                    <div className="relative z-10">
+                      <div className="text-4xl font-black text-secondary/12 group-hover:text-secondary/25 transition-colors duration-400 tracking-tighter select-none mb-5 leading-none">
+                        {item.step}
+                      </div>
+                      <h4 className="text-[15px] font-bold text-dark mb-3 leading-snug tracking-tight group-hover:text-secondary transition-colors duration-300">{item.title}</h4>
+                      <p className="text-[12px] md:text-[13px] text-dark/50 font-light leading-relaxed">{item.desc}</p>
+                    </div>
+                  </motion.div>
+                ))}
               </div>
 
-              <div className="lg:col-span-7">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
-                  {[
-                    { title: 'Structured Planning', icon: <FaProjectDiagram />, delay: 0 },
-                    { title: 'Cost Transparency', icon: <FaHandHoldingUsd />, delay: 0.1 },
-                    { title: 'Quality Supervision', icon: <FaShieldAlt />, delay: 0.2 },
-                    { title: 'Timely Delivery', icon: <FaClock />, delay: 0.3 },
-                  ].map((item, i) => (
-                    <motion.div
-                      key={i}
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: item.delay, duration: 0.6 }}
-                      className="group relative p-6 bg-white/[0.03] border border-white/5 rounded-2xl hover:bg-white/[0.07] hover:border-secondary/20 transition-all duration-300"
-                    >
-                      <div className="flex items-center gap-5">
-                        <div className="w-11 h-11 rounded-xl bg-white/5 flex items-center justify-center text-secondary group-hover:bg-secondary group-hover:text-white transition-all duration-300 text-xl">
-                          {item.icon}
-                        </div>
-                        <div>
-                          <h4 className="text-base font-semibold text-white tracking-tight group-hover:text-secondary transition-colors duration-300">
-                            {item.title}
-                          </h4>
-                          <div className="h-[1px] w-0 group-hover:w-full bg-secondary/30 transition-all duration-500 mt-1" />
-                        </div>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
+              {/* Closing line */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.5, duration: 0.7 }}
+                className="mt-12 flex items-center gap-4"
+              >
+                <div className="h-[1px] flex-1 bg-dark/8" />
+                <p className="text-secondary text-[10px] font-black uppercase tracking-[0.4em] shrink-0">
+                  From the First Conversation to the Final Handover
+                </p>
+                <div className="h-[1px] flex-1 bg-dark/8" />
+              </motion.div>
+            </div>
+          </div>
+
+        </section>
+
+        {/* ══════════════════════════════════════════
+            5. CORE PHILOSOPHY
+        ══════════════════════════════════════════ */}
+        <section className="overflow-hidden bg-[#0e0e0e]">
+          <div className="relative w-full px-6 py-16 md:py-28">
+            <div className="absolute top-0 left-1/3 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-secondary/5 rounded-full blur-[120px] pointer-events-none" />
+            <div className="absolute bottom-0 right-1/4 w-[250px] md:w-[400px] h-[250px] md:h-[400px] bg-secondary/4 rounded-full blur-[100px] pointer-events-none" />
+
+            <div className="container mx-auto max-w-7xl relative z-10">
+              {/* Header */}
+              <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-10 md:mb-20 gap-6">
+                <motion.div
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.7 }}
+                >
+                  <p className="text-secondary text-[10px] font-black uppercase tracking-[0.45em] flex items-center gap-3 mb-3">
+                    <span className="w-8 h-[1px] bg-secondary" />
+                    How We Operate
+                  </p>
+                  <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter leading-[0.9]">
+                    Our Core <br /><span className="text-secondary">Philosophy.</span>
+                  </h2>
+                </motion.div>
                 <motion.p
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
-                  transition={{ delay: 0.5 }}
-                  className="mt-8 text-[9px] uppercase tracking-[0.5em] text-white/20 text-center lg:text-left"
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.7, delay: 0.15 }}
+                  className="text-white/30 text-sm max-w-xs leading-relaxed"
                 >
-                  Engineering-led execution • 12+ years in residential construction
+                  Three non-negotiable principles that guide every project we take on.
                 </motion.p>
               </div>
-            </div>
-          </div>
-        </section>
 
-        {/* ══════════════════════════════════════════
-            9. CLIENT TESTIMONIALS — unchanged
-        ══════════════════════════════════════════ */}
-        <section className="py-24 md:py-32 px-6 bg-[#fdfdfd] overflow-hidden">
-          <div className="container mx-auto max-w-6xl">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="text-center mb-20"
-            >
-              <p className="text-secondary text-xs font-bold uppercase tracking-[0.3em] mb-4 justify-center flex items-center gap-4">
-                <span className="w-6 h-[1px] bg-secondary" />
-                Client Testimonials
-                <span className="w-6 h-[1px] bg-secondary" />
-              </p>
-              <h3 className="text-3xl md:text-5xl font-light text-dark tracking-tight">
-                Don't just take our word for it. <br />
-                <span className="font-medium text-secondary">Hear from our homeowners.</span>
-              </h3>
-            </motion.div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-14 pt-16">
-              {[
-                {
-                  name: 'Mrs. Elumalai Mohanavalli',
-                  role: 'Homeowner',
-                  image: 'https://ui-avatars.com/api/?name=Mohanavalli&background=2D4B37&color=ffffff&size=150&bold=true',
-                  feedback: 'The KARRCHOLAI team impressed with their professionalism and dedication. From the initial planning stages to the ongoing execution, they have demonstrated a keen eye for detail and a commitment to excellence.',
-                  delay: 0,
-                },
-                {
-                  name: 'Mrs. Naatrayan Karthiga Devi',
-                  role: 'Homeowner',
-                  image: 'https://ui-avatars.com/api/?name=Karthiga+Devi&background=B85C38&color=ffffff&size=150&bold=true',
-                  feedback: "We entrusted KARRCHOLAI with the team's dedication to quality craftsmanship and attention to detail truly shines through in every corner of our home. Thank you for turning our house into a haven!",
-                  delay: 0.2,
-                },
-                {
-                  name: 'Mrs. Mohanraj Priya',
-                  role: 'Homeowner',
-                  image: 'https://ui-avatars.com/api/?name=Mohanraj+Priya&background=4A7B5E&color=ffffff&size=150&bold=true',
-                  feedback: 'Choosing KARRCHOLAI for our building renovation was the best decision we made! With their expertise in Vastu alterations and their commitment to quality. Thank you for giving our building a new lease on life!',
-                  delay: 0.4,
-                },
-              ].map((item, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-10%' }}
-                  transition={{ duration: 0.8, delay: item.delay, type: 'spring', bounce: 0.2 }}
-                  className="group relative p-8 md:p-10 pt-16 bg-white border border-dark/5 rounded-[2rem] shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col justify-between text-center mt-8"
-                >
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full border-4 border-white shadow-md overflow-hidden bg-cream group-hover:scale-105 group-hover:border-secondary transition-all duration-500 z-20">
-                    <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
-                  </div>
-                  <div className="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-secondary/10 to-primary/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700 pointer-events-none" />
-                  <div className="relative z-10 flex flex-col items-center">
-                    <div className="flex items-center gap-1 mb-4 text-[#FFB01F] text-sm">
-                      {[...Array(5)].map((_, j) => <FaStar key={j} />)}
+              {/* Philosophy cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-5">
+                {[
+                  {
+                    num: '01',
+                    icon: <FaHardHat size={20} />,
+                    title: 'Structured Planning',
+                    desc: 'Every successful project begins with thorough pre-construction planning. We review drawings, budgets, and timelines before work begins — ensuring clarity and alignment from the start.',
+                  },
+                  {
+                    num: '02',
+                    icon: <FaShieldAlt size={20} />,
+                    title: 'Stage-wise Quality Control',
+                    desc: 'Quality is verified at each critical stage — foundation, structure, roofing, finishing. On-site supervision ensures materials and workmanship meet agreed standards throughout.',
+                  },
+                  {
+                    num: '03',
+                    icon: <FaDollarSign size={20} />,
+                    title: 'Transparent Cost Management',
+                    desc: 'Detailed cost breakdowns and proactive updates on any variations. Our clients always know where their investment is going — no unexpected charges mid-project.',
+                  },
+                ].map((item, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: i * 0.12 }}
+                    className="group relative p-6 md:p-10 rounded-2xl border border-white/8 bg-white/[0.02] hover:bg-white/[0.05] hover:border-secondary/30 transition-all duration-500 overflow-hidden"
+                  >
+                    <div className="absolute bottom-0 left-0 h-[3px] w-0 bg-gradient-to-r from-secondary to-secondary/30 group-hover:w-full transition-all duration-700 ease-out" />
+                    <div className="absolute -top-6 -right-6 w-24 h-24 bg-secondary/5 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700 pointer-events-none" />
+                    <div className="relative z-10">
+                      <div className="flex items-center justify-between mb-6">
+                        <div className="w-10 h-10 md:w-11 md:h-11 rounded-xl bg-secondary/10 flex items-center justify-center text-secondary group-hover:bg-secondary group-hover:text-white transition-all duration-300">
+                          {item.icon}
+                        </div>
+                        <span className="text-3xl font-black text-white/5 group-hover:text-white/10 transition-colors duration-300 tracking-tighter select-none">{item.num}</span>
+                      </div>
+                      <h4 className="text-white font-bold text-base md:text-lg mb-3 tracking-tight group-hover:text-secondary transition-colors duration-300">{item.title}</h4>
+                      <p className="text-white/40 text-[13px] leading-relaxed">{item.desc}</p>
                     </div>
-                    <FaQuoteLeft className="text-secondary/15 text-3xl mb-4 transition-transform duration-500 group-hover:scale-110 group-hover:text-secondary/30" />
-                    <p className="text-sm md:text-[15px] text-dark/70 font-light leading-relaxed mb-6">"{item.feedback}"</p>
-                  </div>
-                  <div className="relative z-10 mt-auto pt-5 border-t border-dark/5 w-full">
-                    <h4 className="text-base md:text-lg font-bold text-dark tracking-tight transition-colors duration-300 group-hover:text-secondary">{item.name}</h4>
-                    <p className="text-xs text-dark/40 font-semibold uppercase tracking-wider mt-1">{item.role}</p>
-                  </div>
-                  <div className="absolute inset-x-0 bottom-0 h-[10px] rounded-b-[2rem] overflow-hidden pointer-events-none">
-                    <div className="absolute bottom-0 left-0 h-[3px] bg-gradient-to-r from-secondary to-primary w-0 group-hover:w-full transition-all duration-700 ease-in-out" />
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ══════════════════════════════════════════
-            10. CTA — unchanged
-        ══════════════════════════════════════════ */}
-        <section className="relative py-40 overflow-hidden bg-[#FAF8F5]">
-          <div className="absolute inset-0 z-0">
-            <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/dark-matter.png")' }} />
-          </div>
-
-          <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1.2, ease: 'easeOut' }}
-            >
-              <div className="flex items-center justify-center gap-4 mb-8">
-                <div className="h-[1px] w-12 bg-[#B85C38]/40" />
-                <span className="text-[9px] font-black tracking-[0.5em] uppercase text-[#B85C38]">Initiate Project</span>
-                <div className="h-[1px] w-12 bg-[#B85C38]/40" />
+                  </motion.div>
+                ))}
               </div>
 
-              <h2 className="text-5xl md:text-7xl lg:text-8xl font-black text-[#2A2A28] leading-[0.9] mb-8 tracking-tighter uppercase">
-                Design Your <br />
-                <span className="text-[#B85C38] lowercase tracking-normal">legacy.</span>
-              </h2>
-
-              <p className="text-sm md:text-lg font-medium leading-relaxed mb-14 text-[#2A2A28]/60 max-w-2xl mx-auto">
-                Commission a bespoke architectural masterpiece. Consult with our leadership to define the contours of your future estate.
-              </p>
-
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="group relative overflow-hidden inline-flex items-center justify-center px-12 py-5 transition-colors duration-500 rounded-full bg-[#B85C38] shadow-xl hover:shadow-2xl"
+              {/* Advantage strip */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, delay: 0.3 }}
+                className="mt-6 md:mt-8 p-6 md:p-10 rounded-2xl bg-secondary/8 border border-secondary/15 flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-16"
               >
-                <div className="absolute inset-0 bg-[#2A2A28] translate-y-[100%] group-hover:translate-y-0 transition-transform duration-700 ease-[0.16,1,0.3,1]" />
-                <span className="relative z-10 flex items-center gap-4 text-xs font-bold uppercase tracking-[0.3em] text-white transition-colors duration-500">
-                  Request Consultation
-                  <div className="w-6 h-[1px] bg-white transition-colors duration-500" />
-                </span>
-              </motion.button>
-            </motion.div>
+                <div className="shrink-0">
+                  <p className="text-secondary text-[10px] font-black uppercase tracking-[0.4em] mb-2">The Advantage</p>
+                  <h4 className="text-white text-xl md:text-3xl font-black tracking-tighter leading-tight">
+                    Engineering expertise<br />you can trust.
+                  </h4>
+                </div>
+                <div className="w-full h-[1px] md:w-[1px] md:h-16 bg-white/10 md:shrink-0" />
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 w-full">
+                  {[
+                    { title: 'Structured Planning', icon: <FaProjectDiagram /> },
+                    { title: 'Cost Transparency', icon: <FaHandHoldingUsd /> },
+                    { title: 'Quality Supervision', icon: <FaShieldAlt /> },
+                    { title: 'Timely Delivery', icon: <FaClock /> },
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-center gap-2 md:gap-3 group/pill">
+                      <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-secondary text-sm shrink-0 group-hover/pill:bg-secondary group-hover/pill:text-white transition-all duration-300">
+                        {item.icon}
+                      </div>
+                      <span className="text-white/50 text-[11px] md:text-[12px] font-semibold leading-tight group-hover/pill:text-white/80 transition-colors duration-300">{item.title}</span>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            </div>
           </div>
         </section>
+
+        {/* ══════════════════════════════════════════
+            6. CLIENT TESTIMONIALS
+        ══════════════════════════════════════════ */}
+        <section className="overflow-hidden bg-[#f8f6f3]">
+          <div className="w-full px-6 py-16 md:py-28">
+            <div className="container mx-auto max-w-7xl">
+
+              {/* Header */}
+              <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-10 md:mb-20 gap-5">
+                <motion.div
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.7 }}
+                >
+                  <p className="text-secondary text-[10px] font-black uppercase tracking-[0.45em] flex items-center gap-3 mb-3">
+                    <span className="w-8 h-[1px] bg-secondary" />
+                    Client Testimonials
+                  </p>
+                  <h2 className="text-3xl md:text-6xl font-black text-dark tracking-tighter leading-[0.9]">
+                    Hear from our <br /><span className="text-secondary">homeowners.</span>
+                  </h2>
+                </motion.div>
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.7, delay: 0.15 }}
+                  className="text-dark/40 text-sm max-w-xs leading-relaxed"
+                >
+                  Real feedback from families who trusted us with their most important investment.
+                </motion.p>
+              </div>
+
+              {/* Testimonial cards */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                {[
+                  {
+                    name: 'Mrs. Elumalai Mohanavalli',
+                    role: 'Homeowner',
+                    image: 'https://ui-avatars.com/api/?name=Mohanavalli&background=2D4B37&color=ffffff&size=150&bold=true',
+                    feedback: 'The KARRCHOLAI team impressed with their professionalism and dedication. From planning to execution, they demonstrated a keen eye for detail and a commitment to excellence.',
+                    delay: 0,
+                  },
+                  {
+                    name: 'Mrs. Naatrayan Karthiga Devi',
+                    role: 'Homeowner',
+                    image: 'https://ui-avatars.com/api/?name=Karthiga+Devi&background=B85C38&color=ffffff&size=150&bold=true',
+                    feedback: 'We entrusted KARRCHOLAI with our home and their dedication to quality craftsmanship and attention to detail truly shines through in every corner. Thank you for turning our house into a haven.',
+                    delay: 0.1,
+                  },
+                  {
+                    name: 'Mrs. Mohanraj Priya',
+                    role: 'Homeowner',
+                    image: 'https://ui-avatars.com/api/?name=Mohanraj+Priya&background=4A7B5E&color=ffffff&size=150&bold=true',
+                    feedback: 'Choosing KARRCHOLAI for our building renovation was the best decision we made. Their expertise and commitment to quality gave our building a new lease on life.',
+                    delay: 0.2,
+                  },
+                ].map((item, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 24 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.65, delay: item.delay }}
+                    className="group relative bg-white rounded-2xl p-6 md:p-8 border border-dark/5 hover:border-secondary/20 hover:shadow-xl transition-all duration-500 overflow-hidden flex flex-col"
+                  >
+                    <div className="absolute bottom-0 left-0 h-[3px] w-0 bg-gradient-to-r from-secondary to-secondary/30 group-hover:w-full transition-all duration-700 ease-out" />
+                    <div className="absolute -top-8 -right-8 w-28 h-28 bg-secondary/5 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700 pointer-events-none" />
+
+                    <div className="relative z-10 flex-1">
+                      <div className="flex items-center gap-1 mb-4 text-[#FFB01F] text-xs">
+                        {[...Array(5)].map((_, j) => <FaStar key={j} />)}
+                      </div>
+                      <FaQuoteLeft className="text-secondary/15 text-xl mb-3 group-hover:text-secondary/30 transition-colors duration-500" />
+                      <p className="text-dark/65 text-[13px] md:text-[14px] leading-relaxed mb-6">"{item.feedback}"</p>
+                    </div>
+
+                    <div className="relative z-10 flex items-center gap-3 pt-4 border-t border-dark/6">
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="w-10 h-10 rounded-full border-2 border-white shadow-md group-hover:border-secondary transition-colors duration-300 shrink-0"
+                      />
+                      <div>
+                        <h4 className="text-[13px] font-bold text-dark tracking-tight group-hover:text-secondary transition-colors duration-300 leading-snug">{item.name}</h4>
+                        <p className="text-[10px] text-dark/40 font-semibold uppercase tracking-wider mt-0.5">{item.role}</p>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+
+            </div>
+          </div>
+        </section>
+
       </main>
 
       <UnifiedFooter />
