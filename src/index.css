@@ -8,48 +8,103 @@
   --secondary: #B85C38;
   --cream: #fdfbf7;
   --dark: #1a1a1a;
+  --font-ui: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+  --font-brand: 'Lora', Georgia, 'Times New Roman', serif;
   scroll-behavior: smooth;
 }
 
 * { box-sizing: border-box; }
 
 body {
-  font-family: 'Barlow', sans-serif !important;
+  font-family: var(--font-ui);
   background-color: var(--cream);
   color: var(--dark);
   overflow-x: hidden;
+  line-height: 1.7;
 }
 
-/* ── Global typography hierarchy — Barlow across every element ── */
+/* ── Global typography hierarchy ──────────────────────────────────────
+   Lora    → h1, h2 (brand / story / heritage weight)
+   Manrope → h3–h6, body, nav, buttons, labels, stats, tools
+   Tamil   → Noto Sans Tamil always (no override)
+──────────────────────────────────────────────────────────────────────── */
 
-/* NUCLEAR OVERRIDE: Force Barlow on absolutely everything */
-*, *::before, *::after {
-  font-family: 'Barlow', sans-serif !important;
-  font-style: normal !important;
+h1, h2 {
+  font-family: var(--font-brand);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
 }
 
-/* Headings: Barlow bold, tight tracking — NO !important so components can override */
-h1, h2, h3, h4, h5, h6 {
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
+h3, h4, h5, h6 {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
 }
 
-/* Body text: Regular weight, comfortable reading */
-p, li, td, th, blockquote, figcaption {
+p, li, td, th, figcaption {
+  font-family: var(--font-ui);
   font-weight: 400;
+  line-height: 1.7;
+}
+
+blockquote {
+  font-family: var(--font-brand);
+  font-style: italic;
+  font-weight: 500;
   line-height: 1.65;
 }
 
-/* Bold inline */
 strong, b {
   font-weight: 700;
 }
 
-/* Buttons, inputs inherit */
-button, a, label, input, select, textarea, span, div {
-  font-family: 'Barlow', sans-serif !important;
+/* Nav: Manrope medium */
+nav, nav a {
+  font-family: var(--font-ui);
+  font-weight: 500;
 }
+
+/* Buttons, inputs: Manrope */
+button, a, label, input, select, textarea {
+  font-family: var(--font-ui);
+}
+
+/* Tamil override — always Noto Sans Tamil */
+[lang="ta"], .tamil-text {
+  font-family: 'Noto Sans Tamil', sans-serif !important;
+  font-style: normal !important;
+}
+
+/* ── Font utility classes ──────────────────────────────────────────────
+   Use these on any element to override the default assignment.
+   font-brand  → Lora  (headings, taglines, quotes, story sections)
+   font-ui     → Manrope (body, tools, nav, buttons, stats)
+   font-tamil  → Noto Sans Tamil
+──────────────────────────────────────────────────────────────────────── */
+.font-brand {
+  font-family: 'Lora', Georgia, serif !important;
+}
+.font-ui {
+  font-family: 'Manrope', ui-sans-serif, system-ui, sans-serif !important;
+}
+.font-tamil {
+  font-family: 'Noto Sans Tamil', sans-serif !important;
+  font-style: normal !important;
+}
+
+/* Lora weight helpers */
+.font-brand-medium  { font-family: 'Lora', Georgia, serif !important; font-weight: 500; }
+.font-brand-semi    { font-family: 'Lora', Georgia, serif !important; font-weight: 600; }
+.font-brand-bold    { font-family: 'Lora', Georgia, serif !important; font-weight: 700; }
+.font-brand-italic  { font-family: 'Lora', Georgia, serif !important; font-style: italic; }
+
+/* Manrope weight helpers */
+.font-ui-medium     { font-family: 'Manrope', sans-serif !important; font-weight: 500; }
+.font-ui-semi       { font-family: 'Manrope', sans-serif !important; font-weight: 600; }
+.font-ui-bold       { font-family: 'Manrope', sans-serif !important; font-weight: 700; }
+.font-ui-extra      { font-family: 'Manrope', sans-serif !important; font-weight: 800; }
 
 /* ── Textures ── */
 .paper-texture {
@@ -198,13 +253,13 @@ html { -webkit-tap-highlight-color: transparent; }
 
 /* ── Mobile responsive globals ── */
 @media (max-width: 640px) {
-  h1 { font-size: clamp(2rem, 10vw, 3.5rem); }
-  h2 { font-size: clamp(1.6rem, 8vw, 2.8rem); }
-  h3 { font-size: clamp(1.2rem, 6vw, 2rem); }
+  h1 { font-size: clamp(2rem, 9vw, 3rem); }
+  h2 { font-size: clamp(1.5rem, 7vw, 2.5rem); }
+  h3 { font-size: clamp(1.15rem, 5.5vw, 1.75rem); }
 
   .btn-primary, .btn-outline {
     padding: 0.75rem 1.25rem;
-    font-size: 0.75rem;
+    font-size: 0.875rem;
   }
 
   section { overflow-x: hidden; }

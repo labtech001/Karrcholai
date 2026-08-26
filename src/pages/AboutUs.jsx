@@ -571,18 +571,31 @@ const AboutUs = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 1.1, ease: 'easeOut' }}
-              className="relative w-full lg:w-5/12 min-h-[55vw] md:min-h-[50vh] lg:min-h-full lg:self-stretch overflow-hidden"
+              className="relative w-full lg:w-5/12 lg:self-stretch overflow-hidden"
             >
-              <img
-                src={founderImg}
-                alt="Saravanakumar B., founder of Karrcholai Construction"
-                className="absolute inset-0 w-full h-full object-cover object-center"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0e0e0e] via-[#0e0e0e]/20 to-transparent lg:bg-gradient-to-r lg:from-transparent lg:via-transparent lg:to-[#0e0e0e]" />
-              {/* Name badge — mobile only */}
-              <div className="absolute bottom-6 left-6 lg:hidden">
-                <h3 className="text-xl font-black text-white tracking-tight">Saravanakumar B.</h3>
-                <p className="text-secondary text-[10px] font-bold uppercase tracking-[0.3em] mt-1">Founder & Civil Engineer</p>
+              {/* Mobile: natural flow image with aspect ratio */}
+              <div className="block lg:hidden relative w-full aspect-[4/5]">
+                <img
+                  src={founderImg}
+                  alt="Saravanakumar B., founder of Karrcholai Construction"
+                  className="absolute inset-0 w-full h-full object-cover object-top"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0e0e0e] via-[#0e0e0e]/30 to-transparent" />
+                {/* Name badge — mobile only */}
+                <div className="absolute bottom-6 left-6">
+                  <h3 className="text-xl font-black text-white tracking-tight">Saravanakumar B.</h3>
+                  <p className="text-secondary text-[10px] font-bold uppercase tracking-[0.3em] mt-1">Founder & Civil Engineer</p>
+                </div>
+              </div>
+
+              {/* Desktop: absolute fill */}
+              <div className="hidden lg:block absolute inset-0">
+                <img
+                  src={founderImg}
+                  alt="Saravanakumar B., founder of Karrcholai Construction"
+                  className="w-full h-full object-cover object-center"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-[#0e0e0e]" />
               </div>
             </motion.div>
 
