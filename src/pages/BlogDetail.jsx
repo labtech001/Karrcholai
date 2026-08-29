@@ -13,7 +13,7 @@ import { useLang } from '../context/LanguageContext';
 
 /* Site palette */
 const FOREST  = '#2D4B37';
-const TERRA   = '#B85C38';
+const TERRA   = '#B85C38'; 
 const CREAM   = '#FAF9F6';
 const INK     = '#1A1A1A';
 
