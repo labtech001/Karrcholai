@@ -374,11 +374,11 @@ const Karr = () => {
 
  {/* Topical cluster: Cost Estimator → Projects → Vastu Compass → Manaiyadi → Contact */}
  <section className="py-12 px-6 bg-[#fdfbf7] border-t border-black/5">
-  <div className="max-w-7xl mx-auto">
-   <p className="text-[9px] font-black tracking-[0.5em] uppercase mb-5" style={{ color: 'rgba(0,0,0,0.25)' }}>
+  <div className="max-w-7xl mx-auto flex flex-col items-center">
+   <p className="text-[9px] font-black tracking-[0.5em] uppercase mb-5 text-center" style={{ color: 'rgba(0,0,0,0.25)' }}>
     Continue Your Journey
    </p>
-   <div className="flex flex-wrap items-center gap-3">
+   <div className="flex flex-wrap items-center justify-center gap-3">
     {[
      { to: '/projects',             emoji: '🏠', label: 'Our Portfolio',          title: 'View Projects',         bg: 'linear-gradient(135deg, #2a2a2a, #1a1a1a)',   accent: 'rgba(255,255,255,0.35)' },
      { to: '/vastu-compass',        emoji: '🧭', label: 'Free Tool',              title: 'Vastu Compass',         bg: 'linear-gradient(135deg, #1a2e1a, #0d1a0d)',   accent: '#d4af37' },

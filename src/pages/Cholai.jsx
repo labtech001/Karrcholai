@@ -396,10 +396,10 @@ const Cholai = () => {
  </section>
 
  {/* Topical cluster: Rainwater article → Cholai Sustainable → Projects → Contact */}
- <section className="py-12 px-6 bg-[#0d1a0d] border-t border-white/5">
- <div className="container mx-auto max-w-5xl">
- <p className="text-[9px] font-black tracking-[0.5em] uppercase mb-5 text-white/25">Explore This Topic</p>
- <div className="flex flex-wrap items-center gap-3">
+ <section className="py-12 px-6 bg-white border-t border-black/5">
+ <div className="container mx-auto max-w-5xl flex flex-col items-center">
+ <p className="text-[9px] font-black tracking-[0.5em] uppercase mb-5 text-center" style={{ color: 'rgba(0,0,0,0.25)' }}>Explore This Topic</p>
+ <div className="flex flex-wrap items-center justify-center gap-3">
  {[
   { to: '/karr',           emoji: '🏗️', label: 'Residential Construction', title: 'Karr Division',         bg: 'linear-gradient(135deg, #2D4B37, #1a2e1a)',   accent: '#B85C38' },
   { to: '/projects',       emoji: '🏠', label: 'Our Portfolio',              title: 'View Projects',         bg: 'linear-gradient(135deg, #2a2a2a, #1a1a1a)',   accent: 'rgba(255,255,255,0.35)' },

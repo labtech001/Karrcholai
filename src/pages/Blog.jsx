@@ -4,18 +4,28 @@ import { Link } from 'react-router-dom';
 import { FiSearch } from 'react-icons/fi';
 import Navbar from '../components/Navbar';
 import UnifiedFooter from '../components/UnifiedFooter';
-import { blogPosts, categories } from '../data/blogData.jsx';
+import { blogPosts, categories, categoriesTa, blogPostsTa } from '../data/blogData.jsx';
 import { Helmet } from 'react-helmet-async';
+import LangToggle from '../components/LangToggle.jsx';
+import { useLang } from '../context/LanguageContext';
 
 const Blog = () => {
- const [activeCategory, setActiveCategory] = useState("All Insights");
+ const [activeCategoryIdx, setActiveCategoryIdx] = useState(0); // index into categories[]
  const [searchQuery, setSearchQuery] = useState("");
+ const { lang } = useLang();
+ const isTamil = lang === 'ta';
+
+ const displayCategories = isTamil ? categoriesTa : categories;
+ const activeCategoryEn = categories[activeCategoryIdx]; // always English for filtering
 
  const filteredPosts = blogPosts.filter(post => {
- const matchesCategory = activeCategory === "All Insights" || post.category === activeCategory;
- const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
- post.category.toLowerCase().includes(searchQuery.toLowerCase());
- return matchesCategory && matchesSearch;
+   const ta = blogPostsTa[post.id];
+   const titleToSearch = isTamil && ta ? ta.title : post.title;
+   const catToSearch   = isTamil && ta ? ta.category : post.category;
+   const matchesCategory = activeCategoryEn === "All Insights" || post.category === activeCategoryEn;
+   const matchesSearch = titleToSearch.toLowerCase().includes(searchQuery.toLowerCase()) ||
+     catToSearch.toLowerCase().includes(searchQuery.toLowerCase());
+   return matchesCategory && matchesSearch;
  });
 
  return (
@@ -44,21 +54,28 @@ const Blog = () => {
  {/* Visually-hidden SEO H1 — crawlers see keyword-rich heading */}
  <h1 className="sr-only">Construction Blog — Vastu, Manaiyadi Sastram &amp; Building Insights | Karrcholai Tamil Nadu</h1>
  {/* Visual display heading */}
- <p aria-hidden="true" className="text-4xl md:text-5xl uppercase tracking-[0.2em] mb-4">The Journal</p>
- <p className="text-[10px] md:text-[11px] font-bold tracking-[0.4em] uppercase text-[#1a1a1a]/50">
- Construction tips, Vastu guides, Manaiyadi Sastram &amp; building insights from Tamil Nadu
+ <p aria-hidden="true" className="text-4xl md:text-5xl uppercase tracking-[0.2em] mb-4">
+   {isTamil ? 'இதழ்' : 'The Journal'}
  </p>
+ <p className="text-[10px] md:text-[11px] font-bold tracking-[0.4em] uppercase text-[#1a1a1a]/50 mb-6">
+   {isTamil
+     ? 'கட்டுமான குறிப்புகள், வாஸ்து வழிகாட்டிகள், மனையடி சாஸ்திரம் & தமிழ்நாட்டிலிருந்து கட்டிட நுண்ணறிவுகள்'
+     : 'Construction tips, Vastu guides, Manaiyadi Sastram & building insights from Tamil Nadu'}
+ </p>
+ <div className="flex justify-center">
+   <LangToggle />
+ </div>
  </div>
  </div>
 
  <nav className="max-w-7xl mx-auto px-6 mb-16">
  <div className="flex flex-wrap justify-center items-center gap-x-8 gap-y-4 border-b border-[#1a1a1a]/5 pb-8">
- {categories.map((category, i) => (
+ {displayCategories.map((category, i) => (
  <button 
  key={i} 
- onClick={() => setActiveCategory(category)}
+ onClick={() => setActiveCategoryIdx(i)}
  className={`text-[9px] font-black tracking-[0.3em] uppercase transition-all duration-300 ${
- activeCategory === category 
+ activeCategoryIdx === i
  ? "text-[#1a1a1a] border-b border-[#1a1a1a]" 
  : "text-[#1a1a1a]/30 hover:text-[#1a1a1a]"
  } pb-2`}
@@ -76,14 +93,23 @@ const Blog = () => {
  animate={{ opacity: 1 }}
  className="text-center py-24 md:py-32"
  >
- <p className="text-[10px] font-black tracking-[0.4em] uppercase text-[#1a1a1a]/30 mb-4">Coming Soon</p>
+ <p className="text-[10px] font-black tracking-[0.4em] uppercase text-[#1a1a1a]/30 mb-4">
+   {isTamil ? 'விரைவில் வருகிறது' : 'Coming Soon'}
+ </p>
  <p className="text-lg md:text-xl text-[#1a1a1a]/50 font-light max-w-md mx-auto leading-relaxed">
- Articles in this category are on the way. Browse Engineering Legends or check back soon.
+   {isTamil
+     ? 'இந்த பிரிவில் கட்டுரைகள் வருகின்றன. பொறியியல் மேதைகள் பிரிவை பார்க்கவும் அல்லது சீக்கிரம் திரும்பவும்.'
+     : 'Articles in this category are on the way. Browse Engineering Legends or check back soon.'}
  </p>
  </motion.div>
  ) : (
  <div className={`grid grid-cols-1 gap-x-12 gap-y-20 ${filteredPosts.length === 1 ? 'md:max-w-lg md:mx-auto' : 'md:grid-cols-2 lg:grid-cols-3'}`}>
- {filteredPosts.map((post) => (
+ {filteredPosts.map((post) => {
+   const ta = blogPostsTa[post.id];
+   const displayTitle    = isTamil && ta ? ta.title    : post.title;
+   const displayCategory = isTamil && ta ? ta.category : post.category;
+   const displayRead     = isTamil && ta ? ta.readLabel : 'Read Article';
+   return (
  <motion.article
  key={post.id}
  initial={{ opacity: 0 }}
@@ -144,31 +170,34 @@ const Blog = () => {
  
  <div className="flex flex-col items-center text-center">
  <span className="text-[#B85C38] text-[9px] font-black tracking-[0.4em] uppercase mb-4">
- {post.category}
+ {displayCategory}
  </span>
  <Link to={`/blog/${post.id}`}>
  <h3 className="text-xl md:text-2xl uppercase tracking-tight leading-tight mb-6 group-hover:opacity-60 transition-opacity">
- {post.title}
+ {displayTitle}
  </h3>
  </Link>
  <div className="w-8 h-[1px] bg-[#1a1a1a]/10 mb-6" />
  <Link to={`/blog/${post.id}`} className="text-[10px] font-black tracking-[0.4em] uppercase text-[#1a1a1a]/30 hover:text-[#1a1a1a] transition-all">
- Read Article
+ {displayRead}
  </Link>
  </div>
  </motion.article>
- ))}
+   );
+ })}
  </div>
  )}
  </div>
 
  <div className="mt-32 pt-20 border-t border-[#1a1a1a]/5 px-6">
  <div className="max-w-md mx-auto flex flex-col items-center gap-8">
- <h4 className="text-[10px] font-black tracking-[0.4em] uppercase text-[#1a1a1a]/30">Looking for something specific?</h4>
+ <h4 className="text-[10px] font-black tracking-[0.4em] uppercase text-[#1a1a1a]/30">
+   {isTamil ? 'குறிப்பிட்ட தேடலா?' : 'Looking for something specific?'}
+ </h4>
  <div className="w-full relative">
  <input 
  type="text" 
- placeholder="SEARCH THE JOURNAL" 
+ placeholder={isTamil ? 'இதழை தேடுக' : 'SEARCH THE JOURNAL'}
  value={searchQuery}
  onChange={(e) => setSearchQuery(e.target.value)}
  className="w-full bg-transparent border-b border-[#1a1a1a]/10 py-4 text-[11px] font-bold tracking-[0.2em] uppercase outline-none focus:border-[#1a1a1a] transition-all text-center"

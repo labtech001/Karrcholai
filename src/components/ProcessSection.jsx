@@ -2,182 +2,205 @@ import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { Link } from 'react-router-dom'
 
-/* ── Step data ──────────────────────────────────────────────── */
+/* ─────────────────────────────────────────────
+   DATA
+───────────────────────────────────────────── */
 const STEPS = [
   {
-    number: '1',
-    brand: 'INITIAL',
-    sub: 'WITH CLIENT',
-    color: '#8B7355',          // warm tan
-    accent: '#C9A96E',
-    icon: (
-      <svg viewBox="0 0 40 40" fill="none" className="w-8 h-8" stroke="currentColor" strokeWidth="1.5">
-        <circle cx="15" cy="12" r="5" />
-        <circle cx="28" cy="10" r="4" />
-        <path d="M4 32c0-6 5-10 11-10s11 4 11 10" strokeLinecap="round" />
-        <path d="M28 22c4 1 7 4 7 8" strokeLinecap="round" />
-      </svg>
-    ),
-    description: 'Understanding your needs, site analysis, planning, budget & timeline.',
-    image: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=600&q=80',
+    num: 1,
+    label: 'INITIAL',
+    sub: 'With Client',
+    color: '#7A5C3A',
+    highlight: '#C9A96E',
     link: '/contact',
     cta: 'Start Planning',
-  },
-  {
-    number: '2',
-    brand: 'KARR',
-    sub: 'CONSTRUCTION & PMC',
-    color: '#B85C38',
-    accent: '#E07848',
-    icon: (
-      <svg viewBox="0 0 40 40" fill="none" className="w-8 h-8" stroke="currentColor" strokeWidth="1.5">
-        <rect x="6" y="22" width="6" height="6" rx="1" />
-        <rect x="17" y="22" width="6" height="6" rx="1" />
-        <rect x="28" y="22" width="6" height="6" rx="1" />
-        <rect x="6" y="12" width="6" height="6" rx="1" />
-        <rect x="17" y="12" width="6" height="6" rx="1" />
-        <path d="M4 32h32M20 8v4" strokeLinecap="round" />
-        <path d="M12 8l8-5 8 5" strokeLinecap="round" strokeLinejoin="round" />
+    desc: 'Understanding your needs, site analysis, planning, budget & timeline.',
+    keyPoints: [],
+    icon: (c) => (
+      <svg viewBox="0 0 48 48" fill="none" stroke={c} strokeWidth="1.5"
+        strokeLinecap="round" strokeLinejoin="round" className="w-full h-full">
+        <circle cx="17" cy="14" r="6" />
+        <circle cx="33" cy="12" r="5" />
+        <path d="M4 40c0-7.2 5.8-13 13-13s13 5.8 13 13" />
+        <path d="M33 23c5.5 1.5 10 6.2 10 13" />
       </svg>
     ),
-    description: 'Strong foundation. Quality materials. Skilled execution. On-time delivery.',
-    image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80',
+  },
+  {
+    num: 2,
+    label: 'KARR',
+    sub: 'Construction & PMC',
+    color: '#8B3A1A',
+    highlight: '#C9603A',
     link: '/karr',
     cta: 'Explore KARR',
-  },
-  {
-    number: '3',
-    brand: 'CHOLAI',
-    sub: 'SUSTAINABLE & GREEN SOLUTIONS',
-    color: '#4A7C59',
-    accent: '#6BA87A',
-    icon: (
-      <svg viewBox="0 0 40 40" fill="none" className="w-8 h-8" stroke="currentColor" strokeWidth="1.5">
-        <path d="M20 6c0 0-12 8-12 18a12 12 0 0024 0C32 14 20 6 20 6z" strokeLinejoin="round" />
-        <path d="M20 20v12M14 26l6-6 6 6" strokeLinecap="round" strokeLinejoin="round" />
+    desc: 'Strong foundation. Quality materials. Skilled execution. On-time delivery.',
+    keyPoints: [],
+    icon: (c) => (
+      <svg viewBox="0 0 48 48" fill="none" stroke={c} strokeWidth="1.5"
+        strokeLinecap="round" strokeLinejoin="round" className="w-full h-full">
+        <rect x="6" y="28" width="8" height="8" rx="1" />
+        <rect x="20" y="28" width="8" height="8" rx="1" />
+        <rect x="34" y="28" width="8" height="8" rx="1" />
+        <rect x="6" y="16" width="8" height="8" rx="1" />
+        <rect x="20" y="16" width="8" height="8" rx="1" />
+        <path d="M3 38h42M24 9v7" />
+        <path d="M13 9l11-6 11 6" />
       </svg>
     ),
-    description: 'Landscape design, rainwater harvesting, solar energy & waste management.',
-    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80',
+  },
+  {
+    num: 3,
+    label: 'CHOLAI',
+    sub: 'Sustainable & Green',
+    color: '#2D5C3A',
+    highlight: '#4A8C5A',
     link: '/cholai',
-    cta: 'Explore CHOLAI',
-  },
-  {
-    number: '4',
-    brand: 'FINAL',
-    sub: 'BUILDING WITH CLIENT',
-    color: '#C9A020',
-    accent: '#E8C040',
-    icon: (
-      <svg viewBox="0 0 40 40" fill="none" className="w-8 h-8" stroke="currentColor" strokeWidth="1.5">
-        <path d="M6 34V18l14-12 14 12v16" strokeLinecap="round" strokeLinejoin="round" />
-        <rect x="15" y="24" width="10" height="10" rx="1" />
-        <path d="M12 18v-2M28 18v-2" strokeLinecap="round" />
+    cta: 'Explore Cholai',
+    desc: 'Landscape design, rainwater harvesting, solar energy & waste management.',
+    keyPoints: [],
+    icon: (c) => (
+      <svg viewBox="0 0 48 48" fill="none" stroke={c} strokeWidth="1.5"
+        strokeLinecap="round" strokeLinejoin="round" className="w-full h-full">
+        <path d="M24 6c0 0-15 9-15 23a15 15 0 0030 0C39 15 24 6 24 6z" />
+        <path d="M24 22v14" />
+        <path d="M16 28l8-8 8 8" />
+        <path d="M17 18c2-3 5-5 7-5" />
       </svg>
     ),
-    description: 'A quality home delivered with trust, care & long-term support.',
-    image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80',
+  },
+  {
+    num: 4,
+    label: 'FINAL',
+    sub: 'Building with Client',
+    color: '#5A4010',
+    highlight: '#C9920A',
     link: '/projects',
     cta: 'See Our Work',
+    desc: 'A quality home delivered with trust, care & long-term support.',
+    keyPoints: [],
+    icon: (c) => (
+      <svg viewBox="0 0 48 48" fill="none" stroke={c} strokeWidth="1.5"
+        strokeLinecap="round" strokeLinejoin="round" className="w-full h-full">
+        <path d="M6 42V22L24 7l18 15v20" />
+        <rect x="17" y="29" width="14" height="13" rx="1" />
+        <path d="M14 22v-3M34 22v-3" />
+      </svg>
+    ),
   },
 ]
 
-/* ── Step Card ──────────────────────────────────────────────── */
-function StepCard({ step, index }) {
-  const ref = useRef(null)
-  const inView = useInView(ref, { once: true, margin: '-80px' })
+/* ─────────────────────────────────────────────
+   ARROW CONNECTOR
+───────────────────────────────────────────── */
+function Arrow({ color }) {
+  return (
+    <div className="flex items-center flex-1 mx-1">
+      <div className="flex-1 h-px" style={{ background: color, opacity: 0.45 }} />
+      <svg viewBox="0 0 14 14" fill="none" className="w-3.5 h-3.5 shrink-0" style={{ color }}>
+        <path d="M1 7h10M8 3.5L11.5 7 8 10.5"
+          stroke="currentColor" strokeWidth="1.6"
+          strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    </div>
+  )
+}
+
+/* ─────────────────────────────────────────────
+   SINGLE STEP CARD
+───────────────────────────────────────────── */
+function StepCard({ step, index, total, inView }) {
+  const isLast = index === total - 1
 
   return (
     <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 32 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, delay: index * 0.15, ease: 'easeOut' }}
-      className="relative flex flex-col group overflow-hidden rounded-none"
-      style={{ flex: '1 1 0' }}
+      transition={{ duration: 0.7, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
+      className="flex-1 flex flex-col"
+      style={{ borderRight: !isLast ? '1px solid rgba(139,115,85,0.18)' : 'none' }}
     >
-      {/* Photo */}
-      <div className="relative h-[320px] sm:h-[380px] lg:h-[420px] overflow-hidden">
-        <img
-          src={step.image}
-          alt={`${step.brand} – ${step.sub}`}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-          loading="lazy"
-        />
-        {/* Gradient overlay — stronger at top for text, lighter at bottom */}
+      {/* ── TOP BLOCK ── */}
+      <div className="flex flex-col items-center text-center px-6 pt-10 pb-8">
+        {/* Icon circle */}
         <div
-          className="absolute inset-0"
-          style={{
-            background: `linear-gradient(to bottom, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.15) 50%, rgba(0,0,0,0.55) 100%)`,
-          }}
-        />
-
-        {/* Top: Icon + Brand name */}
-        <div className="absolute top-0 left-0 right-0 p-5 flex flex-col items-center text-center z-10">
-          <div style={{ color: step.accent }} className="mb-2 drop-shadow-lg">
-            {step.icon}
-          </div>
-          <h3
-            className="text-white font-black text-xl sm:text-2xl tracking-widest leading-none"
-            style={{ textShadow: '0 2px 8px rgba(0,0,0,0.7)' }}
-          >
-            {step.brand}
-          </h3>
-          <p
-            className="text-[10px] sm:text-xs font-semibold tracking-[0.2em] uppercase mt-0.5"
-            style={{ color: step.accent }}
-          >
-            {step.sub}
-          </p>
+          className="w-16 h-16 rounded-full flex items-center justify-center mb-5 transition-transform duration-500 group-hover:scale-110"
+          style={{ background: `${step.highlight}18`, padding: 14 }}
+        >
+          {step.icon(step.color)}
         </div>
 
-        {/* Divider line between panels (not on last) */}
-        {index < STEPS.length - 1 && (
-          <div className="hidden lg:block absolute right-0 top-0 bottom-0 w-px bg-white/15 z-20" />
-        )}
-      </div>
+        {/* Phase label */}
+        <h3
+          className="font-black text-2xl sm:text-[26px] tracking-[0.12em] leading-none"
+          style={{ color: step.color }}
+        >
+          {step.label}
+        </h3>
 
-      {/* Bottom: Step number + description + CTA */}
-      <div
-        className="flex flex-col flex-1 px-5 pt-5 pb-6"
-        style={{ background: '#F8F5EF' }}
-      >
-        {/* Step number badge + arrow connector */}
-        <div className="flex items-center gap-3 mb-3">
-          <div
-            className="w-8 h-8 rounded-full flex items-center justify-center text-white font-black text-sm shrink-0 shadow-md"
-            style={{ background: step.color }}
-          >
-            {step.number}
-          </div>
-          {index < STEPS.length - 1 && (
-            <div className="flex-1 flex items-center gap-1">
-              <div className="flex-1 h-px" style={{ background: step.accent, opacity: 0.5 }} />
-              <svg
-                className="w-3 h-3 shrink-0"
-                viewBox="0 0 12 12"
-                fill="none"
-                style={{ color: step.accent }}
-              >
-                <path d="M1 6h9M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </div>
-          )}
-        </div>
-
-        <p className="text-[#4A3728] text-sm leading-relaxed flex-1">
-          {step.description}
+        {/* Sub label */}
+        <p
+          className="text-[11px] font-semibold tracking-[0.22em] uppercase mt-2"
+          style={{ color: step.color, opacity: 0.6 }}
+        >
+          {step.sub}
         </p>
 
+        {/* Thin decorative rule */}
+        <div
+          className="w-10 h-px mt-5"
+          style={{ background: step.highlight, opacity: 0.45 }}
+        />
+      </div>
+
+      {/* ── DIVIDER LINE (full width) ── */}
+      <div style={{ height: 1, background: 'rgba(139,115,85,0.12)' }} />
+
+      {/* ── BOTTOM BLOCK ── */}
+      <div className="flex flex-col items-center text-center px-6 pt-7 pb-10 flex-1">
+
+        {/* Step number row with connectors */}
+        <div className="flex items-center w-full mb-6">
+          {index > 0
+            ? <div className="flex-1 h-px opacity-35"
+                style={{ background: STEPS[index - 1].highlight }} />
+            : <div className="flex-1" />
+          }
+
+          <div
+            className="w-11 h-11 rounded-full flex items-center justify-center font-black
+              text-white text-base shrink-0 mx-3 shadow-lg"
+            style={{ background: `linear-gradient(135deg, ${step.color}, ${step.highlight})` }}
+          >
+            {step.num}
+          </div>
+
+          {!isLast
+            ? <Arrow color={step.highlight} />
+            : <div className="flex-1" />
+          }
+        </div>
+
+        {/* Description */}
+        <p
+          className="text-[13.5px] leading-[1.75] font-light"
+          style={{ color: '#3D2E1A', maxWidth: 190 }}
+        >
+          {step.desc}
+        </p>
+
+        {/* CTA */}
         <Link
           to={step.link}
-          className="mt-4 inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase transition-all duration-300"
+          className="mt-6 inline-flex items-center gap-2 text-[10px] font-black
+            tracking-[0.28em] uppercase transition-opacity duration-200 hover:opacity-50"
           style={{ color: step.color }}
-          aria-label={`${step.cta} – ${step.brand}`}
         >
           {step.cta}
-          <svg className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 16 16" fill="none">
-            <path d="M1 8h12M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          <svg viewBox="0 0 14 14" fill="none" className="w-3 h-3">
+            <path d="M1 7h10M8 3.5L11.5 7 8 10.5"
+              stroke="currentColor" strokeWidth="1.8"
+              strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </Link>
       </div>
@@ -185,73 +208,112 @@ function StepCard({ step, index }) {
   )
 }
 
-/* ── Main section ───────────────────────────────────────────── */
+/* ─────────────────────────────────────────────
+   SECTION HEADER
+───────────────────────────────────────────── */
+function SectionHeader({ inView }) {
+  return (
+    <div className="w-full px-6 md:px-16 pt-16 pb-2">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+        <div>
+          <motion.div
+            initial={{ opacity: 0, x: -16 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            className="flex items-center gap-3 mb-3"
+          >
+            <span className="w-10 h-px" style={{ background: '#B85C38' }} />
+            <span className="text-[10px] font-black tracking-[0.42em] uppercase"
+              style={{ color: '#B85C38' }}>
+              How We Work
+            </span>
+          </motion.div>
+
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.75, delay: 0.08 }}
+            className="text-4xl sm:text-5xl md:text-6xl font-black leading-[0.92] tracking-tight"
+            style={{ color: '#1a1a1a' }}
+          >
+            From{' '}
+            <span style={{ color: '#B85C38' }}>Vision</span>
+            <br />
+            to{' '}
+            <span style={{ color: '#3D6B47' }}>Home.</span>
+          </motion.h2>
+        </div>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.7, delay: 0.2 }}
+          className="text-sm font-light leading-relaxed max-w-xs md:text-right"
+          style={{ color: '#6B5040' }}
+        >
+          Four deliberate steps — every phase guided by expertise, transparency
+          and genuine care for the families we build for.
+        </motion.p>
+      </div>
+    </div>
+  )
+}
+
+/* ─────────────────────────────────────────────
+   MAIN EXPORT
+───────────────────────────────────────────── */
 export default function ProcessSection() {
-  const taglineRef = useRef(null)
-  const taglineInView = useInView(taglineRef, { once: true, margin: '-60px' })
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: true, margin: '-60px' })
 
   return (
     <section
+      ref={ref}
       aria-label="Our Building Process"
       className="w-full overflow-hidden"
-      style={{ background: '#F8F5EF' }}
+      style={{ background: '#F5F0E8' }}
     >
-      {/* Section header */}
-      <div className="max-w-7xl mx-auto px-6 sm:px-10 pt-16 pb-8 text-center">
-        <motion.span
-          initial={{ opacity: 0, y: -10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-[10px] font-bold tracking-[0.3em] uppercase"
-          style={{ color: '#B85C38' }}
-        >
-          How We Work
-        </motion.span>
-        <motion.h2
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.1 }}
-          className="mt-2 text-3xl sm:text-4xl font-black text-[#1a1a1a] tracking-tight leading-tight"
-        >
-          Your Journey From <span style={{ color: '#B85C38' }}>Vision</span> to <span style={{ color: '#4A7C59' }}>Home</span>
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className="mt-3 text-sm text-[#6B5744] max-w-xl mx-auto leading-relaxed"
-        >
-          From first consultation to handover — every step guided by expertise, transparency, and care.
-        </motion.p>
+      {/* Header */}
+      <SectionHeader inView={inView} />
+
+      {/* Thin rule */}
+      <div className="max-w-7xl mx-auto px-6 md:px-16 mt-10 mb-0">
+        <div style={{ height: 1, background: 'rgba(139,115,85,0.15)' }} />
       </div>
 
-      {/* Cards grid — 4 columns on lg, 2 on md, 1 on sm */}
-      <div className="max-w-7xl mx-auto px-6 sm:px-10 pb-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 border border-[#E8E0D4] overflow-hidden rounded-lg shadow-xl">
-          {STEPS.map((step, i) => (
-            <StepCard key={step.number} step={step} index={i} />
-          ))}
-        </div>
+      {/* ── 4 Panels ── */}
+      <div className="flex flex-col sm:flex-row w-full border-t-0">
+        {STEPS.map((step, i) => (
+          <StepCard
+            key={step.num}
+            step={step}
+            index={i}
+            total={STEPS.length}
+            inView={inView}
+          />
+        ))}
       </div>
 
-      {/* Bottom tagline */}
-      <div
-        ref={taglineRef}
-        className="border-t border-[#DDD5C8] py-5 px-6 text-center"
-        style={{ background: '#F0EBE1' }}
+      {/* Bottom full-width rule */}
+      <div style={{ height: 1, background: 'rgba(139,115,85,0.15)' }} />
+
+      {/* ── Tagline ── */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={inView ? { opacity: 1 } : {}}
+        transition={{ duration: 1, delay: 0.5 }}
+        className="flex items-center justify-center gap-5 py-5"
+        style={{ background: '#EDE8DC' }}
       >
-        <motion.p
-          initial={{ opacity: 0, letterSpacing: '0.1em' }}
-          animate={taglineInView ? { opacity: 1, letterSpacing: '0.35em' } : {}}
-          transition={{ duration: 1, ease: 'easeOut' }}
-          className="text-[11px] sm:text-xs font-semibold text-[#8B7355] uppercase"
+        <div className="h-px w-16 sm:w-28" style={{ background: '#8B7355' }} />
+        <p
+          className="text-[10px] sm:text-[11px] font-semibold tracking-[0.35em] uppercase text-center"
+          style={{ color: '#8B7355' }}
         >
-          From Stone to Oasis —&nbsp; We Build Better Living
-        </motion.p>
-      </div>
+          From Stone to Oasis — We Build Better Living
+        </p>
+        <div className="h-px w-16 sm:w-28" style={{ background: '#8B7355' }} />
+      </motion.div>
     </section>
   )
 }

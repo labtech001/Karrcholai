@@ -6,6 +6,7 @@ import LogoVideoModal from './components/LogoVideoModal'
 import Preloader from './components/Preloader'
 import { usePageTracking } from './hooks/usePageTracking'
 import { Navigate } from 'react-router-dom'
+import { LanguageProvider } from './context/LanguageContext'
 
 export const LogoVideoContext = createContext({ openLogoVideo: () => {} })
 
@@ -94,12 +95,14 @@ function App() {
   }
 
   return (
-    <LogoVideoContext.Provider value={{ openLogoVideo: () => setVideoOpen(true) }}>
-      {!preloaderDone && <Preloader onComplete={handlePreloaderComplete} />}
-      <Router>
-        <AppContent videoOpen={videoOpen} setVideoOpen={setVideoOpen} />
-      </Router>
-    </LogoVideoContext.Provider>
+    <LanguageProvider>
+      <LogoVideoContext.Provider value={{ openLogoVideo: () => setVideoOpen(true) }}>
+        {!preloaderDone && <Preloader onComplete={handlePreloaderComplete} />}
+        <Router>
+          <AppContent videoOpen={videoOpen} setVideoOpen={setVideoOpen} />
+        </Router>
+      </LogoVideoContext.Provider>
+    </LanguageProvider>
   )
 }
 
