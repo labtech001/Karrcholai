@@ -81,7 +81,7 @@ const PROJECTS = [
     // 7. Materials
     materials: [
       { icon: FiLayers, name: 'Wire Cut Bricks',   desc: 'Machine-made wire cut bricks for uniform size, sharp edges and superior strength' },
-      { icon: FiHome,   name: 'Concrete — M20',    desc: 'M20 grade concrete, manually mixed on-site for controlled quality' },
+      { icon: FiHome,   name: 'Concrete — M20',    desc: 'M20 grade concrete, manually mixed on-site for controlled consistency and strength' },
       { icon: FiTool,   name: 'TMT Bar — 550 SD',  desc: 'TATA Brand Fe-550 SD TMT reinforcement bars for high ductility and seismic resistance' },
       { icon: FiZap,    name: 'Cement — Dalmia',   desc: 'Dalmia brand OPC/PPC cement for consistent strength and workability' },
       { icon: FiDroplet,name: 'Rendercon Chemical', desc: 'Rendercon bonding chemical applied in plaster mix for crack-free, durable finish' },
@@ -139,7 +139,7 @@ const PROJECTS = [
 
     // 12. Client Testimonial
     testimonial: {
-      quote: 'We entrusted KARRCHOLAI with our home. The team\'s dedication to quality craftsmanship and attention to detail truly shines through in every corner. Thank you for turning our house into a haven!',
+      quote: 'We entrusted KARRCHOLAI with our home. The team\'s dedication and attention to detail truly shines through in every corner. Thank you for turning our house into a haven!',
       author: 'Homeowner',
       location: 'Karur, Tamil Nadu',
       rating: 5,
@@ -299,7 +299,7 @@ export default function Projects() {
               Projects.
             </h1>
             <p className="text-white/60 text-sm md:text-base max-w-md font-light mx-auto">
-              Residential construction across Tamil Nadu — built with structure, clarity, and care.
+              Residential projects across Tamil Nadu — built with structure, clarity, and care.
             </p>
           </motion.div>
         </div>

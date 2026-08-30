@@ -3,10 +3,10 @@ import { useRef } from 'react'
 import { FiBarChart2, FiShield, FiUsers, FiHome } from 'react-icons/fi'
 
 const reasons = [
-  { icon: FiHome,     title: 'Vastu-Aligned Design',         desc: 'Every home planned with traditional Vastu principles for harmony and well-being.' },
+  { icon: FiHome,     title: 'Vastu-Aligned Design',         desc: 'Every residence planned with traditional Vastu principles for harmony and well-being.' },
   { icon: FiBarChart2,title: 'Professional PMC',             desc: 'Structured management for precision builds.' },
   { icon: FiShield,   title: 'Transparent Pricing',          desc: 'Complete financial clarity at every stage.' },
-  { icon: FiUsers,    title: 'Quality Workmanship',          desc: 'Premium materials and skilled craftsmen.' },
+  { icon: FiUsers,    title: 'Skilled Workmanship',          desc: 'Specified materials and craftsmen with verifiable site experience.' },
 ]
 
 const WhyChooseUs = () => {
@@ -48,7 +48,7 @@ const WhyChooseUs = () => {
               transition={{ delay: 0.3 }}
               className="text-dark/60 text-xl font-light leading-relaxed mb-12 max-w-sm"
             >
-              We combine architectural discipline with a relentless focus on quality and transparency.
+              We combine architectural discipline with a relentless focus on workmanship standards and transparency.
             </motion.p>
 
             {/* Large background text */}

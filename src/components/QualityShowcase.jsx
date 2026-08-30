@@ -47,7 +47,7 @@ const QualityShowcase = () => {
             className="hidden md:block max-w-xs text-right"
           >
             <p className="text-dark/40 text-[10px] leading-relaxed uppercase tracking-widest font-medium">
-              A deep dive into our construction standards, from structural foundation to the final architectural finish.
+              A deep dive into our site standards — from structural foundation to the final architectural finish.
             </p>
           </motion.div>
         </div>

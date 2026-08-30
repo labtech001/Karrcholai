@@ -57,14 +57,43 @@ const WelcomeSection = () => {
                 <span className="w-12 h-[2px] bg-secondary" />
                 <span className="text-secondary font-black text-[11px] tracking-[0.4em] uppercase">The Karrcholai Story</span>
               </div>
+
+              {/* கற்சோலை — Tamil brand word */}
+              <div className="mb-4 pt-2">
+                <motion.span
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={inView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+                  className="block font-black"
+                  style={{
+                    fontFamily: '"Noto Serif Tamil", "Latha", "Tamil MN", serif',
+                    fontSize: 'clamp(2.2rem, 5.5vw, 4.5rem)',
+                    color: '#B85C38',
+                    letterSpacing: '0.03em',
+                    lineHeight: 1.4,
+                  }}
+                >
+                  கற்சோலை
+                </motion.span>
+                <motion.span
+                  initial={{ scaleX: 0 }}
+                  animate={inView ? { scaleX: 1 } : {}}
+                  transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                  className="block h-[2px] origin-left rounded-full mt-1"
+                  style={{
+                    width: '120px',
+                    background: 'linear-gradient(90deg, #B85C38, transparent)',
+                  }}
+                />
+              </div>
               
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-black text-dark leading-[0.95] mb-6 md:mb-8">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-dark leading-[0.95] mb-6 md:mb-8">
                 Crafting <span className="text-primary">Exceptional</span> <br/>
                 Living <span className="text-primary/40">Spaces.</span>
               </h2>
 
               <p className="text-dark/70 text-base md:text-lg font-light leading-relaxed max-w-xl">
-                Karrcholai Construction is a residential construction and Project Management Consultancy founded by a Civil Engineer with 12+ years of professional experience in residential construction. Since establishing Karrcholai, we have focused on delivering quality homes through systematic project planning, transparent execution and responsible construction practices.
+                Karrcholai Construction is a residential construction and Project Management Consultancy founded by a Civil Engineer with 12+ years of professional experience in residential construction. Since establishing Karrcholai, we have focused on delivering well-built residences through systematic project planning, transparent site execution and responsible building practices.
               </p>
             </motion.div>
 

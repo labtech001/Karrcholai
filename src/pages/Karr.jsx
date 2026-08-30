@@ -62,20 +62,20 @@ const Karr = () => {
 
  const residentialServices = [
  { title: "Turnkey Home Construction", icon: FiHome },
- { title: "Structural Construction Work", icon: FiLayout },
+ { title: "Structural Site Work", icon: FiLayout },
  { title: "Finishing Works", icon: FiEdit3 },
  { title: "Renovation & House Extensions", icon: FiRefreshCw },
  { title: "Site Execution & Supervision", icon: FiUserCheck },
- { title: "Quality Control & Inspection", icon: FiCheckCircle }
+ { title: "On-Site Inspection & Sign-Off", icon: FiCheckCircle }
  ];
 
  const pmcServices = [
  { title: "Project Planning & Scheduling", icon: FiLayout },
- { title: "Construction Cost Estimation", icon: FiDollarSign },
+ { title: "Budget & Cost Estimation", icon: FiDollarSign },
  { title: "Contractor Coordination", icon: FiUserCheck },
  { title: "Material Planning & Procurement", icon: FiBriefcase },
  { title: "Site Supervision & Inspection", icon: FiSearch },
- { title: "Quality Control", icon: FiCheckCircle },
+ { title: "Workmanship Verification", icon: FiCheckCircle },
  { title: "Progress Monitoring & Reporting", icon: FiEdit3 }
  ];
 
@@ -160,7 +160,7 @@ const Karr = () => {
  <span className="text-[#B85C38] font-bold tracking-[0.6em] uppercase text-xs md:text-sm mb-4 block">Residential Construction</span>
  <h2 className="text-4xl md:text-6xl font-bold leading-none tracking-tight">
  Building Strong <br />
- <span className="text-[#1a1a1a]/20">Residential Homes.</span>
+ <span className="text-[#1a1a1a]/20">Independent Houses.</span>
  </h2>
  </motion.div>
  <motion.p 
@@ -168,7 +168,7 @@ const Karr = () => {
  transition={{ delay: 0.2 }}
  className="text-[#1a1a1a]/50 text-base max-w-xs font-light border-l border-[#B85C38]/30 pl-8"
  >
- We handle complete construction for independent houses and villas — from foundation to finishing. Every project is managed with verified structural work, quality materials, and consistent on-site supervision.
+ We handle complete site execution for independent houses and villas — from foundation to finishing. Every project is managed with verified structural work, specified materials, and consistent on-site supervision.
  </motion.p>
  </div>
 
@@ -213,14 +213,14 @@ const Karr = () => {
  <span className="text-white/30">Management.</span>
  </h2>
  <p className="text-white/40 text-lg font-light leading-relaxed mb-12 max-w-lg">
- Our Project Management Consultancy (PMC) provides expert oversight for homeowners who need structured planning, cost control, and quality supervision — without managing the build day to day themselves.
+ Our Project Management Consultancy (PMC) provides expert oversight for homeowners who need structured planning, cost control, and independent workmanship oversight — without managing the build day to day themselves.
  </p>
  
  <div className="space-y-6">
  {[
  "Structured timelines and progress tracking",
  "Transparent cost monitoring",
- "Rigorous quality supervision"
+ "Independent site supervision"
  ].map((text, i) => (
  <div key={i} className="flex items-center gap-4 text-white/80 group">
  <div className="w-2 h-2 rounded-full bg-[#B85C38] group-hover:scale-150 transition-transform" />
@@ -285,7 +285,7 @@ const Karr = () => {
  <span className="text-[#1a1a1a]/20">Remodelling Services.</span>
  </h2>
  <p className="text-[#1a1a1a]/50 text-lg font-light leading-relaxed mb-12">
- We upgrade and extend existing homes — improving layout, repairing structure, and updating interiors while maintaining the integrity of the building.
+ We upgrade and extend existing properties — improving layout, repairing structure, and updating interiors while maintaining the integrity of the building.
  </p>
  
  <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
@@ -333,13 +333,13 @@ const Karr = () => {
  <div className="absolute top-10 right-10 opacity-[0.05] group-hover:opacity-[0.1] transition-opacity">
  <FiDollarSign size={120} />
  </div>
- <h3 className="text-2xl font-bold mb-6">Construction Cost Estimation</h3>
+ <h3 className="text-2xl font-bold mb-6">Budget & Cost Estimation</h3>
  <p className="text-[#1a1a1a]/50 font-light leading-relaxed mb-10 max-w-sm">
- Accurate estimation is the foundation of every successful build. We prepare detailed cost breakdowns so you can plan your investment with confidence before construction begins.
+ Accurate estimation is the foundation of every successful build. We prepare detailed cost breakdowns — itemised by work package — so you can plan your investment with confidence before site work begins.
  </p>
  <ul className="space-y-6">
  {[
- "Itemised construction cost estimation",
+ "Itemised cost breakdown by work package",
  "Project planning and scheduling",
  "Material quantity assessment",
  "Budget planning and cost control"
@@ -406,28 +406,28 @@ const Karr = () => {
  <FAQSection
   dark={false}
   accent="#B85C38"
-  subtitle="PMC & Construction FAQ"
+  subtitle="PMC & Building FAQ"
   title="Your Questions About Karr Division, Answered"
   faqs={[
    {
     q: 'What is PMC in construction?',
-    a: 'PMC stands for Project Management Consultancy. Karrcholai\'s PMC service means we act as your professional on-site representative — managing contractors, tracking budgets, supervising quality, handling procurement, and delivering progress reports — so you get a well-built home without having to manage the construction yourself.',
+    a: 'PMC stands for Project Management Consultancy. Karrcholai\'s PMC service means we act as your professional on-site representative — managing contractors, tracking budgets, verifying workmanship against drawings, handling procurement, and delivering progress reports — so you get a well-built residence without having to run the site yourself.',
    },
    {
     q: 'What is the difference between PMC and a regular contractor?',
-    a: 'A contractor builds the structure. A PMC like Karrcholai manages the entire project on your behalf — vetting and coordinating contractors, enforcing quality standards, preventing cost overruns, and ensuring the project complies with approved drawings. We work for you, not the contractor.',
+    a: 'A contractor builds the structure. A PMC like Karrcholai manages the entire project on your behalf — vetting and coordinating contractors, enforcing specification compliance, preventing cost overruns, and ensuring the project adheres to approved drawings. We work for you, not the contractor.',
    },
    {
-    q: 'Do you provide house construction from foundation to handover?',
+    q: 'Do you provide house building from foundation to handover?',
     a: 'Yes. Our residential construction service covers every phase — foundation and structural work, brickwork and plastering, flooring, electrical and plumbing, painting, and interior finishing — right through to key handover with full documentation.',
    },
    {
-    q: 'How do you ensure quality during construction?',
-    a: 'We assign a dedicated site manager to every project. Quality inspections are conducted at every milestone — foundation, structure, MEP rough-in, finishing, and handover. We use standardised checklists and provide photo progress reports throughout.',
+    q: 'How do you maintain workmanship standards during the build?',
+    a: 'We assign a dedicated site manager to every project. Inspections against drawings and specifications are conducted at every milestone — foundation, structure, MEP rough-in, finishing, and handover. We use standardised checklists and provide photo progress reports throughout.',
    },
    {
     q: 'Can I hire Karrcholai for PMC if I already have a contractor?',
-    a: 'Yes. You can engage us purely in a PMC capacity — we\'ll audit the existing contractor\'s work, track quality and budgets, and act as your independent oversight team. This is especially useful for clients who live far from the construction site.',
+    a: 'Yes. You can engage us purely in a PMC capacity — we\'ll audit the existing contractor\'s work against drawings and specifications, track costs, and act as your independent oversight team. This is especially useful for clients who live far from the site.',
    },
    {
     q: 'Which areas of Tamil Nadu do you serve?',

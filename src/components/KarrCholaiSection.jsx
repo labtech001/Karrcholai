@@ -7,10 +7,10 @@ import cholaiImg from '../../assets/pic5.png'
 
 const karrFeatures = [
   'Turnkey House Construction',
-  'Structural Construction Work',
+  'Structural Site Work',
   'Renovation & House Extensions',
   'Site Execution & Supervision',
-  'Quality Control & Inspection',
+  'On-Site Inspection & Sign-Off',
 ]
 
 const cholaiFeatures = [
@@ -152,7 +152,7 @@ const KarrCholaiSection = () => {
                 {hovered === 'karr' && (
                   <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.5 }} className="overflow-hidden mt-4">
                     <p className="text-white/80 max-w-lg text-base leading-relaxed mb-6 font-light">
-                      Forging structural integrity and architectural brilliance. We deliver turnkey construction solutions built to stand the test of time.
+                      Forging structural integrity and architectural brilliance. We deliver turnkey building solutions built to stand the test of time.
                     </p>
                     <div className="grid grid-cols-2 gap-x-8 gap-y-2 mb-8 max-w-2xl">
                       {karrFeatures.map((f, i) => (

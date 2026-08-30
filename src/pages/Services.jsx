@@ -31,12 +31,12 @@ const SERVICES = [
     shortLabel: 'Residential',
     tag: 'Build Your Dream',
     tagline: 'Custom homes built with precision, heritage & heart.',
-    body: "From independent houses to premium villas, we handle every phase — foundation to finishing — with Vastu-compliant layouts, premium materials, and craftsmanship rooted in Tamil Nadu's architectural tradition.",
+    body: "From independent houses to premium villas, we handle every phase — foundation to finishing — with Vastu-compliant layouts, specified materials, and craftsmanship rooted in Tamil Nadu's architectural tradition.",
     img: imgRes,
     accent: '#C17B3E',
     accentDark: '#8B5520',
     icon: BsHouseDoor,
-    features: ['Custom Home Design & Build', 'Luxury Villa Construction', 'Vastu-Compliant Layouts', 'Premium Material Sourcing', 'Structural Integrity Guarantee', 'Interior Finishing & Handover'],
+    features: ['Custom House Design & Build', 'Luxury Villa Construction', 'Vastu-Compliant Layouts', 'Specified Material Sourcing', 'Structural Integrity Guarantee', 'Interior Finishing & Handover'],
     subs: [
       { icon: FaLeaf,      label: 'Landscape Development', img: imgLand,  desc: 'Lawn planning, garden beds, hardscaping — outdoor spaces designed to grow with your home.' },
       { icon: FaCloudRain, label: 'Rainwater Harvesting',  img: imgRain,  desc: 'Rooftop collection, storage tanks, recharge pits — water security built in from day one.' },
@@ -53,12 +53,12 @@ const SERVICES = [
     shortLabel: 'PMC',
     tag: 'Project Management',
     tagline: 'Expert oversight from groundbreaking to key handover.',
-    body: 'Our Project Management Consultancy covers the full construction lifecycle — planning, procurement, supervision, and handover. We act as your trusted on-site representative so your project finishes on time, on budget, with zero compromise.',
+    body: 'Our Project Management Consultancy covers the full build lifecycle — planning, procurement, supervision, and handover. We act as your trusted on-site representative so your project finishes on time, on budget, with no surprises.',
     img: imgPmc,
     accent: '#4A7C6F',
     accentDark: '#2D5A4F',
     icon: MdOutlineEngineering,
-    features: ['Budget & Timeline Management', 'Contractor Coordination', 'Quality Assurance', 'Risk Mitigation', 'Progress Reporting', 'Handover & Documentation'],
+    features: ['Budget & Timeline Management', 'Contractor Coordination', 'Specification Compliance', 'Risk Mitigation', 'Progress Reporting', 'Handover & Documentation'],
     subs: [
       { icon: FaLeaf,      label: 'Landscape Development',  img: imgLand,  desc: 'Native planting, green area planning, and garden layout coordinated within PMC.' },
       { icon: FaCloudRain, label: 'Rainwater Harvesting',   img: imgRain,  desc: 'Site-specific collection and recharge systems integrated from day one.' },
@@ -109,7 +109,7 @@ const SERVICES = [
       { icon: FaLeaf,       label: 'Native Landscaping',      img: imgLand,  desc: 'Drought-resistant plants, permeable surfaces, and biodiversity-led garden design.' },
       { icon: FaRecycle,    label: 'Waste Zero Systems',      img: null,     desc: 'Composting units, biogas connections, and construction debris management plans.' },
       { icon: FaLightbulb,  label: 'Energy Efficient Design', img: imgLight, desc: 'Passive cooling, cross-ventilation, insulation, and LED systems cut lifetime energy costs.' },
-      { icon: FaTh,         label: 'Green Materials',         img: imgFloor, desc: 'Locally sourced stone, lime plaster, recycled aggregates — lower carbon, higher quality.' },
+      { icon: FaTh,         label: 'Green Materials',         img: imgFloor, desc: 'Locally sourced stone, lime plaster, recycled aggregates — lower carbon, durable by design.' },
     ],
   },
 ]
@@ -450,7 +450,7 @@ export default function Services() {
                   </div>
                   <motion.p {...fadeUp} transition={{ duration: 0.65, delay: 0.14 }}
                     className="text-[13px] text-black/38 font-light leading-relaxed max-w-[38ch]">
-                    All managed in-house — planned, executed, and quality-checked by our team.
+                    All managed in-house — planned, executed, and inspected by our own team.
                   </motion.p>
                 </div>
 
@@ -638,8 +638,8 @@ export default function Services() {
         subtitle="Common Questions"
         title="Everything You Need to Know About Our Services"
         faqs={[
-          { q: 'Do you provide house construction from foundation to handover?', a: 'Yes. Karrcholai handles the complete construction lifecycle — from site analysis and foundation work through structural build, finishing, and final key handover. You get one team, one contract, and a single point of contact throughout.' },
-          { q: 'What is PMC in construction?', a: 'PMC stands for Project Management Consultancy. We act as your on-site representative — managing contractors, budgets, timelines, material procurement, quality inspections, and documentation.' },
+          { q: 'Do you provide house construction from foundation to handover?', a: 'Yes. Karrcholai handles the complete build lifecycle — from site analysis and foundation work through structural build, finishing, and final key handover. You get one team, one contract, and a single point of contact throughout.' },
+          { q: 'What is PMC in construction?', a: 'PMC stands for Project Management Consultancy. We act as your on-site representative — managing contractors, budgets, timelines, material procurement, workmanship inspections, and documentation.' },
           { q: 'What does your renovation service cover?', a: 'Our renovation service covers structural upgrades, interior remodelling, Vastu realignment, kitchen and bathroom renovation, flooring replacement, facade work, and phase-wise expansion.' },
           { q: 'Are sustainable features like solar and rainwater harvesting included?', a: 'Sustainability is built into every Karrcholai project by default. Solar, rainwater, smart lighting, waste segregation, and native landscaping are planned at design stage — not retrofitted as extras.' },
           { q: 'Which areas of Tamil Nadu do you serve?', a: 'We serve Karur, Chennai, Coimbatore, Madurai, Trichy, Erode, and surrounding areas across Tamil Nadu.' },

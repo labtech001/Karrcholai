@@ -71,7 +71,7 @@ const HeroSection = () => {
   transition={{ duration: 0.8, delay: 0.7 }}
   className="text-white/60 text-sm sm:text-base font-light leading-relaxed max-w-xl mt-5"
  >
-  Karrcholai Construction is a Tamil Nadu-based residential construction and Project Management Consultancy firm focused on quality construction, transparent project execution and responsible living.
+  Karrcholai Construction is a Tamil Nadu-based residential construction and Project Management Consultancy — delivering transparent site execution, disciplined planning, and responsible building practices.
  </motion.p>
 
  {/* CTA Buttons */}
@@ -89,7 +89,7 @@ const HeroSection = () => {
  <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out pointer-events-none" />
  </Link>
  <Link to="/projects" className="group bg-white/5 backdrop-blur-md border border-white/20 text-white text-[10px] sm:text-xs font-bold tracking-[0.15em] uppercase px-6 sm:px-8 py-3.5 sm:py-4 rounded-sm transition-all duration-500 hover:bg-white hover:text-[#1a1a1a] hover:-translate-y-1 w-full sm:w-auto text-center flex justify-center">
- Start Your Dream Project
+ View Our Work
  </Link>
  </motion.div>
  </div>

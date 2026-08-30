@@ -50,7 +50,7 @@ const HomeBlogSection = () => {
  className="hidden md:block text-right"
  >
  <p className="text-dark/40 text-sm font-light max-w-xs">
- Engineering stories and construction insights from the Karrcholai team.
+ Engineering stories and building insights from the Karrcholai team.
  </p>
  </motion.div>
  </div>

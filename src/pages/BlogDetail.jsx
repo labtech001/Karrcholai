@@ -50,7 +50,7 @@ const BlogDetail = () => {
   const hasTamilContent = isVastu;
 
   const pageTitle = isArunStory
-    ? `How Arun Built His Dream Home — A Client Story | Karrcholai Construction`
+    ? `How Arun Built His Residence — A Client Story | Karrcholai Construction`
     : isFirstStone
     ? `The First Stone — Professional Plan Analysis | Karrcholai Construction`
     : isVastu
@@ -138,7 +138,7 @@ const BlogDetail = () => {
                 transition={{ delay: 0.45, duration: 0.7 }}
                 style={{ color: '#fff', fontSize: 'clamp(2rem,4.5vw,4rem)', fontWeight: 900,
                   lineHeight: 1.1, letterSpacing: '-0.02em', margin: '0 auto 18px', maxWidth: 900 }}>
-                How Arun Built His Dream Home
+                How Arun Built His Residence
               </motion.h1>
               <motion.p
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }}

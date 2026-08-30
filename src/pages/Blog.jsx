@@ -60,7 +60,7 @@ const Blog = () => {
  <p className="text-[10px] md:text-[11px] font-bold tracking-[0.4em] uppercase text-[#1a1a1a]/50 mb-6">
    {isTamil
      ? 'கட்டுமான குறிப்புகள், வாஸ்து வழிகாட்டிகள், மனையடி சாஸ்திரம் & தமிழ்நாட்டிலிருந்து கட்டிட நுண்ணறிவுகள்'
-     : 'Construction tips, Vastu guides, Manaiyadi Sastram & building insights from Tamil Nadu'}
+     : 'Building tips, Vastu guides, Manaiyadi Sastram & site insights from Tamil Nadu'}
  </p>
  <div className="flex justify-center">
    <LangToggle />

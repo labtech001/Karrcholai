@@ -264,8 +264,7 @@ const ManaiyadiIntroduction = () => {
  <span className="text-secondary">with Confidence.</span>
  </h2>
  <p className="text-white/40 text-xs md:text-base mb-10 max-w-lg mx-auto font-light leading-relaxed">
- Our team can help you apply Manaiyadi principles during planning â€” alongside structural engineering and quality
- construction.
+ Our team can help you apply Manaiyadi principles during planning — alongside structural engineering and disciplined site execution.
  </p>
  <motion.button
  whileHover={{ scale: 1.05, backgroundColor: '#ffffff', color: '#1a1a1a' }}

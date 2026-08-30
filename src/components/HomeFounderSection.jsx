@@ -59,13 +59,13 @@ const HomeFounderSection = () => {
                 </h2>
                 <div className="space-y-7 text-[15px] md:text-[17px] text-[#4a3b32]/80 font-medium leading-[1.8]">
                   <p>
-                    Hello, I'm <strong className="text-[#4a3b32] font-bold">Saravanakumar B.</strong>, a BE Civil Engineer and the founder of <strong className="text-[#4a3b32] font-bold">Karrcholai Construction.</strong> With more than 12 years of experience in residential construction, my journey has been build through practical site knowledge, disciplined execution, and a strong belief in honest building practices.
+                    Hello, I'm <strong className="text-[#4a3b32] font-bold">Saravanakumar B.</strong>, a BE Civil Engineer and the founder of <strong className="text-[#4a3b32] font-bold">Karrcholai Construction.</strong> With more than 12 years of experience in residential building, my journey has been built through practical site knowledge, disciplined execution, and a strong belief in honest building practices.
                   </p>
                   <p>
-                    For me, construction is not only about creating structures — it is about creating spaces for life. A home must be strong in its foundation, clear in planning, practical in execution, and peaceful for the people who live in it. This belief became the reason for starting <span className="text-secondary">Karrcholai Construction.</span>
+                    For me, building is not only about creating structures — it is about creating spaces for life. A residence must be strong in its foundation, clear in planning, practical in execution, and peaceful for the people who live in it. This belief became the reason for starting <span className="text-secondary">Karrcholai Construction.</span>
                   </p>
                   <p>
-                    The name Karrcholai comes from two ideas — <strong className="text-[#4a3b32] font-bold">Karr</strong>, meaning stone, and <strong className="text-[#4a3b32] font-bold">Cholai</strong>, meaning oasis. Together, they represent my vision: <strong className="text-[#4a3b32] font-bold">strong construction with peaceful living.</strong>
+                    The name Karrcholai comes from two ideas — <strong className="text-[#4a3b32] font-bold">Karr</strong>, meaning stone, and <strong className="text-[#4a3b32] font-bold">Cholai</strong>, meaning oasis. Together, they represent my vision: <strong className="text-[#4a3b32] font-bold">strong foundations with peaceful living.</strong>
                   </p>
                 </div>
               </motion.div>
@@ -91,10 +91,10 @@ const HomeFounderSection = () => {
                 </h2>
                 <div className="space-y-7 text-[15px] md:text-[17px] text-[#4a3b32]/80 font-medium leading-[1.8]">
                   <p>
-                    Construction is not just about building a structure. It is about creating a space where life happens. A good house should not depend only on design.
+                    Building is not just about raising a structure. It is about creating a space where life happens. A good house should not depend only on design.
                   </p>
                   <p>
-                    It must have a strong foundation, proper planning, correct materials, and disciplined execution. I believe in practical buildings rather than decorative buildings.
+                    It must have a strong foundation, proper planning, correct materials, and disciplined site execution. I believe in practical buildings rather than decorative buildings.
                   </p>
                   <p>
                     My goal in every project is simple — to build with responsibility, clarity, and long-term thinking for the families that trust us.

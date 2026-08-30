@@ -2,6 +2,7 @@
 import HeroSection from '../components/HeroSection'
 import StatsBanner from '../components/StatsBanner'
 import WelcomeSection from '../components/WelcomeSection'
+import InteriorShowcaseSection from '../components/InteriorShowcaseSection'
 import KarrHomeSection from '../components/KarrHomeSection'
 import CholaiHomeSection from '../components/CholaiHomeSection'
 import WhyChooseUs from '../components/WhyChooseUs'
@@ -38,6 +39,9 @@ const Home = () => {
  <section id="about">
  <WelcomeSection />
  </section>
+
+ {/* ── Interior Showcase ── */}
+ <InteriorShowcaseSection />
 
  {/* ── Our Process: Initial → KARR → CHOLAI → Final ── */}
  <section id="process">

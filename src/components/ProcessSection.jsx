@@ -34,7 +34,7 @@ const STEPS = [
     highlight: '#C9603A',
     link: '/karr',
     cta: 'Explore KARR',
-    desc: 'Strong foundation. Quality materials. Skilled execution. On-time delivery.',
+    desc: 'Strong foundation. Specified materials. Skilled execution. On-time delivery.',
     keyPoints: [],
     icon: (c) => (
       <svg viewBox="0 0 48 48" fill="none" stroke={c} strokeWidth="1.5"
@@ -77,7 +77,7 @@ const STEPS = [
     highlight: '#C9920A',
     link: '/projects',
     cta: 'See Our Work',
-    desc: 'A quality home delivered with trust, care & long-term support.',
+    desc: 'A well-built residence delivered with trust, care & long-term support.',
     keyPoints: [],
     icon: (c) => (
       <svg viewBox="0 0 48 48" fill="none" stroke={c} strokeWidth="1.5"
@@ -240,7 +240,7 @@ function SectionHeader({ inView }) {
             <span style={{ color: '#B85C38' }}>Vision</span>
             <br />
             to{' '}
-            <span style={{ color: '#3D6B47' }}>Home.</span>
+            <span style={{ color: '#3D6B47' }}>Handover.</span>
           </motion.h2>
         </div>
 

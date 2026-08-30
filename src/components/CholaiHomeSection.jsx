@@ -31,7 +31,7 @@ const SERVICES = [
     label: 'Rainwater',
     title: 'Rainwater Harvesting',
     subtitle: 'Conserving Every Drop',
-    desc: 'Rainwater harvesting helps conserve water and recharge groundwater resources. Our advanced collection systems ensure long-term water security for homeowners.',
+    desc: 'Rainwater harvesting helps conserve water and recharge groundwater resources. Our integrated collection systems ensure long-term water security for every residence we build.',
     items: ['Rainwater collection systems', 'Groundwater recharge solutions', 'Water conservation planning'],
     impact: '50,000L+ Stored',
     images: [newRainwater],
@@ -44,7 +44,7 @@ const SERVICES = [
     label: 'Solar Energy',
     title: 'Solar Energy Solutions',
     subtitle: 'Powering the Future',
-    desc: 'We provide renewable energy solutions that help homeowners reduce electricity costs and environmental impact. Clean, silent, and sustainable energy for modern homes.',
+    desc: 'We provide renewable energy solutions that help reduce electricity costs and environmental impact. Clean, silent, and sustainable energy for modern residences.',
     items: ['Solar panel installation', 'Solar energy system planning', 'Renewable energy integration'],
     impact: '95% Energy Saving',
     images: [newSolar],
@@ -57,7 +57,7 @@ const SERVICES = [
     label: 'Waste Mgmt.',
     title: 'Waste Management',
     subtitle: 'Circular Living',
-    desc: 'Responsible waste management improves environmental health and sustainability. We implement systems that turn waste into resources, supporting a clean living space.',
+    desc: 'Responsible waste management improves environmental health and sustainability. We implement systems that turn waste into resources, supporting a clean living environment.',
     items: ['Waste segregation systems', 'Composting solutions', 'Sustainable waste planning'],
     impact: 'Zero Waste Goal',
     images: [newWaste],
@@ -70,7 +70,7 @@ const SERVICES = [
     label: 'Lighting',
     title: 'Smart Lighting',
     subtitle: 'Illuminate Thoughtfully',
-    desc: 'Energy-efficient lighting design that transforms spaces while minimising power consumption. We integrate smart controls, LED systems, and natural light strategies for beautiful, sustainable homes.',
+    desc: 'Energy-efficient lighting design that transforms spaces while minimising power consumption. We integrate smart controls, LED systems, and natural light strategies for beautiful, sustainable living.',
     items: ['LED & energy-efficient fixtures', 'Smart lighting controls', 'Natural light optimisation'],
     impact: '80% Energy Saved',
     images: [newLighting],
@@ -139,10 +139,22 @@ const CholaiHomeSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="text-5xl md:text-7xl font-black leading-none tracking-tighter"
+              className="leading-none tracking-tighter"
             >
-              CHOLAI <br />
-              <span className="italic text-white/15">Solutions.</span>
+              <span className="block text-5xl md:text-7xl font-black">CHOLAI</span>
+              <span
+                className="block font-black"
+                style={{
+                  fontFamily: '"Noto Serif Tamil", "Latha", "Tamil MN", serif',
+                  fontSize: 'clamp(2rem, 4.5vw, 3.8rem)',
+                  color: '#3F7A4F',
+                  letterSpacing: '0.03em',
+                  lineHeight: 1.2,
+                }}
+              >
+                சோலை
+              </span>
+              <span className="block text-2xl sm:text-3xl md:text-4xl italic text-white/15">Solutions.</span>
             </motion.h2>
           </div>
 
@@ -244,7 +256,7 @@ const CholaiHomeSection = () => {
                   Our Mission
                 </p>
                 <p className="text-white/60 text-sm font-light leading-relaxed italic">
-                  "The Cholai division focuses on environmentally responsible solutions that help homeowners reduce dependency and support sustainable management of our planet's resources."
+                  "The Cholai division focuses on environmentally responsible solutions that help reduce dependency on conventional resources and support sustainable management of our planet for future generations."
                 </p>
               </div>
 

@@ -151,8 +151,8 @@ export default function ComicSection() {
           React.createElement('span', { style: { fontSize: 9, fontWeight: 900, color: TERRA, letterSpacing: '0.45em', textTransform: 'uppercase' } }, 'The Full Story'),
           React.createElement('div', { style: { height: 1, width: 32, background: TERRA } })
         ),
-        React.createElement('h2', { style: { fontSize: 'clamp(1.7rem,4vw,2.8rem)', fontWeight: 900, color: INK, letterSpacing: '-0.02em', lineHeight: 1.1, margin: '0 0 12px' } }, 'From Empty Plot to Dream Home'),
-        React.createElement('p', { style: { fontSize: 14, color: 'rgba(0,0,0,0.42)', maxWidth: 420, margin: '0 auto', lineHeight: 1.7 } }, 'Every person involved. Every conversation that mattered. The complete story of how Arun built his home with Karrcholai.')
+        React.createElement('h2', { style: { fontSize: 'clamp(1.7rem,4vw,2.8rem)', fontWeight: 900, color: INK, letterSpacing: '-0.02em', lineHeight: 1.1, margin: '0 0 12px' } }, 'From Empty Plot to Keys in Hand'),
+        React.createElement('p', { style: { fontSize: 14, color: 'rgba(0,0,0,0.42)', maxWidth: 420, margin: '0 auto', lineHeight: 1.7 } }, 'Every person involved. Every conversation that mattered. The complete story of how Arun built his residence with Karrcholai.')
       )
     ),
 
@@ -246,7 +246,7 @@ export default function ComicSection() {
         React.createElement(Chapter, { n: '04', sub: 'The Build', title: '8 Months. Every Sunday, a Photo Update.' }),
         React.createElement(Scene, {
           icon: '\uD83C\uDFD7\uFE0F', label: 'April \u2013 October 2024', title: 'Structure, Walls, Roof, Week by Week',
-          body: 'Construction began April 2, 2024. Every Sunday at 9 AM Arun received a WhatsApp album with photos, a written summary, and next week\'s plan. When Priya requested the kitchen ceiling raised to 11 feet in Month 4, Karthik revised the drawing within 24 hours at no extra cost. Structure completed Month 5, tiling and finishing through Month 7.',
+          body: 'The build began April 2, 2024. Every Sunday at 9 AM Arun received a WhatsApp album with photos, a written summary, and next week\'s plan. When Priya requested the kitchen ceiling raised to 11 feet in Month 4, Karthik revised the drawing within 24 hours at no extra cost. Structure completed Month 5, tiling and finishing through Month 7.',
           gradient: 'linear-gradient(135deg,#2a3a28,' + FOREST + ')', delay: 0.05
         }),
         React.createElement(Dialogs, { items: [

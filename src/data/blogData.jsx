@@ -6,7 +6,7 @@ import vis3 from '../../assets/vis3.webp';
 import vis4 from '../../assets/vis4.webp';
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   WHATSAPP STORY — Arun's Dream Home
+   WHATSAPP STORY — Arun's Residence Project
    Format: real WhatsApp-style 1:1 conversation thread
    Colors: site palette — cream / forest-green / terracotta
 ───────────────────────────────────────────────────────────────────────────── */
@@ -166,9 +166,9 @@ export const blogPosts = [
     author: 'Karrcholai Team',
     excerpt: "How Sir M. Visvesvaraya's discipline, planning, and engineering excellence continue to guide modern residential construction in India.",
     gallery: [
-      { type: 'html', content: `<h2 class="text-3xl font-bold mt-10 mb-6">Sir M. Visvesvaraya — The Engineer Who Built Modern India</h2><h3 class="text-2xl font-semibold mt-8 mb-4">Introduction</h3><p class="mb-4 text-lg leading-relaxed opacity-80">India's progress in engineering and infrastructure owes much to leaders who turned careful planning into lasting public works. Sir Mokshagundam Visvesvaraya remains one of the most respected civil engineers and nation-builders in India's history. His career offers lessons still relevant today — quality, discipline, and long-term thinking.</p><h3 class="text-2xl font-semibold mt-8 mb-4">Who Was Sir M. Visvesvaraya?</h3><p class="mb-4 text-lg leading-relaxed opacity-80">Born September 15, 1861 in Karnataka, he was a civil engineer, administrator, and planner who helped shape modern India's infrastructure. His work earned him the Bharat Ratna — India's highest civilian honour. Engineers' Day is celebrated on his birthday every year.</p>` },
+      { type: 'html', content: `<h2 class="text-3xl font-bold mt-10 mb-6">Sir M. Visvesvaraya — The Engineer Who Built Modern India</h2><h3 class="text-2xl font-semibold mt-8 mb-4">Introduction</h3><p class="mb-4 text-lg leading-relaxed opacity-80">India's progress in engineering and infrastructure owes much to leaders who turned careful planning into lasting public works. Sir Mokshagundam Visvesvaraya remains one of the most respected civil engineers and nation-builders in India's history. His career offers lessons still relevant today — discipline, rigorous planning, and long-term thinking.</p><h3 class="text-2xl font-semibold mt-8 mb-4">Who Was Sir M. Visvesvaraya?</h3><p class="mb-4 text-lg leading-relaxed opacity-80">Born September 15, 1861 in Karnataka, he was a civil engineer, administrator, and planner who helped shape modern India's infrastructure. His work earned him the Bharat Ratna — India's highest civilian honour. Engineers' Day is celebrated on his birthday every year.</p>` },
       { type: 'single', image: vis2 },
-      { type: 'html', content: `<h3 class="text-2xl font-semibold mt-8 mb-4">Engineering Work That Changed the Country</h3><p class="mb-4 text-lg leading-relaxed opacity-80">Sir Visvesvaraya led landmark projects in water management and urban planning — including the Krishna Raja Sagara Dam in Karnataka. He introduced flood protection systems and automatic sluice gates — practical solutions to real problems.</p><h3 class="text-2xl font-semibold mt-8 mb-4">Conclusion</h3><p class="mb-4 text-lg leading-relaxed opacity-80">At Karrcholai, we draw on that same commitment — structured planning, on-site supervision, and homes built to last.</p>` },
+      { type: 'html', content: `<h3 class="text-2xl font-semibold mt-8 mb-4">Engineering Work That Changed the Country</h3><p class="mb-4 text-lg leading-relaxed opacity-80">Sir Visvesvaraya led landmark projects in water management and urban planning — including the Krishna Raja Sagara Dam in Karnataka. He introduced flood protection systems and automatic sluice gates — practical solutions to real problems.</p><h3 class="text-2xl font-semibold mt-8 mb-4">Conclusion</h3><p class="mb-4 text-lg leading-relaxed opacity-80">At Karrcholai, we draw on that same commitment — structured planning, on-site supervision, and buildings built to last.</p>` },
       { type: 'double', images: [vis3, vis4] },
     ],
   },

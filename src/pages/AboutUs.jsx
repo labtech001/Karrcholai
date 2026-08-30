@@ -37,17 +37,17 @@ const AboutUs = () => {
     {
       step: '02',
       title: 'Requirement & Site Understanding',
-      desc: 'We study your requirements and understand the site conditions. This helps us identify the practical considerations that may affect planning, construction, cost and execution.',
+      desc: 'We study your requirements and understand the site conditions. This helps us identify the practical considerations that may affect planning, design, cost and execution.',
     },
     {
       step: '03',
       title: 'Planning & Design Coordination',
-      desc: 'Based on your requirements, we coordinate the planning process and work towards developing a practical solution for your home — considering functionality, space utilisation, construction feasibility, budget and your preferences.',
+      desc: 'Based on your requirements, we coordinate the planning process and work towards developing a practical solution for your residence — considering functionality, space utilisation, build feasibility, budget and your preferences.',
     },
     {
       step: '04',
       title: 'Estimation & Project Planning',
-      desc: 'Before construction begins, we work towards establishing a clear understanding of the project scope, quantities, materials and expected costs. Proper planning at this stage helps minimise unexpected issues and material wastage.',
+      desc: 'Before site work begins, we work towards establishing a clear understanding of the project scope, quantities, materials and expected costs. Proper planning at this stage helps minimise unexpected issues and material wastage.',
     },
     {
       step: '05',
@@ -57,17 +57,17 @@ const AboutUs = () => {
     {
       step: '06',
       title: 'Construction & Execution',
-      desc: 'This is where the plan becomes reality. We coordinate the required teams, materials and activities at the site and execute the work through the different stages of construction — from foundation to finishing.',
+      desc: 'This is where the plan becomes reality. We coordinate the required teams, materials and activities at the site and execute the work through the different stages of the build — from foundation to finishing.',
     },
     {
       step: '07',
-      title: 'Quality & Progress Monitoring',
-      desc: 'Construction is continuously monitored to maintain the required quality and workmanship. We focus on proper execution, material usage, site coordination and progress, while keeping the client informed about important stages.',
+      title: 'Progress & Workmanship Monitoring',
+      desc: 'Site work is continuously monitored against drawings and agreed specifications. We focus on proper execution, material usage, site coordination and progress, while keeping the client informed about important stages.',
     },
     {
       step: '08',
       title: 'Finishing & Handover',
-      desc: 'Once construction is completed, finishing works and final checks are carried out. After ensuring that the agreed work has been completed, the home is prepared for handover. Your dream home is ready to become your living space.',
+      desc: 'Once site work is completed, finishing works and final checks are carried out. After ensuring that the agreed scope has been delivered, the residence is prepared for handover. Your new home is ready to move into.',
     },
   ]
 
@@ -184,7 +184,7 @@ const AboutUs = () => {
                   to Oasis
                 </h2>
                 <p className="text-white/40 text-sm font-light leading-relaxed max-w-sm">
-                  A story of discipline, purpose and the belief that every family deserves a home built with clarity and care.
+                  A story of discipline, purpose and the belief that every family deserves a residence built with clarity and care.
                 </p>
               </div>
               <div className="relative z-10 flex gap-8 mt-12 pt-8 border-t border-white/10">
@@ -219,10 +219,10 @@ const AboutUs = () => {
               </div>
               <div className="space-y-4 text-[14px] md:text-[16px] text-dark/65 leading-[1.9]">
                 <p>
-                  Building a dream home should be exciting, not overwhelming. A home is one of the most important investments a family makes — it should be built with <strong className="text-dark">confidence, care and clarity</strong>.
+                  Building a new residence should be exciting, not overwhelming. A home is one of the most important investments a family makes — it should be built with <strong className="text-dark">confidence, care and clarity</strong>.
                 </p>
                 <p>
-                  With over <strong className="text-dark">12 years of experience in MNCs and private construction firms</strong>, our founder gained deep knowledge of construction practices, technical standards, quality control, work sequencing and project management — the kind of discipline that most residential projects never see.
+                  With over <strong className="text-dark">12 years of experience in MNCs and private building firms</strong>, our founder gained deep knowledge of site practices, technical standards, workmanship verification, work sequencing and project management — the kind of discipline that most residential projects never see.
                 </p>
                 <p>
                   Working in MNC environments taught us the value of planning, systematic execution and completing projects within timeline. But residential construction showed us something different — that every family is unique, and every home must be too.
@@ -346,12 +346,12 @@ const AboutUs = () => {
                   </div>
 
                   <p className="text-white/55 text-[14px] leading-relaxed mb-7 max-w-md">
-                    KARR represents the stone — the foundation, the discipline, the unwavering commitment to getting every structural detail right. Good construction comes from planning, coordination, quality control and consistent execution at every stage.
+                    KARR represents the stone — the foundation, the discipline, the unwavering commitment to getting every structural detail right. Good building comes from planning, coordination, verified workmanship and consistent site execution at every stage.
                   </p>
 
                   <div className="grid grid-cols-1 gap-0 divide-y divide-white/8">
                     {[
-                      'Quality-focused construction',
+                      'Workmanship-focused site execution',
                       'Proper work sequencing',
                       'Technical standards & specifications',
                       'Disciplined project management',
@@ -485,7 +485,7 @@ const AboutUs = () => {
               >
                 <p className="text-white/30 text-[10px] uppercase tracking-[0.5em] mb-3">This is the responsibility we carry</p>
                 <p className="text-white text-base md:text-2xl font-light leading-relaxed max-w-3xl mx-auto">
-                  We want to build homes that are <strong className="text-secondary">strong in structure</strong>, practical in living, thoughtful in resource use and respectful of nature — because we are not simply building for today.
+                  We want to build residences that are <strong className="text-secondary">strong in structure</strong>, practical in living, thoughtful in resource use and respectful of nature — because we are not simply building for today.
                 </p>
                 <p className="text-secondary font-bold text-sm uppercase tracking-[0.3em] mt-5">We are building with tomorrow in mind.</p>
               </motion.div>
@@ -524,7 +524,7 @@ const AboutUs = () => {
                 >
                   <p className="text-dark/30 text-[9px] font-black uppercase tracking-[0.5em] mb-3">Together</p>
                   <h4 className="text-lg md:text-2xl font-black text-dark tracking-tight leading-tight mb-3">
-                    A home should be more than a structure.
+                    A house should be more than a structure.
                   </h4>
                   <p className="text-dark/45 text-[13px] leading-relaxed max-w-sm mb-6">
                     A place where people and nature can exist together responsibly — built with tomorrow in mind.
@@ -626,13 +626,13 @@ const AboutUs = () => {
                     With more than <strong className="text-white">12 years of professional experience</strong>, my journey has been shaped by practical site experience, disciplined project execution and a strong belief in honest, responsible building practices.
                   </p>
                   <p>
-                    Exposure to <strong className="text-white">MNC and Private Limited companies</strong> gave me structured project environments, quality standards and large-scale execution experience. Work with an <strong className="text-white">Architectural firm</strong> deepened my understanding of design intent, space planning and the integration of architecture with construction reality.
+                    Exposure to <strong className="text-white">MNC and Private Limited companies</strong> gave me structured project environments, technical standards and large-scale execution experience. Work with an <strong className="text-white">Architectural firm</strong> deepened my understanding of design intent, space planning and the integration of architecture with build reality.
                   </p>
                   <p>
                     For me, construction is not simply about creating structures — it is about creating <strong className="text-white">spaces for life.</strong>
                   </p>
                   <p>
-                    This belief became the foundation for starting <span className="text-secondary font-semibold">Karrcholai Construction in 2021</span> — with a focus on quality, transparency, cost-conscious planning and long-term value for every client.
+                    This belief became the foundation for starting <span className="text-secondary font-semibold">Karrcholai Construction in 2021</span> — with a focus on disciplined execution, transparency, cost-conscious planning and long-term value for every client.
                   </p>
                 </div>
 
@@ -750,7 +750,7 @@ const AboutUs = () => {
                   className="max-w-md"
                 >
                   <p className="text-dark/50 text-[14px] md:text-[15px] leading-relaxed mb-5">
-                    Building a home should be an organised, transparent journey — not a confusing one. We follow a systematic process from your first enquiry to final handover.
+                    Building a new residence should be organised, transparent, and stress-free — not confusing. We follow a systematic process from your first enquiry to final handover.
                   </p>
                   <div className="flex flex-wrap gap-2 items-center text-[10px] font-black uppercase tracking-[0.3em]">
                     {['Listen', 'Plan', 'Execute', 'Monitor', 'Deliver'].map((word, i, arr) => (
@@ -861,8 +861,8 @@ const AboutUs = () => {
                   {
                     num: '02',
                     icon: <FaShieldAlt size={20} />,
-                    title: 'Stage-wise Quality Control',
-                    desc: 'Quality is verified at each critical stage — foundation, structure, roofing, finishing. On-site supervision ensures materials and workmanship meet agreed standards throughout.',
+                    title: 'Stage-wise Site Verification',
+                    desc: 'Work is checked against drawings and specifications at each critical stage — foundation, structure, roofing, finishing. On-site supervision ensures materials and workmanship meet the agreed contract throughout.',
                   },
                   {
                     num: '03',
@@ -914,7 +914,7 @@ const AboutUs = () => {
                   {[
                     { title: 'Structured Planning', icon: <FaProjectDiagram /> },
                     { title: 'Cost Transparency', icon: <FaHandHoldingUsd /> },
-                    { title: 'Quality Supervision', icon: <FaShieldAlt /> },
+                    { title: 'Site Supervision', icon: <FaShieldAlt /> },
                     { title: 'Timely Delivery', icon: <FaClock /> },
                   ].map((item, i) => (
                     <div key={i} className="flex items-center gap-2 md:gap-3 group/pill">

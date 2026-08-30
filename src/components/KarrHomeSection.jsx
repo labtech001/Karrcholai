@@ -18,27 +18,27 @@ const tabs = [
   {
     id: 'residential',
     label: 'Residential',
-    headline: 'Crafting Exceptional Homes.',
-    desc: 'Karrcholai Construction provides complete residential construction services for independent houses and villas. We ensure every project is built with quality materials, durable structures, and professional workmanship.',
+    headline: 'Crafting Exceptional Residences.',
+    desc: 'Karrcholai Construction provides complete residential building services for independent houses and villas. We ensure every project is delivered with specified materials, durable structures, and professional workmanship — checked at every stage.',
     image: residential,
     services: [
       { title: 'Turnkey house construction', icon: FiHome },
-      { title: 'Structural construction work', icon: FiLayout },
+      { title: 'Structural site work', icon: FiLayout },
       { title: 'Finishing works', icon: FiEdit3 },
       { title: 'Renovation & extensions', icon: FiRefreshCw },
       { title: 'Site execution & supervision', icon: FiUserCheck },
-      { title: 'Quality control & inspection', icon: FiCheckCircle },
+      { title: 'On-site inspection & sign-off', icon: FiCheckCircle },
     ],
   },
   {
     id: 'pmc',
     label: 'PMC',
     headline: 'Efficiency in Execution.',
-    desc: 'Our Project Management Consultancy (PMC) services help homeowners manage their construction projects efficiently — saving time, controlling costs, and ensuring quality throughout every phase.',
+    desc: 'Our Project Management Consultancy (PMC) services help homeowners manage their residential projects efficiently — saving time, controlling costs, and maintaining workmanship standards throughout every phase.',
     image: pmcImg,
     services: [
       { title: 'Project planning & scheduling', icon: FiLayout },
-      { title: 'Construction cost estimation', icon: FiDollarSign },
+      { title: 'Budget & cost estimation', icon: FiDollarSign },
       { title: 'Contractor coordination', icon: FiUserCheck },
       { title: 'Material planning & procurement', icon: FiBriefcase },
       { title: 'Site supervision & inspection', icon: FiSearch },
@@ -49,7 +49,7 @@ const tabs = [
     id: 'renovation',
     label: 'Renovation',
     headline: 'Revitalize Your Living Space.',
-    desc: 'Our renovation solutions enhance the functionality, durability, and appearance of existing homes — breathing new life into every corner with precision and craftsmanship.',
+    desc: 'Our renovation solutions enhance the functionality, durability, and appearance of existing properties — breathing new life into every corner with precision and craftsmanship.',
     image: renovationImg,
     services: [
       { title: 'House renovation', icon: FiHome },
@@ -85,10 +85,22 @@ const KarrHomeSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="text-4xl sm:text-5xl md:text-7xl font-black leading-none tracking-tighter text-[#1a1a1a]"
+              className="leading-none tracking-tighter text-[#1a1a1a]"
             >
-              KARR <br />
-              <span className="font-light text-[#1a1a1a]/15">Construction.</span>
+              <span className="block text-4xl sm:text-5xl md:text-7xl font-black">KARR</span>
+              <span
+                className="block font-black"
+                style={{
+                  fontFamily: '"Noto Serif Tamil", "Latha", "Tamil MN", serif',
+                  fontSize: 'clamp(2rem, 4.5vw, 3.8rem)',
+                  color: '#B85C38',
+                  letterSpacing: '0.03em',
+                  lineHeight: 1.2,
+                }}
+              >
+                கற்
+              </span>
+              <span className="block text-2xl sm:text-3xl md:text-4xl font-light text-[#1a1a1a]/15">Construction.</span>
             </motion.h2>
           </div>
 
@@ -218,7 +230,7 @@ const KarrHomeSection = () => {
                   animate={{ opacity: 1 }}
                   className="flex gap-3 sm:gap-6 flex-wrap"
                 >
-                  {['Save Time', 'Control Costs', 'Ensure Quality'].map((txt, i) => (
+                  {['Save Time', 'Control Costs', 'Verify Standards'].map((txt, i) => (
                     <div key={i} className="flex items-center gap-2 sm:gap-3 bg-[#2D4B37]/5 border border-[#2D4B37]/10 rounded-full px-4 sm:px-5 py-2 sm:py-2.5">
                       <div className="w-2 h-2 rounded-full bg-[#B85C38]" />
                       <span className="text-[9px] sm:text-[10px] font-black tracking-widest uppercase text-[#2D4B37]">{txt}</span>

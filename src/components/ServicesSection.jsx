@@ -28,8 +28,8 @@ const services = [
   },
   {
     id: 5,
-    title: 'Site Supervision & Quality Control',
-    desc: 'Rigorous on-site standards and material testing to guarantee a world-class finish.',
+    title: 'Site Supervision & Workmanship Standards',
+    desc: 'Rigorous on-site checks against drawings and specifications — ensuring every phase meets the agreed standard.',
     icon: FiShield,
   }
 ]
@@ -69,7 +69,7 @@ const ServicesSection = () => {
             viewport={{ once: true }}
             className="text-white/40 text-lg max-w-sm font-light leading-relaxed border-l border-secondary/30 pl-8 mb-4"
           >
-            We provide comprehensive support throughout the entire construction process:
+            We provide comprehensive support throughout the entire build — from first pour to final handover:
           </motion.p>
         </div>
 
@@ -116,7 +116,7 @@ const ServicesSection = () => {
           {/* Empty Cell for Aesthetic Balance with Goal text */}
           <div className="hidden lg:flex p-10 border border-white/5 rounded-[32px] flex-col justify-center bg-white/[0.01]">
             <p className="text-white/30 text-xs leading-relaxed text-center font-light">
-              "Our goal is to make the construction process smooth, transparent, and stress-free for homeowners."
+              "Our goal is to make the build process smooth, transparent, and stress-free for every family we work with."
             </p>
           </div>
         </div>
