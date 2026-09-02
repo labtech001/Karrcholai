@@ -46,7 +46,7 @@ const HomeManaiadiSection = () => {
  className="text-5xl md:text-7xl font-black leading-none tracking-tighter text-dark"
  >
  MANAIYADI <br />
- <span className="text-dark/15">Sastram.</span>
+ <span className="text-dark/40">Sastram.</span>
  </motion.h2>
  </div>
 
@@ -57,7 +57,7 @@ const HomeManaiadiSection = () => {
  transition={{ delay: 0.3 }}
  className="max-w-xs"
  >
- <p className="text-dark/40 text-sm font-light leading-relaxed mb-6">
+ <p className="text-dark/65 text-sm font-light leading-relaxed mb-6">
  The ancient Tamil science of vibrational measurement â€” governing how building dimensions influence human life, prosperity, and harmony.
  </p>
  <Link to="/manaiyadi">
@@ -83,7 +83,7 @@ const HomeManaiadiSection = () => {
  <img src={vastuDetail} alt="Vastu architectural diagram showing proportion and structural balance" className="w-full h-full min-h-[400px] sm:min-h-[480px] lg:min-h-[550px] object-cover transition-transform duration-1000 group-hover:scale-105" />
  <div className="absolute inset-0 bg-gradient-to-t from-dark/70 via-dark/10 to-transparent pointer-events-none" />
  <div className="absolute bottom-8 left-8">
- <p className="text-white/50 text-[9px] font-black tracking-widest uppercase mb-2">Visual Harmony</p>
+ <p className="text-white/65 text-[9px] font-black tracking-widest uppercase mb-2">Visual Harmony</p>
  <p className="text-white text-3xl font-black tracking-tighter uppercase leading-tight">
  Structural <br /> Divinity.
  </p>
@@ -99,7 +99,7 @@ const HomeManaiadiSection = () => {
  className="absolute bottom-0 right-0 bg-dark text-white p-5 rounded-2xl shadow-2xl max-w-[190px]"
  >
  <FiCompass size={22} className="text-secondary mb-3" />
- <p className="text-[10px] font-black tracking-widest uppercase text-white/40 mb-1">Cultural Heritage</p>
+ <p className="text-[10px] font-black tracking-widest uppercase text-white/65 mb-1">Cultural Heritage</p>
  <p className="text-sm font-bold leading-snug">Over 1000 years of architectural precision</p>
  </motion.div>
  </motion.div>
@@ -112,14 +112,14 @@ const HomeManaiadiSection = () => {
  viewport={{ once: true }}
  transition={{ duration: 0.8 }}
  >
- <p className="text-dark/40 text-[10px] font-black tracking-[0.4em] uppercase mb-4">The Philosophy</p>
+ <p className="text-dark/65 text-[10px] font-black tracking-[0.4em] uppercase mb-4">The Philosophy</p>
  <h3 className="text-4xl md:text-5xl font-black text-dark leading-tight tracking-tighter mb-6">
- Vibrational <span className="text-dark/20">Synchronicity.</span>
+ Vibrational <span className="text-dark/45">Synchronicity.</span>
  </h3>
- <p className="text-dark/50 text-base font-light leading-relaxed mb-6 max-w-lg">
+ <p className="text-dark/70 text-base font-light leading-relaxed mb-6 max-w-lg">
  <strong className="text-dark font-black">Manaiyadi Sastram (மனையடி சாஸ்திரம்)</strong> prescribes specific measurements for rooms and wall heights to ensure prosperity, health, and happiness. Every dimension carries a vibrational frequency that interacts with cosmic energy.
  </p>
- <p className="text-dark/40 text-sm border-l-2 border-secondary/30 pl-4">
+ <p className="text-dark/65 text-sm border-l-2 border-secondary/30 pl-4">
  "Architecture is the reach for truth, and Manaiyadi Sastram is the mathematical path to it."
  </p>
  </motion.div>
@@ -142,7 +142,7 @@ const HomeManaiadiSection = () => {
  </div>
  <div>
  <h4 className="text-sm font-black text-dark mb-1 uppercase tracking-wide">{p.title}</h4>
- <p className="text-xs text-dark/40 font-light leading-relaxed">{p.desc}</p>
+ <p className="text-xs text-dark/60 font-light leading-relaxed">{p.desc}</p>
  </div>
  </motion.div>
  )

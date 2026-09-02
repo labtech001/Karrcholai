@@ -66,11 +66,12 @@ const WelcomeSection = () => {
                   transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
                   className="block font-black"
                   style={{
-                    fontFamily: '"Noto Serif Tamil", "Latha", "Tamil MN", serif',
-                    fontSize: 'clamp(2.2rem, 5.5vw, 4.5rem)',
+                    fontFamily: '"Arima", "Noto Serif Tamil", serif',
+                    fontSize: 'clamp(2.4rem, 6vw, 5rem)',
                     color: '#B85C38',
-                    letterSpacing: '0.03em',
+                    letterSpacing: '0.04em',
                     lineHeight: 1.4,
+                    fontWeight: 700,
                   }}
                 >
                   கற்சோலை

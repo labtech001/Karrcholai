@@ -134,7 +134,7 @@ const UnifiedFooter = () => {
                   ].map((link) => (
                     <li key={link.name}>
                       <Link to={link.path}
-                        className="text-white/50 hover:text-white text-[11px] font-bold tracking-widest transition-all duration-300 flex items-center gap-2 group uppercase">
+                        className="text-white/70 hover:text-white text-[11px] font-bold tracking-widest transition-all duration-300 flex items-center gap-2 group uppercase">
                         <span className="w-1.5 h-1.5 rounded-full bg-secondary/0 group-hover:bg-secondary transition-all duration-300 flex-shrink-0" />
                         <span className="group-hover:translate-x-1 transition-transform duration-300">{link.name}</span>
                       </Link>
@@ -159,7 +159,7 @@ const UnifiedFooter = () => {
                   ].map((link) => (
                     <li key={link.name}>
                       <Link to={link.path}
-                        className="text-white/50 hover:text-white text-[11px] font-bold tracking-widest transition-all duration-300 flex items-center gap-2 group uppercase">
+                        className="text-white/70 hover:text-white text-[11px] font-bold tracking-widest transition-all duration-300 flex items-center gap-2 group uppercase">
                         <span className="w-1.5 h-1.5 rounded-full bg-secondary/0 group-hover:bg-secondary transition-all duration-300 flex-shrink-0" />
                         <span className="group-hover:translate-x-1 transition-transform duration-300">{link.name}</span>
                       </Link>
@@ -175,12 +175,12 @@ const UnifiedFooter = () => {
             <h4 className="text-[9px] font-black tracking-[0.4em] uppercase text-secondary mb-6 brightness-110 border-b border-white/5 pb-3 inline-block">
               Newsletter
             </h4>
-            <p className="text-white/50 text-[10px] mb-6 font-light leading-relaxed tracking-wide max-w-sm lg:max-w-[240px]">
+            <p className="text-white/70 text-[10px] mb-6 font-light leading-relaxed tracking-wide max-w-sm lg:max-w-[240px]">
               Stay updated with our latest architectural projects and traditional building insights.
             </p>
             <div className="mb-6">
               <a href="/contact"
-                className="text-[10px] font-bold text-white/40 hover:text-white transition-colors block uppercase tracking-widest"
+                className="text-[10px] font-bold text-white/65 hover:text-white transition-colors block uppercase tracking-widest"
                 aria-label="Contact Karrcholai Construction">
                 Contact Us
               </a>
@@ -189,7 +189,7 @@ const UnifiedFooter = () => {
               <input
                 type="email"
                 placeholder="Email address"
-                className="w-full bg-white/5 border border-white/10 rounded-lg py-3.5 px-4 text-xs text-white focus:outline-none focus:border-secondary/50 transition-all placeholder:text-white/20"
+                className="w-full bg-white/5 border border-white/10 rounded-lg py-3.5 px-4 text-xs text-white focus:outline-none focus:border-secondary/50 transition-all placeholder:text-white/45"
                 aria-label="Email address for newsletter"
               />
               <button type="submit"
@@ -202,15 +202,15 @@ const UnifiedFooter = () => {
 
         {/* Bottom Bar */}
         <div className="pt-6 mt-20 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="flex gap-6 text-[8px] font-black tracking-[0.3em] uppercase text-white/40">
+          <div className="flex gap-6 text-[8px] font-black tracking-[0.3em] uppercase text-white/60">
             <a href="#" className="hover:text-white transition-colors">Privacy</a>
             <a href="#" className="hover:text-white transition-colors">Terms</a>
             <a href="#" className="hover:text-white transition-colors">Cookies</a>
           </div>
-          <p className="text-white/30 text-[8px] font-black tracking-[0.3em] uppercase text-center">
+          <p className="text-white/60 text-[8px] font-black tracking-[0.3em] uppercase text-center">
             © 2026 Karrcholai Construction. All rights reserved.
           </p>
-          <div className="flex items-center justify-center gap-2 text-white/40 text-[8px] font-black tracking-widest uppercase">
+          <div className="flex items-center justify-center gap-2 text-white/60 text-[8px] font-black tracking-widest uppercase">
             <span className="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse" />
             Status: Live
           </div>

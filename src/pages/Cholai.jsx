@@ -196,7 +196,7 @@ const Cholai = () => {
  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
  className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
  >
- <span className="text-white/30 text-[9px] uppercase tracking-[0.4em] font-bold">Discover</span>
+ <span className="text-white/55 text-[9px] uppercase tracking-[0.4em] font-bold">Discover</span>
  <div className="w-[1px] h-12 bg-gradient-to-b from-secondary to-transparent" />
  </motion.div>
  </section>
@@ -218,9 +218,9 @@ const Cholai = () => {
  <h2 className="text-2xl md:text-4xl lg:text-5xl font-black text-dark leading-[1.2] md:leading-[1.1] mb-8 max-w-5xl mx-auto">
  The Cholai division delivers
  <span className="text-primary"> practical, environmentally responsible </span>
- <span className="text-primary/40">solutions for residential properties.</span>
+ <span className="text-primary/65">solutions for residential properties.</span>
  </h2>
- <p className="text-dark/60 text-base md:text-lg font-light leading-relaxed max-w-2xl mx-auto mb-8">
+ <p className="text-dark/70 text-base md:text-lg font-light leading-relaxed max-w-2xl mx-auto mb-8">
  From outdoor landscaping and rainwater systems to solar energy, waste management, and smart lighting — we help homeowners build and maintain homes that are functional, sustainable, and suited to Tamil Nadu's climate.
  </p>
  <div className="w-20 h-1 bg-secondary/20 mx-auto" />
@@ -256,10 +256,10 @@ const Cholai = () => {
 
  <h3 className="text-3xl md:text-5xl lg:text-6xl font-black text-dark leading-[0.95] mb-6 md:mb-8">
  {service.title.split(' ')[0]} <br className="hidden md:block" />
- <span className="text-primary/40">{service.title.split(' ').slice(1).join(' ')}</span>
+ <span className="text-primary/65">{service.title.split(' ').slice(1).join(' ')}</span>
  </h3>
  
- <p className="text-dark/60 text-lg font-light leading-relaxed mb-10 max-w-xl">
+ <p className="text-dark/70 text-lg font-light leading-relaxed mb-10 max-w-xl">
  {service.description}
  </p>
 
@@ -267,7 +267,7 @@ const Cholai = () => {
  {service.items.map((item, i) => (
  <div key={i} className="flex items-center gap-3">
  <div className="w-1.5 h-1.5 rounded-full bg-secondary" />
- <span className="text-[10px] font-black text-dark/40 tracking-[0.2em] uppercase">{item}</span>
+ <span className="text-[10px] font-black text-dark/65 tracking-[0.2em] uppercase">{item}</span>
  </div>
  ))}
  </div>
@@ -375,7 +375,7 @@ const Cholai = () => {
  <span className="font-black text-secondary">sustainable solutions?</span>
  </h3>
  
- <p className="text-white/50 text-lg font-light mb-12 max-w-2xl mx-auto leading-relaxed">
+ <p className="text-white/65 text-lg font-light mb-12 max-w-2xl mx-auto leading-relaxed">
  Whether you are building new or improving an existing property, we will assess your site and recommend practical solutions for landscape, water, energy, and waste management.
  </p>
 
@@ -398,7 +398,7 @@ const Cholai = () => {
  {/* Topical cluster: Rainwater article → Cholai Sustainable → Projects → Contact */}
  <section className="py-12 px-6 bg-white border-t border-black/5">
  <div className="container mx-auto max-w-5xl flex flex-col items-center">
- <p className="text-[9px] font-black tracking-[0.5em] uppercase mb-5 text-center" style={{ color: 'rgba(0,0,0,0.25)' }}>Explore This Topic</p>
+ <p className="text-[9px] font-black tracking-[0.5em] uppercase mb-5 text-center" style={{ color: 'rgba(0,0,0,0.60)' }}>Explore This Topic</p>
  <div className="flex flex-wrap items-center justify-center gap-3">
  {[
   { to: '/karr',           emoji: '🏗️', label: 'Residential Construction', title: 'Karr Division',         bg: 'linear-gradient(135deg, #2D4B37, #1a2e1a)',   accent: '#B85C38' },
@@ -411,11 +411,11 @@ const Cholai = () => {
   style={{ background: cl.bg, textDecoration: 'none' }}>
   <span className="text-lg">{cl.emoji}</span>
   <span>
-   <span className="block text-[7px] font-black tracking-[0.35em] uppercase mb-0.5" style={{ color: cl.accent }}>{cl.label}</span>
+   <span className="block text-[7px] font-black tracking-[0.35em] uppercase mb-0.5" style={{ color: typeof cl.accent === 'string' && cl.accent.startsWith('rgba') ? 'rgba(255,255,255,0.80)' : cl.accent }}>{cl.label}</span>
    <span className="block text-[12px] font-bold text-white whitespace-nowrap">{cl.title}</span>
   </span>
   </a>
-  {idx < arr.length - 1 && <span className="font-black text-xs text-white/20">→</span>}
+  {idx < arr.length - 1 && <span className="font-black text-xs text-black/45">→</span>}
  </span>
  ))}
  </div>

@@ -135,7 +135,7 @@ const Karr = () => {
  </span>
  <h1 className="text-5xl md:text-8xl font-bold text-white leading-none tracking-tighter mb-8">
  Karr<br />
- <span className="text-white/30">Construction.</span>
+ <span className="text-white/55">Construction.</span>
  </h1>
  <p className="text-white/60 text-lg md:text-xl max-w-2xl mx-auto font-light leading-relaxed">
  The Karr division delivers residential construction and project management services — built on structural integrity, transparent planning, and disciplined site execution across Tamil Nadu.
@@ -160,13 +160,13 @@ const Karr = () => {
  <span className="text-[#B85C38] font-bold tracking-[0.6em] uppercase text-xs md:text-sm mb-4 block">Residential Construction</span>
  <h2 className="text-4xl md:text-6xl font-bold leading-none tracking-tight">
  Building Strong <br />
- <span className="text-[#1a1a1a]/20">Independent Houses.</span>
+ <span className="text-[#1a1a1a]/45">Independent Houses.</span>
  </h2>
  </motion.div>
  <motion.p 
  {...fadeInUp}
  transition={{ delay: 0.2 }}
- className="text-[#1a1a1a]/50 text-base max-w-xs font-light border-l border-[#B85C38]/30 pl-8"
+ className="text-[#1a1a1a]/65 text-base max-w-xs font-light border-l border-[#B85C38]/30 pl-8"
  >
  We handle complete site execution for independent houses and villas — from foundation to finishing. Every project is managed with verified structural work, specified materials, and consistent on-site supervision.
  </motion.p>
@@ -193,7 +193,7 @@ const Karr = () => {
  <service.icon size={24} />
  </motion.div>
  <h3 className="text-xl font-bold mb-4 text-[#2D4B37] group-hover:text-[#B85C38] transition-colors">{service.title}</h3>
- <div className="flex items-center gap-2 text-[9px] font-black tracking-widest uppercase text-[#1a1a1a]/20 group-hover:text-[#1a1a1a] transition-all">
+ <div className="flex items-center gap-2 text-[9px] font-black tracking-widest uppercase text-[#1a1a1a]/55 group-hover:text-[#1a1a1a] transition-all">
  View Details <FiArrowRight className="text-[#B85C38] group-hover:translate-x-2 transition-transform" />
  </div>
  </motion.div>
@@ -210,9 +210,9 @@ const Karr = () => {
  <span className="text-[#B85C38] font-bold tracking-[0.6em] uppercase text-xs md:text-sm mb-4 block">Project Management Consultancy (PMC)</span>
  <h2 className="text-4xl md:text-7xl font-bold leading-none tracking-tight mb-8">
  Professional Project <br />
- <span className="text-white/30">Management.</span>
+ <span className="text-white/55">Management.</span>
  </h2>
- <p className="text-white/40 text-lg font-light leading-relaxed mb-12 max-w-lg">
+ <p className="text-white/65 text-lg font-light leading-relaxed mb-12 max-w-lg">
  Our Project Management Consultancy (PMC) provides expert oversight for homeowners who need structured planning, cost control, and independent workmanship oversight — without managing the build day to day themselves.
  </p>
  
@@ -282,9 +282,9 @@ const Karr = () => {
  <span className="text-[#B85C38] font-bold tracking-[0.6em] uppercase text-xs md:text-sm mb-4 block">Renovation & Remodelling</span>
  <h2 className="text-4xl md:text-6xl font-bold leading-none tracking-tight mb-8">
  Renovation & <br />
- <span className="text-[#1a1a1a]/20">Remodelling Services.</span>
+ <span className="text-[#1a1a1a]/45">Remodelling Services.</span>
  </h2>
- <p className="text-[#1a1a1a]/50 text-lg font-light leading-relaxed mb-12">
+ <p className="text-[#1a1a1a]/65 text-lg font-light leading-relaxed mb-12">
  We upgrade and extend existing properties — improving layout, repairing structure, and updating interiors while maintaining the integrity of the building.
  </p>
  
@@ -320,7 +320,7 @@ const Karr = () => {
  <span className="text-[#B85C38] font-bold tracking-[0.6em] uppercase text-xs md:text-sm mb-4 block text-center">Planning & Estimation</span>
  <h2 className="text-4xl md:text-7xl font-bold leading-none tracking-tighter">
  Planning & <br />
- <span className="text-[#1a1a1a]/20 text-center">Budget Clarity.</span>
+ <span className="text-[#1a1a1a]/45 text-center">Budget Clarity.</span>
  </h2>
  </motion.div>
  </div>
@@ -334,7 +334,7 @@ const Karr = () => {
  <FiDollarSign size={120} />
  </div>
  <h3 className="text-2xl font-bold mb-6">Budget & Cost Estimation</h3>
- <p className="text-[#1a1a1a]/50 font-light leading-relaxed mb-10 max-w-sm">
+ <p className="text-[#1a1a1a]/65 font-light leading-relaxed mb-10 max-w-sm">
  Accurate estimation is the foundation of every successful build. We prepare detailed cost breakdowns — itemised by work package — so you can plan your investment with confidence before site work begins.
  </p>
  <ul className="space-y-6">
@@ -375,7 +375,7 @@ const Karr = () => {
  {/* Topical cluster: Cost Estimator → Projects → Vastu Compass → Manaiyadi → Contact */}
  <section className="py-12 px-6 bg-[#fdfbf7] border-t border-black/5">
   <div className="max-w-7xl mx-auto flex flex-col items-center">
-   <p className="text-[9px] font-black tracking-[0.5em] uppercase mb-5 text-center" style={{ color: 'rgba(0,0,0,0.25)' }}>
+   <p className="text-[9px] font-black tracking-[0.5em] uppercase mb-5 text-center" style={{ color: 'rgba(0,0,0,0.60)' }}>
     Continue Your Journey
    </p>
    <div className="flex flex-wrap items-center justify-center gap-3">
@@ -395,7 +395,7 @@ const Karr = () => {
         <span className="block text-[12px] font-bold text-white whitespace-nowrap">{cl.title}</span>
        </span>
       </a>
-      {idx < arr.length - 1 && <span className="text-xs font-black" style={{ color: 'rgba(0,0,0,0.2)' }}>→</span>}
+      {idx < arr.length - 1 && <span className="text-xs font-black" style={{ color: 'rgba(0,0,0,0.45)' }}>→</span>}
      </span>
     ))}
    </div>

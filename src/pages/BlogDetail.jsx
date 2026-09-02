@@ -8,8 +8,7 @@ import { blogPosts } from '../data/blogData.jsx';
 import ComicSection from '../components/ComicSection.jsx';
 import FirstStoneSection from '../components/FirstStoneSection.jsx';
 import VastuArticle from '../components/vastu/VastuArticle.jsx';
-import LangToggle from '../components/LangToggle.jsx';
-import { useLang } from '../context/LanguageContext';
+
 
 /* Site palette */
 const FOREST  = '#2D4B37';
@@ -27,15 +26,13 @@ const BlogDetail = () => {
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
   const heroY  = useTransform(scrollYProgress, [0, 1], ['0%', '28%']);
   const heroOp = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
-  const { lang } = useLang();
-
   useEffect(() => { window.scrollTo(0, 0); }, [id]);
 
   if (!post) return (
     <div style={{ minHeight: '100vh', background: CREAM, display: 'flex', flexDirection: 'column',
       alignItems: 'center', justifyContent: 'center', padding: 24, textAlign: 'center' }}>
       <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.4em', textTransform: 'uppercase',
-        opacity: 0.25, marginBottom: 16 }}>Story not found</p>
+        opacity: 0.6, marginBottom: 16 }}>Story not found</p>
       <Link to="/blog" style={{ fontSize: 10, fontWeight: 900, letterSpacing: '0.4em',
         textTransform: 'uppercase', color: INK, borderBottom: '1px solid ' + INK,
         paddingBottom: 2, textDecoration: 'none' }}>← Return to Journal</Link>
@@ -45,9 +42,6 @@ const BlogDetail = () => {
   const isArunStory    = post.heroType === 'arun-story';
   const isFirstStone   = post.heroType === 'first-stone';
   const isVastu        = post.heroType === 'vastu';
-
-  /* Posts that have Tamil translations */
-  const hasTamilContent = isVastu;
 
   const pageTitle = isArunStory
     ? `How Arun Built His Residence — A Client Story | Karrcholai Construction`
@@ -72,20 +66,6 @@ const BlogDetail = () => {
         {post.image && <meta property="og:image" content={post.image} />}
       </Helmet>
       <Navbar />
-
-      {/* ── Fixed language toggle — visible on all blog posts ── */}
-      <div style={{
-        position: 'fixed',
-        top: 'calc(var(--nav-height, 120px) + 16px)',
-        right: 16,
-        zIndex: 998,
-      }}>
-        <LangToggle style={{
-          borderRadius: 24,
-          boxShadow: '0 4px 18px rgba(0,0,0,0.18)',
-          fontSize: 11,
-        }} />
-      </div>
 
       <main>
 
@@ -230,7 +210,7 @@ const BlogDetail = () => {
                 transition={{ delay: 0.3 }}
                 style={{ color: '#d4af37', fontSize: 'clamp(0.9rem,2vw,1.1rem)', fontWeight: 900,
                   letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: 16 }}>
-                {lang === 'ta' ? 'வாஸ்து சாஸ்திரம்' : 'Vastu Shastras'}
+                Vastu Shastras
               </motion.p>
               <motion.h1
                 initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }}
@@ -238,9 +218,7 @@ const BlogDetail = () => {
                 style={{ color: '#fff', fontSize: 'clamp(2rem,4.5vw,4rem)', fontWeight: 900,
                   lineHeight: 1.15, letterSpacing: '-0.02em', margin: '0 auto 20px',
                   maxWidth: 900, width: '100%' }}>
-                {lang === 'ta'
-                  ? 'வாஸ்து சாஸ்திரம் உருவாக்கப்பட்டதன் நோக்கம் என்ன?'
-                  : 'What Was the Purpose Behind the Creation of the Vastu Shastras?'}
+                What Was the Purpose Behind the Creation of the Vastu Shastras?
               </motion.h1>
             </motion.div>
           </div>
@@ -318,6 +296,7 @@ const BlogDetail = () => {
         </div>
 
         {/* ── Internal linking: Topical cluster chains ── */}
+        {/* eslint-disable-next-line no-extra-parens */}
         {(() => {
           const relatedPosts = blogPosts
             .filter(p => p.id !== post.id && p.category === post.category)
@@ -366,7 +345,7 @@ const BlogDetail = () => {
                 {suggested.length > 0 && (
                   <div style={{ marginBottom: 48 }}>
                     <p style={{ fontSize: 9, fontWeight: 900, letterSpacing: '0.5em', textTransform: 'uppercase',
-                      color: 'rgba(0,0,0,0.25)', marginBottom: 24 }}>Continue Reading</p>
+                      color: 'rgba(0,0,0,0.6)', marginBottom: 24 }}>Continue Reading</p>
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 16 }}>
                       {suggested.map(related => (
                         <Link key={related.id} to={`/blog/${related.id}`}
@@ -387,7 +366,7 @@ const BlogDetail = () => {
 
                 {/* Topical cluster label */}
                 <p style={{ fontSize: 9, fontWeight: 900, letterSpacing: '0.5em', textTransform: 'uppercase',
-                  color: 'rgba(0,0,0,0.25)', marginBottom: 16 }}>Explore This Topic</p>
+                  color: 'rgba(0,0,0,0.6)', marginBottom: 16 }}>Explore This Topic</p>
 
                 {/* Cluster chain — one per row, centered */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -398,10 +377,10 @@ const BlogDetail = () => {
                       <span style={{ fontSize: 20, flexShrink: 0 }}>{cl.emoji}</span>
                       <div style={{ flex: 1 }}>
                         <span style={{ fontSize: 7, fontWeight: 900, letterSpacing: '0.35em', textTransform: 'uppercase',
-                          color: cl.accent, display: 'block', marginBottom: 2 }}>{cl.label}</span>
+                          color: cl.accent === 'rgba(255,255,255,0.35)' ? 'rgba(255,255,255,0.75)' : cl.accent === 'rgba(255,255,255,0.45)' ? 'rgba(255,255,255,0.8)' : cl.accent, display: 'block', marginBottom: 2 }}>{cl.label}</span>
                         <span style={{ fontSize: 13, fontWeight: 700, color: '#fff' }}>{cl.title}</span>
                       </div>
-                      <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', flexShrink: 0 }}>→</span>
+                      <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.65)', flexShrink: 0 }}>→</span>
                     </Link>
                   ))}
                 </div>
@@ -415,9 +394,9 @@ const BlogDetail = () => {
           textAlign: 'center' }}>
           <Link to="/blog"
             style={{ fontSize: 10, fontWeight: 900, letterSpacing: '0.5em',
-              textTransform: 'uppercase', color: 'rgba(0,0,0,0.25)', textDecoration: 'none' }}
+              textTransform: 'uppercase', color: 'rgba(0,0,0,0.55)', textDecoration: 'none' }}
             onMouseEnter={e => e.currentTarget.style.color = INK}
-            onMouseLeave={e => e.currentTarget.style.color = 'rgba(0,0,0,0.25)'}>
+            onMouseLeave={e => e.currentTarget.style.color = 'rgba(0,0,0,0.55)'}>
             ← Back to the Journal
           </Link>
         </div>

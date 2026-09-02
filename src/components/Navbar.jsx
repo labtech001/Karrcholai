@@ -171,7 +171,7 @@ const Navbar = () => {
                                 {item.name}
                               </span>
                               <span style={{ display: 'block', fontSize: '0.62rem',
-                                color: 'rgba(26,26,26,0.45)', fontWeight: '500' }}>
+                                color: 'rgba(26,26,26,0.60)', fontWeight: '500' }}>
                                 {item.desc}
                               </span>
                             </Link>
@@ -270,8 +270,8 @@ const Navbar = () => {
                     }}
                   >
                     <span style={{ fontSize: '0.85rem', fontWeight: '700', letterSpacing: '0.2em',
-                      textTransform: 'uppercase', color: isActive ? '#C9754A' : 'rgba(255,255,255,0.8)' }}>
-                      <span style={{ fontSize: '0.55rem', opacity: 0.3, marginRight: '0.8rem',
+                      textTransform: 'uppercase', color: isActive ? '#C9754A' : 'rgba(255,255,255,0.85)' }}>
+                      <span style={{ fontSize: '0.55rem', opacity: 0.5, marginRight: '0.8rem',
                         fontFamily: 'monospace', fontWeight: 400 }}>0{i+1}</span>
                       {link.name}
                     </span>
@@ -296,7 +296,7 @@ const Navbar = () => {
                             padding: '0.95rem 1.5rem 0.95rem 2.5rem',
                             textDecoration: 'none',
                             borderBottom: '1px solid rgba(255,255,255,0.04)',
-                            color: location.pathname === sub.path ? '#C9754A' : 'rgba(255,255,255,0.55)',
+                            color: location.pathname === sub.path ? '#C9754A' : 'rgba(255,255,255,0.75)',
                             fontSize: '0.72rem', fontWeight: '600', letterSpacing: '0.18em',
                             textTransform: 'uppercase',
                             WebkitTapHighlightColor: 'rgba(201,117,74,0.15)',
@@ -349,7 +349,7 @@ const Navbar = () => {
 
         {/* Footer */}
         <div style={{ padding: '1.25rem 1.5rem', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-          <p style={{ fontSize: '0.6rem', color: 'rgba(255,255,255,0.4)',
+          <p style={{ fontSize: '0.6rem', color: 'rgba(255,255,255,0.55)',
             letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: '600' }}>
             Karrcholai Construction — Premium Residential Builds
           </p>

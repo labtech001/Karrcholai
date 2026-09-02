@@ -65,7 +65,7 @@ const VastuCompassPage = () => {
         {/* Topical cluster: Vastu article → Manaiyadi Calculator → Construction → Contact */}
         <section className="py-12 px-4 md:px-6" style={{ background: '#F5F2EC' }}>
           <div className="mx-auto max-w-5xl">
-            <p className="text-[9px] font-black tracking-[0.5em] uppercase mb-5" style={{ color: 'rgba(0,0,0,0.25)' }}>
+            <p className="text-[9px] font-black tracking-[0.5em] uppercase mb-5" style={{ color: 'rgba(0,0,0,0.60)' }}>
               Explore This Topic
             </p>
             <div className="flex flex-wrap items-center gap-3">
@@ -82,11 +82,11 @@ const VastuCompassPage = () => {
                     style={{ background: cl.bg, textDecoration: 'none' }}>
                     <span className="text-lg">{cl.emoji}</span>
                     <span>
-                      <span className="block text-[7px] font-black tracking-[0.35em] uppercase mb-0.5" style={{ color: cl.accent }}>{cl.label}</span>
+                      <span className="block text-[7px] font-black tracking-[0.35em] uppercase mb-0.5" style={{ color: typeof cl.accent === 'string' && cl.accent.startsWith('rgba') ? 'rgba(255,255,255,0.80)' : cl.accent }}>{cl.label}</span>
                       <span className="block text-[12px] font-bold text-white whitespace-nowrap">{cl.title}</span>
                     </span>
                   </a>
-                  {idx < arr.length - 1 && <span className="font-black text-xs" style={{ color: 'rgba(0,0,0,0.2)' }}>→</span>}
+                  {idx < arr.length - 1 && <span className="font-black text-xs" style={{ color: 'rgba(0,0,0,0.45)' }}>→</span>}
                 </span>
               ))}
             </div>

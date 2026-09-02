@@ -149,7 +149,7 @@ const AboutUs = () => {
             transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
             className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4"
           >
-            <span className="text-white/30 text-[10px] uppercase tracking-[0.4em] rotate-90 mb-8">Scroll</span>
+            <span className="text-white/55 text-[10px] uppercase tracking-[0.4em] rotate-90 mb-8">Scroll</span>
             <div className="w-[1px] h-20 bg-gradient-to-b from-secondary to-transparent" />
           </motion.div>
         </section>
@@ -183,7 +183,7 @@ const AboutUs = () => {
                   <span className="text-transparent" style={{ WebkitTextStroke: '2px #C9754A' }}>Stone</span><br />
                   to Oasis
                 </h2>
-                <p className="text-white/40 text-sm font-light leading-relaxed max-w-sm">
+                <p className="text-white/65 text-sm font-light leading-relaxed max-w-sm">
                   A story of discipline, purpose and the belief that every family deserves a residence built with clarity and care.
                 </p>
               </div>
@@ -195,7 +195,7 @@ const AboutUs = () => {
                 ].map((s) => (
                   <div key={s.num}>
                     <div className="text-2xl md:text-4xl font-black text-secondary tracking-tighter">{s.num}</div>
-                    <div className="text-[9px] uppercase tracking-[0.25em] text-white/30 mt-1.5">{s.label}</div>
+                    <div className="text-[9px] uppercase tracking-[0.25em] text-white/55 mt-1.5">{s.label}</div>
                   </div>
                 ))}
               </div>
@@ -256,7 +256,7 @@ const AboutUs = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.7, delay: 0.15 }}
-                  className="text-white/40 text-sm max-w-xs leading-relaxed"
+                  className="text-white/65 text-sm max-w-xs leading-relaxed"
                 >
                   Homeowners were being let down — not by lack of money, but by lack of structure, discipline and accountability.
                 </motion.p>
@@ -281,7 +281,7 @@ const AboutUs = () => {
                     <div className="absolute top-0 right-0 w-full h-[2px] bg-gradient-to-l from-secondary/0 via-secondary/0 to-secondary/0 group-hover:via-secondary/60 transition-all duration-700" />
                     <div className="text-4xl font-black text-white/5 group-hover:text-white/10 transition-colors duration-500 mb-3 tracking-tighter select-none">{item.num}</div>
                     <div className="text-secondary font-bold text-sm mb-2 tracking-wide">{item.label}</div>
-                    <div className="text-white/45 text-[13px] leading-relaxed">{item.desc}</div>
+                    <div className="text-white/60 text-[13px] leading-relaxed">{item.desc}</div>
                   </motion.div>
                 ))}
               </div>
@@ -314,7 +314,7 @@ const AboutUs = () => {
                     Two names. One vision.
                   </h3>
                 </div>
-                <p className="text-dark/45 text-sm max-w-sm md:text-right leading-relaxed hidden md:block">
+                <p className="text-dark/65 text-sm max-w-sm md:text-right leading-relaxed hidden md:block">
                   KARR and CHOLAI aren't just words — they are the two principles that guide every decision we make on every project.
                 </p>
               </div>
@@ -345,7 +345,7 @@ const AboutUs = () => {
                     </div>
                   </div>
 
-                  <p className="text-white/55 text-[14px] leading-relaxed mb-7 max-w-md">
+                  <p className="text-white/70 text-[14px] leading-relaxed mb-7 max-w-md">
                     KARR represents the stone — the foundation, the discipline, the unwavering commitment to getting every structural detail right. Good building comes from planning, coordination, verified workmanship and consistent site execution at every stage.
                   </p>
 
@@ -368,7 +368,7 @@ const AboutUs = () => {
                         className="flex items-center gap-4 py-3 group/item"
                       >
                         <span className="w-1.5 h-1.5 rounded-full bg-secondary shrink-0" />
-                        <span className="text-[13px] text-white/60 group-hover/item:text-white/90 transition-colors duration-300">{item}</span>
+                        <span className="text-[13px] text-white/75 group-hover/item:text-white/90 transition-colors duration-300">{item}</span>
                       </motion.div>
                     ))}
                   </div>
@@ -419,7 +419,7 @@ const AboutUs = () => {
                         <span className="text-xl shrink-0">{item.icon}</span>
                         <div>
                           <div className="text-sm font-bold text-dark group-hover/card:text-secondary transition-colors duration-300">{item.label}</div>
-                          <div className="text-[11px] text-dark/45 mt-0.5">{item.desc}</div>
+                          <div className="text-[11px] text-dark/65 mt-0.5">{item.desc}</div>
                         </div>
                       </motion.div>
                     ))}
@@ -471,7 +471,7 @@ const AboutUs = () => {
                     <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-secondary to-secondary/30 group-hover:w-full transition-all duration-700 ease-out" />
                     <div className="w-8 h-[2px] bg-secondary mb-5" />
                     <h4 className="text-white font-bold text-base mb-3 tracking-wide">{item.title}</h4>
-                    <p className="text-white/45 text-[13px] leading-relaxed">{item.body}</p>
+                    <p className="text-white/65 text-[13px] leading-relaxed">{item.body}</p>
                   </motion.div>
                 ))}
               </div>
@@ -483,7 +483,7 @@ const AboutUs = () => {
                 transition={{ duration: 0.7 }}
                 className="relative text-center px-5 md:px-6 py-8 md:py-10 rounded-2xl overflow-hidden border border-secondary/20 bg-gradient-to-r from-secondary/10 via-secondary/5 to-secondary/10"
               >
-                <p className="text-white/30 text-[10px] uppercase tracking-[0.5em] mb-3">This is the responsibility we carry</p>
+                <p className="text-white/60 text-[10px] uppercase tracking-[0.5em] mb-3">This is the responsibility we carry</p>
                 <p className="text-white text-base md:text-2xl font-light leading-relaxed max-w-3xl mx-auto">
                   We want to build residences that are <strong className="text-secondary">strong in structure</strong>, practical in living, thoughtful in resource use and respectful of nature — because we are not simply building for today.
                 </p>
@@ -507,9 +507,9 @@ const AboutUs = () => {
                 >
                   <div>
                     <div className="text-3xl md:text-6xl font-black text-dark tracking-tighter mb-2">Karr</div>
-                    <div className="text-dark/30 text-[9px] font-bold uppercase tracking-[0.4em]">Stone · Strength · Structure</div>
+                    <div className="text-dark/55 text-[9px] font-bold uppercase tracking-[0.4em]">Stone · Strength · Structure</div>
                   </div>
-                  <p className="text-dark/45 text-sm leading-relaxed mt-6">
+                  <p className="text-dark/65 text-sm leading-relaxed mt-6">
                     Gives the home its <strong className="text-dark">strength.</strong>
                   </p>
                 </motion.div>
@@ -522,14 +522,14 @@ const AboutUs = () => {
                   transition={{ duration: 0.7, delay: 0.1 }}
                   className="flex-[2] bg-[#f5f2ee] px-6 md:px-14 py-8 md:py-10 flex flex-col items-center justify-center text-center md:border-r border-b md:border-b-0 border-dark/8"
                 >
-                  <p className="text-dark/30 text-[9px] font-black uppercase tracking-[0.5em] mb-3">Together</p>
+                  <p className="text-dark/65 text-[9px] font-black uppercase tracking-[0.5em] mb-3">Together</p>
                   <h4 className="text-lg md:text-2xl font-black text-dark tracking-tight leading-tight mb-3">
                     A house should be more than a structure.
                   </h4>
-                  <p className="text-dark/45 text-[13px] leading-relaxed max-w-sm mb-6">
+                  <p className="text-dark/65 text-[13px] leading-relaxed max-w-sm mb-6">
                     A place where people and nature can exist together responsibly — built with tomorrow in mind.
                   </p>
-                  <div className="px-5 py-2.5 border border-dark/15 text-dark/40 text-[9px] font-black uppercase tracking-[0.35em] rounded-full hover:border-secondary/50 hover:text-secondary transition-all duration-300 cursor-default text-center">
+                  <div className="px-5 py-2.5 border border-dark/15 text-dark/65 text-[9px] font-black uppercase tracking-[0.35em] rounded-full hover:border-secondary/50 hover:text-secondary transition-all duration-300 cursor-default text-center">
                     From Stone to Oasis — We Build Better Living
                   </div>
                 </motion.div>
@@ -544,9 +544,9 @@ const AboutUs = () => {
                 >
                   <div>
                     <div className="text-3xl md:text-6xl font-black text-dark tracking-tighter mb-2">Cholai</div>
-                    <div className="text-dark/30 text-[9px] font-bold uppercase tracking-[0.4em]">Oasis · Life · Sustainability</div>
+                    <div className="text-dark/55 text-[9px] font-bold uppercase tracking-[0.4em]">Oasis · Life · Sustainability</div>
                   </div>
-                  <p className="text-dark/45 text-sm leading-relaxed mt-6">
+                  <p className="text-dark/65 text-sm leading-relaxed mt-6">
                     Gives the home its <strong className="text-dark">life.</strong>
                   </p>
                 </motion.div>
@@ -621,7 +621,7 @@ const AboutUs = () => {
                   <p className="text-secondary text-sm font-bold uppercase tracking-[0.3em] mt-3">BE Civil Engineer · Founder, Karrcholai Construction</p>
                 </div>
 
-                <div className="space-y-4 text-[14px] text-white/55 leading-[1.9]">
+                <div className="space-y-4 text-[14px] text-white/75 leading-[1.9]">
                   <p>
                     With more than <strong className="text-white">12 years of professional experience</strong>, my journey has been shaped by practical site experience, disciplined project execution and a strong belief in honest, responsible building practices.
                   </p>
@@ -639,7 +639,7 @@ const AboutUs = () => {
                 {/* Credential pills */}
                 <div className="flex flex-wrap gap-2 mt-8">
                   {['12+ Years Experience', 'BE Civil Engineer', 'MNC Background', 'Architectural Exposure', 'Project Management'].map((tag) => (
-                    <span key={tag} className="px-3 py-1.5 border border-white/10 rounded-full text-[10px] text-white/40 font-semibold uppercase tracking-wide hover:border-secondary/40 hover:text-secondary/70 transition-colors duration-300">
+                    <span key={tag} className="px-3 py-1.5 border border-white/10 rounded-full text-[10px] text-white/65 font-semibold uppercase tracking-wide hover:border-secondary/40 hover:text-secondary/70 transition-colors duration-300">
                       {tag}
                     </span>
                   ))}
@@ -647,7 +647,7 @@ const AboutUs = () => {
 
                 {/* Signature */}
                 <div className="mt-10 pt-7 border-t border-white/8">
-                  <p className="text-white/25 text-[10px] uppercase tracking-[0.3em] mb-1">With regards,</p>
+                  <p className="text-white/55 text-[10px] uppercase tracking-[0.3em] mb-1">With regards,</p>
                   <p className="text-white font-black text-xl tracking-tight">Saravanakumar B.</p>
                   <p className="text-secondary text-[10px] font-bold uppercase tracking-[0.25em] mt-0.5">Founder & Civil Engineer</p>
                 </div>
@@ -677,7 +677,7 @@ const AboutUs = () => {
                   <h3 className="text-3xl md:text-5xl font-black text-white tracking-tighter leading-[0.92] mb-6">
                     A home is where <br /><span className="text-secondary">life happens.</span>
                   </h3>
-                  <p className="text-white/40 text-sm leading-relaxed max-w-sm">
+                  <p className="text-white/65 text-sm leading-relaxed max-w-sm">
                     Every decision on a construction site has consequences — for the family, for the budget, and for the environment.
                   </p>
                 </motion.div>
@@ -749,14 +749,14 @@ const AboutUs = () => {
                   transition={{ duration: 0.7, delay: 0.15 }}
                   className="max-w-md"
                 >
-                  <p className="text-dark/50 text-[14px] md:text-[15px] leading-relaxed mb-5">
+                  <p className="text-dark/70 text-[14px] md:text-[15px] leading-relaxed mb-5">
                     Building a new residence should be organised, transparent, and stress-free — not confusing. We follow a systematic process from your first enquiry to final handover.
                   </p>
                   <div className="flex flex-wrap gap-2 items-center text-[10px] font-black uppercase tracking-[0.3em]">
                     {['Listen', 'Plan', 'Execute', 'Monitor', 'Deliver'].map((word, i, arr) => (
                       <React.Fragment key={word}>
                         <span className="text-secondary">{word}</span>
-                        {i < arr.length - 1 && <span className="text-dark/20 font-normal">→</span>}
+                        {i < arr.length - 1 && <span className="text-dark/55 font-normal">→</span>}
                       </React.Fragment>
                     ))}
                   </div>
@@ -788,7 +788,7 @@ const AboutUs = () => {
                         {item.step}
                       </div>
                       <h4 className="text-[15px] font-bold text-dark mb-3 leading-snug tracking-tight group-hover:text-secondary transition-colors duration-300">{item.title}</h4>
-                      <p className="text-[12px] md:text-[13px] text-dark/50 font-light leading-relaxed">{item.desc}</p>
+                      <p className="text-[12px] md:text-[13px] text-dark/65 font-light leading-relaxed">{item.desc}</p>
                     </div>
                   </motion.div>
                 ))}
@@ -843,7 +843,7 @@ const AboutUs = () => {
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.7, delay: 0.15 }}
-                  className="text-white/30 text-sm max-w-xs leading-relaxed"
+                  className="text-white/60 text-sm max-w-xs leading-relaxed"
                 >
                   Three non-negotiable principles that guide every project we take on.
                 </motion.p>
@@ -889,7 +889,7 @@ const AboutUs = () => {
                         <span className="text-3xl font-black text-white/5 group-hover:text-white/10 transition-colors duration-300 tracking-tighter select-none">{item.num}</span>
                       </div>
                       <h4 className="text-white font-bold text-base md:text-lg mb-3 tracking-tight group-hover:text-secondary transition-colors duration-300">{item.title}</h4>
-                      <p className="text-white/40 text-[13px] leading-relaxed">{item.desc}</p>
+                      <p className="text-white/65 text-[13px] leading-relaxed">{item.desc}</p>
                     </div>
                   </motion.div>
                 ))}
@@ -921,7 +921,7 @@ const AboutUs = () => {
                       <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-secondary text-sm shrink-0 group-hover/pill:bg-secondary group-hover/pill:text-white transition-all duration-300">
                         {item.icon}
                       </div>
-                      <span className="text-white/50 text-[11px] md:text-[12px] font-semibold leading-tight group-hover/pill:text-white/80 transition-colors duration-300">{item.title}</span>
+                      <span className="text-white/70 text-[11px] md:text-[12px] font-semibold leading-tight group-hover/pill:text-white/80 transition-colors duration-300">{item.title}</span>
                     </div>
                   ))}
                 </div>
@@ -958,7 +958,7 @@ const AboutUs = () => {
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.7, delay: 0.15 }}
-                  className="text-dark/40 text-sm max-w-xs leading-relaxed"
+                  className="text-dark/65 text-sm max-w-xs leading-relaxed"
                 >
                   Real feedback from families who trusted us with their most important investment.
                 </motion.p>
@@ -1016,7 +1016,7 @@ const AboutUs = () => {
                       />
                       <div>
                         <h4 className="text-[13px] font-bold text-dark tracking-tight group-hover:text-secondary transition-colors duration-300 leading-snug">{item.name}</h4>
-                        <p className="text-[10px] text-dark/40 font-semibold uppercase tracking-wider mt-0.5">{item.role}</p>
+                        <p className="text-[10px] text-dark/60 font-semibold uppercase tracking-wider mt-0.5">{item.role}</p>
                       </div>
                     </div>
                   </motion.div>

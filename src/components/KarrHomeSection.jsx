@@ -100,7 +100,7 @@ const KarrHomeSection = () => {
               >
                 கற்
               </span>
-              <span className="block text-2xl sm:text-3xl md:text-4xl font-light text-[#1a1a1a]/15">Construction.</span>
+              <span className="block text-2xl sm:text-3xl md:text-4xl font-light text-[#1a1a1a]/40">Construction.</span>
             </motion.h2>
           </div>
 
@@ -111,7 +111,7 @@ const KarrHomeSection = () => {
             transition={{ delay: 0.3 }}
             className="max-w-xs"
           >
-            <p className="text-[#1a1a1a]/45 text-sm font-light leading-relaxed mb-5 sm:mb-6">
+            <p className="text-[#1a1a1a]/60 text-sm font-light leading-relaxed mb-5 sm:mb-6">
               The Karr division focuses on strong, durable, and professionally managed residential construction services across Tamil Nadu.
             </p>
             <Link to="/karr">
@@ -131,7 +131,7 @@ const KarrHomeSection = () => {
               className={`flex-1 sm:flex-none px-5 sm:px-7 py-3 rounded-xl text-[10px] font-black tracking-[0.3em] uppercase transition-all duration-300 whitespace-nowrap ${
                 active === i
                   ? 'bg-[#1a1a1a] text-white shadow-lg'
-                  : 'text-[#1a1a1a]/40 hover:text-[#1a1a1a]'
+                  : 'text-[#1a1a1a]/60 hover:text-[#1a1a1a]'
               }`}
             >
               {tab.label}
@@ -176,7 +176,7 @@ const KarrHomeSection = () => {
 
                 {/* Bottom stat */}
                 <div className="absolute bottom-5 left-5 sm:bottom-8 sm:left-8">
-                  <p className="text-white/50 text-[8px] sm:text-[9px] font-black tracking-widest uppercase mb-1">
+                  <p className="text-white/65 text-[8px] sm:text-[9px] font-black tracking-widest uppercase mb-1">
                     {active === 0 ? 'Homes Built' : active === 1 ? 'Projects Managed' : 'Projects Renovated'}
                   </p>
                   <p className="text-4xl sm:text-5xl font-black text-white leading-none">
@@ -191,11 +191,11 @@ const KarrHomeSection = () => {
               <div>
                 <h3 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#1a1a1a] leading-tight tracking-tight mb-4 sm:mb-6">
                   {current.headline.split(' ').slice(0, -1).join(' ')}{' '}
-                  <span className="font-light text-[#1a1a1a]/20">
+                  <span className="font-light text-[#1a1a1a]/45">
                     {current.headline.split(' ').slice(-1)}
                   </span>
                 </h3>
-                <p className="text-[#1a1a1a]/50 text-sm sm:text-base font-light leading-relaxed max-w-xl">
+                <p className="text-[#1a1a1a]/65 text-sm sm:text-base font-light leading-relaxed max-w-xl">
                   {current.desc}
                 </p>
               </div>
@@ -242,7 +242,7 @@ const KarrHomeSection = () => {
               {/* Estimation Highlights */}
               {active === 0 && (
                 <div className="p-5 sm:p-6 bg-[#2D4B37] rounded-2xl text-white">
-                  <p className="text-[10px] font-black tracking-widest uppercase text-white/40 mb-3 sm:mb-4">Our Process Includes</p>
+                  <p className="text-[10px] font-black tracking-widest uppercase text-white/60 mb-3 sm:mb-4">Our Process Includes</p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
                     {['Detailed cost estimation', 'Project planning', 'Material scheduling', 'Budget control'].map((t, i) => (
                       <div key={i} className="flex items-center gap-3 text-white/80 text-sm font-light">
@@ -256,7 +256,7 @@ const KarrHomeSection = () => {
               <Link to="/karr">
                 <motion.button
                   whileHover={{ x: 8 }}
-                  className="group flex items-center gap-4 text-[10px] font-black tracking-[0.4em] uppercase text-[#1a1a1a]/40 hover:text-[#B85C38] transition-colors w-fit"
+                  className="group flex items-center gap-4 text-[10px] font-black tracking-[0.4em] uppercase text-[#1a1a1a]/60 hover:text-[#B85C38] transition-colors w-fit"
                 >
                   Learn More About Karr
                   <FiArrowRight className="text-[#B85C38] group-hover:translate-x-2 transition-transform" />

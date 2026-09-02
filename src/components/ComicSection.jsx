@@ -117,7 +117,7 @@ function StatBar(p) {
       }
     }, p.items.map(function(s, i) {
       return React.createElement('div', { key: i, style: { background: CREAM, padding: '14px 8px', textAlign: 'center' } },
-        React.createElement('p', { style: { fontSize: 9, fontWeight: 700, color: 'rgba(0,0,0,0.38)', textTransform: 'uppercase', letterSpacing: '0.22em', margin: '0 0 4px' } }, s.label),
+        React.createElement('p', { style: { fontSize: 9, fontWeight: 700, color: 'rgba(0,0,0,0.55)', textTransform: 'uppercase', letterSpacing: '0.22em', margin: '0 0 4px' } }, s.label),
         React.createElement('p', { style: { fontSize: 15, fontWeight: 900, color: FOREST, margin: 0 } }, s.value)
       );
     }))
@@ -152,13 +152,13 @@ export default function ComicSection() {
           React.createElement('div', { style: { height: 1, width: 32, background: TERRA } })
         ),
         React.createElement('h2', { style: { fontSize: 'clamp(1.7rem,4vw,2.8rem)', fontWeight: 900, color: INK, letterSpacing: '-0.02em', lineHeight: 1.1, margin: '0 0 12px' } }, 'From Empty Plot to Keys in Hand'),
-        React.createElement('p', { style: { fontSize: 14, color: 'rgba(0,0,0,0.42)', maxWidth: 420, margin: '0 auto', lineHeight: 1.7 } }, 'Every person involved. Every conversation that mattered. The complete story of how Arun built his residence with Karrcholai.')
+        React.createElement('p', { style: { fontSize: 14, color: 'rgba(0,0,0,0.62)', maxWidth: 420, margin: '0 auto', lineHeight: 1.7 } }, 'Every person involved. Every conversation that mattered. The complete story of how Arun built his residence with Karrcholai.')
       )
     ),
 
     // Cast
     React.createElement(Reveal, { delay: 0.06 },
-      React.createElement('p', { style: { fontSize: 9, fontWeight: 900, color: 'rgba(0,0,0,0.28)', letterSpacing: '0.4em', textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 } }, 'Characters'),
+      React.createElement('p', { style: { fontSize: 9, fontWeight: 900, color: 'rgba(0,0,0,0.55)', letterSpacing: '0.4em', textTransform: 'uppercase', textAlign: 'center', marginBottom: 14 } }, 'Characters'),
       React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'center', marginBottom: 48 } },
         [
           { name: 'Arun Kumar', role: 'Client', bg: '#3a5a8a', note: 'Dreamed of owning a home for 10 years.' },
@@ -178,7 +178,7 @@ export default function ComicSection() {
             React.createElement('div', null,
               React.createElement('p', { style: { fontSize: 12, fontWeight: 800, color: INK, margin: '0 0 2px' } }, c.name),
               React.createElement('p', { style: { fontSize: 8, fontWeight: 700, color: TERRA, textTransform: 'uppercase', letterSpacing: '0.2em', margin: '0 0 4px' } }, c.role),
-              React.createElement('p', { style: { fontSize: 11, color: 'rgba(0,0,0,0.48)', margin: 0, lineHeight: 1.4 } }, c.note)
+              React.createElement('p', { style: { fontSize: 11, color: 'rgba(0,0,0,0.62)', margin: 0, lineHeight: 1.4 } }, c.note)
             )
           );
         })
@@ -283,7 +283,7 @@ export default function ComicSection() {
       React.createElement('div', {
         style: { background: FOREST, borderRadius: 12, padding: '40px 28px', textAlign: 'center', boxShadow: '0 6px 32px rgba(45,75,55,0.18)' }
       },
-        React.createElement('p', { style: { fontSize: 9, fontWeight: 900, color: 'rgba(255,255,255,0.35)', letterSpacing: '0.5em', textTransform: 'uppercase', marginBottom: 18 } }, 'Verified Client \u00B7 Erode, Tamil Nadu'),
+        React.createElement('p', { style: { fontSize: 9, fontWeight: 900, color: 'rgba(255,255,255,0.65)', letterSpacing: '0.5em', textTransform: 'uppercase', marginBottom: 18 } }, 'Verified Client \u00B7 Erode, Tamil Nadu'),
         React.createElement('p', { style: { fontSize: 'clamp(1rem,2.8vw,1.5rem)', color: '#fff', lineHeight: 1.75, fontStyle: 'italic', maxWidth: 500, margin: '0 auto 20px', fontWeight: 400 } },
           '"10 years of renting. One call. Eight months. And now every morning I wake up in a house that is completely, entirely, perfectly ours."'
         ),
@@ -299,7 +299,7 @@ export default function ComicSection() {
             }, '\u2605');
           })
         ),
-        React.createElement('p', { style: { fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.4)', letterSpacing: '0.3em', textTransform: 'uppercase', margin: '0 0 24px' } }, '\u2014 Arun Kumar'),
+        React.createElement('p', { style: { fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.65)', letterSpacing: '0.3em', textTransform: 'uppercase', margin: '0 0 24px' } }, '\u2014 Arun Kumar'),
         React.createElement('a', {
           href: '/contact',
           style: { display: 'inline-block', background: TERRA, color: '#fff', fontSize: 11, fontWeight: 900, letterSpacing: '0.25em', textTransform: 'uppercase', padding: '13px 28px', borderRadius: 6, textDecoration: 'none', boxShadow: '0 4px 16px rgba(184,92,56,0.35)' }

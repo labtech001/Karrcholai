@@ -11,7 +11,7 @@ const inpClass = `w-full px-5 py-4 rounded-2xl text-sm font-medium outline-none 
 
 const Field = ({ label, children }) => (
   <div className="flex flex-col gap-2">
-    <label className="text-[10px] font-black uppercase tracking-[0.3em] text-dark/40 ml-1">{label}</label>
+    <label className="text-[10px] font-black uppercase tracking-[0.3em] text-dark/65 ml-1">{label}</label>
     {children}
   </div>
 )
@@ -103,7 +103,7 @@ const HomeContactSection = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <h3 className="text-[10px] font-black tracking-[0.4em] uppercase text-dark/40 mb-8 ml-1">Contact Details</h3>
+              <h3 className="text-[10px] font-black tracking-[0.4em] uppercase text-dark/65 mb-8 ml-1">Contact Details</h3>
               <div className="space-y-8">
                 {[
                   { icon: FiPhone, label: 'Call Us', value: '+91 97414 16747', color: TERRA },
@@ -116,7 +116,7 @@ const HomeContactSection = () => {
                       <item.icon size={20} style={{ color: item.color }} />
                     </div>
                     <div>
-                      <p className="text-[10px] font-black tracking-[0.2em] uppercase text-dark/30 mb-1">{item.label}</p>
+                      <p className="text-[10px] font-black tracking-[0.2em] uppercase text-dark/55 mb-1">{item.label}</p>
                       <p className="text-lg font-bold text-dark">{item.value}</p>
                     </div>
                   </div>
@@ -138,16 +138,16 @@ const HomeContactSection = () => {
                 <h4 className="text-xs font-black tracking-[0.3em] uppercase text-secondary mb-6">Office Hours</h4>
                 <div className="space-y-4">
                   <div className="flex justify-between items-center border-b border-white/5 pb-3">
-                    <span className="text-sm font-light text-white/50">Mon – Fri</span>
+                    <span className="text-sm font-light text-white/65">Mon – Fri</span>
                     <span className="text-sm font-bold">9:00 AM – 6:00 PM</span>
                   </div>
                   <div className="flex justify-between items-center border-b border-white/5 pb-3">
-                    <span className="text-sm font-light text-white/50">Sat</span>
+                    <span className="text-sm font-light text-white/65">Sat</span>
                     <span className="text-sm font-bold">10:00 AM – 4:00 PM</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-sm font-light text-white/50">Sun</span>
-                    <span className="text-sm font-bold text-secondary/50">Closed</span>
+                    <span className="text-sm font-light text-white/65">Sun</span>
+                    <span className="text-sm font-bold text-secondary/70">Closed</span>
                   </div>
                 </div>
               </div>

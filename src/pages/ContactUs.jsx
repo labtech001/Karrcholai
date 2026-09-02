@@ -37,7 +37,7 @@ function Field({ label, children }) {
   return (
     <motion.div initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }} transition={{ duration: 0.5 }} className="flex flex-col gap-1">
-      <label className="text-[10px] font-black uppercase tracking-[0.3em]" style={{ color: `${DARK}55` }}>{label}</label>
+      <label className="text-[10px] font-black uppercase tracking-[0.3em]" style={{ color: `${DARK}70` }}>{label}</label>
       {children}
     </motion.div>
   )
@@ -223,7 +223,7 @@ export default function ContactUs() {
           transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
           className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-10"
         >
-          <span className="text-white/30 text-[9px] uppercase tracking-[0.4em] font-bold">Scroll</span>
+          <span className="text-white/55 text-[9px] uppercase tracking-[0.4em] font-bold">Scroll</span>
           <div className="w-px h-12" style={{ background: `linear-gradient(to bottom, ${TERRA}, transparent)` }} />
         </motion.div>
       </section>
@@ -275,7 +275,7 @@ export default function ContactUs() {
                     <item.Icon size={17} style={{ color: item.color }} />
                   </div>
                   <div>
-                    <p className="text-[10px] font-black tracking-[0.25em] uppercase" style={{ color: `${DARK}45` }}>{item.label}</p>
+                    <p className="text-[10px] font-black tracking-[0.25em] uppercase" style={{ color: `${DARK}65` }}>{item.label}</p>
                     <p className="text-sm font-bold group-hover:underline" style={{ color: DARK }}>{item.value}</p>
                   </div>
                   <FiArrowRight size={13} className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: item.color }} />
@@ -332,7 +332,7 @@ export default function ContactUs() {
               className="lg:col-span-3 rounded-[2rem] p-5 sm:p-6 flex flex-col" style={{ background: CREAM }}>
               <div className="mb-3">
                 <h3 className="text-xl font-black mb-0.5" style={{ color: DARK }}>Get in Touch</h3>
-                <p className="text-[11px] font-light" style={{ color: `${DARK}60` }}>We'll get back to you shortly.</p>
+                <p className="text-[11px] font-light" style={{ color: `${DARK}75` }}>We'll get back to you shortly.</p>
               </div>
               <form onSubmit={handleSubmit} ref={contactFormRef} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-3">
@@ -417,13 +417,13 @@ export default function ContactUs() {
                   <motion.div key={i} initial={{ opacity: 0, x: 10 }} animate={formInView ? { opacity: 1, x: 0 } : {}}
                     transition={{ delay: 0.4 + i * 0.1 }}
                     className="flex justify-between items-center py-2.5 border-b last:border-0" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
-                    <span className="text-xs font-medium" style={{ color: 'rgba(255,255,255,0.45)' }}>{row.day}</span>
+                    <span className="text-xs font-medium" style={{ color: 'rgba(255,255,255,0.65)' }}>{row.day}</span>
                     <span className="text-xs font-bold" style={{ color: row.open ? TERRA : 'rgba(255,255,255,0.2)' }}>{row.time}</span>
                   </motion.div>
                 ))}
                 <div className="mt-4 flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                  <span className="text-[10px] font-bold tracking-widest uppercase" style={{ color: 'rgba(255,255,255,0.3)' }}>Currently Open</span>
+                  <span className="text-[10px] font-bold tracking-widest uppercase" style={{ color: 'rgba(255,255,255,0.55)' }}>Currently Open</span>
                 </div>
               </div>
 
@@ -435,7 +435,7 @@ export default function ContactUs() {
                       <FiPhone size={14} style={{ color: TERRA }} />
                     </div>
                     <div>
-                      <p className="text-[9px] font-black tracking-widest uppercase text-white/30">Direct Call</p>
+                      <p className="text-[9px] font-black tracking-widest uppercase text-white/55">Direct Call</p>
                       <p className="text-sm font-bold text-white">+91 97414 16747</p>
                     </div>
                   </div>
@@ -444,7 +444,7 @@ export default function ContactUs() {
                       <FiMail size={14} style={{ color: FOREST }} />
                     </div>
                     <div>
-                      <p className="text-[9px] font-black tracking-widest uppercase text-white/30">Official Email</p>
+                      <p className="text-[9px] font-black tracking-widest uppercase text-white/55">Official Email</p>
                       <p className="text-sm font-bold text-white">karrcholai@gmail.com</p>
                     </div>
                   </div>
@@ -521,7 +521,7 @@ export default function ContactUs() {
                 style={{ background: 'rgba(22,20,16,0.92)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.1)' }}>
                 <div className="flex-1 min-w-0">
                   <h3 className="text-base font-black text-white mb-1">Find Us</h3>
-                  <p className="text-[10px] font-light text-white/40 leading-relaxed">5/20, Puliyampatti, CV Palayam (PO), Pugalur Taluk, Thennilai West, Karur — 639 206</p>
+                  <p className="text-[10px] font-light text-white/60 leading-relaxed">5/20, Puliyampatti, CV Palayam (PO), Pugalur Taluk, Thennilai West, Karur — 639 206</p>
                 </div>
                 <div className="flex flex-col gap-2 sm:flex-row sm:gap-4 flex-shrink-0">
                   {[
@@ -533,7 +533,7 @@ export default function ContactUs() {
                         style={{ background: `${row.c}20`, border: `1px solid ${row.c}30` }}>
                         <row.Icon size={10} style={{ color: row.c }} />
                       </div>
-                      <span className="text-[11px] font-medium text-white/55">{row.v}</span>
+                      <span className="text-[11px] font-medium text-white/75">{row.v}</span>
                     </div>
                   ))}
                 </div>

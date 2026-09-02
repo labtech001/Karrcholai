@@ -154,7 +154,7 @@ const CholaiHomeSection = () => {
               >
                 சோலை
               </span>
-              <span className="block text-2xl sm:text-3xl md:text-4xl italic text-white/15">Solutions.</span>
+              <span className="block text-2xl sm:text-3xl md:text-4xl italic text-white/45">Solutions.</span>
             </motion.h2>
           </div>
 
@@ -165,11 +165,11 @@ const CholaiHomeSection = () => {
             transition={{ delay: 0.3 }}
             className="max-w-xs"
           >
-            <p className="text-white/40 text-sm font-light leading-relaxed mb-6">
+            <p className="text-white/60 text-sm font-light leading-relaxed mb-6">
               The Cholai division focuses on environmentally responsible solutions — creating sustainable, self-sufficient homes for a greener tomorrow.
             </p>
             <Link to="/cholai">
-              <button className="group flex items-center gap-3 text-white/50 font-black text-[10px] tracking-[0.3em] uppercase hover:text-white transition-colors">
+              <button className="group flex items-center gap-3 text-white/65 font-black text-[10px] tracking-[0.3em] uppercase hover:text-white transition-colors">
                 Explore Cholai <FiArrowUpRight className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
               </button>
             </Link>
@@ -185,7 +185,7 @@ const CholaiHomeSection = () => {
               className={`px-5 py-3 rounded-xl text-[10px] font-black tracking-[0.25em] uppercase transition-all duration-300 flex items-center gap-2 ${
                 active === i
                   ? 'bg-white text-[#1C1C1A] shadow-lg'
-                  : 'text-white/30 hover:text-white/70'
+                  : 'text-white/60 hover:text-white/90'
               }`}
             >
               <span className={active === i ? 'text-[#1C1C1A]' : ''} style={{ color: active === i ? '#1C1C1A' : srv.accent, opacity: active === i ? 1 : 0.8 }}>
@@ -223,19 +223,19 @@ const CholaiHomeSection = () => {
                 <h3 className="text-4xl md:text-5xl font-black leading-tight tracking-tight mb-6">
                   {current.title.split(' ')[0]}{' '}
                   <br />
-                  <span className="text-white/20 italic">
+                  <span className="text-white/45 italic">
                     {current.title.split(' ').slice(1).join(' ')}
                   </span>
                 </h3>
 
-                <p className="text-white/50 text-base font-light leading-relaxed max-w-lg">
+                <p className="text-white/65 text-base font-light leading-relaxed max-w-lg">
                   {current.desc}
                 </p>
               </div>
 
               {/* Service Items */}
               <div className="space-y-3">
-                <p className="text-[10px] font-black tracking-widest uppercase text-white/25 mb-4">What We Offer</p>
+                <p className="text-[10px] font-black tracking-widest uppercase text-white/55 mb-4">What We Offer</p>
                 {current.items.map((item, i) => (
                   <motion.div
                     key={i}
@@ -245,7 +245,7 @@ const CholaiHomeSection = () => {
                     className="flex items-center gap-4 group"
                   >
                     <div className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: current.accent }} />
-                    <span className="text-white/60 text-sm font-light group-hover:text-white transition-colors">{item}</span>
+                    <span className="text-white/70 text-sm font-light group-hover:text-white transition-colors">{item}</span>
                   </motion.div>
                 ))}
               </div>
@@ -255,7 +255,7 @@ const CholaiHomeSection = () => {
                 <p className="text-[10px] font-black tracking-widest uppercase mb-2" style={{ color: current.accent }}>
                   Our Mission
                 </p>
-                <p className="text-white/60 text-sm font-light leading-relaxed italic">
+                <p className="text-white/70 text-sm font-light leading-relaxed italic">
                   "The Cholai division focuses on environmentally responsible solutions that help reduce dependency on conventional resources and support sustainable management of our planet for future generations."
                 </p>
               </div>
@@ -263,7 +263,7 @@ const CholaiHomeSection = () => {
               <Link to="/cholai">
                 <motion.button
                   whileHover={{ x: 8 }}
-                  className="group flex items-center gap-4 text-[10px] font-black tracking-[0.4em] uppercase text-white/30 hover:text-white transition-colors w-fit"
+                  className="group flex items-center gap-4 text-[10px] font-black tracking-[0.4em] uppercase text-white/55 hover:text-white transition-colors w-fit"
                 >
                   Discover All Solutions
                   <FaArrowRight className="transition-transform group-hover:translate-x-2" style={{ color: current.accent }} />
@@ -314,7 +314,7 @@ const CholaiHomeSection = () => {
                 <div className="absolute bottom-6 left-6 right-6">
                   <div className="flex items-end justify-between">
                     <div>
-                      <p className="text-white/40 text-[9px] font-black tracking-widest uppercase mb-1">Impact</p>
+                      <p className="text-white/55 text-[9px] font-black tracking-widest uppercase mb-1">Impact</p>
                       <p className="text-3xl font-black text-white leading-none" style={{ color: current.accent }}>
                         {current.impact}
                       </p>

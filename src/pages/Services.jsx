@@ -165,7 +165,7 @@ function SubCard({ icon: Icon, label, desc, img, accent, i }) {
       <div className="p-5">
         <h4 className="text-[14px] font-bold text-[#111] mb-1.5 tracking-tight">{label}</h4>
         <div className="w-7 h-[2px] rounded-full mb-3" style={{ background: accent }} />
-        <p className="text-[12px] text-black/38 leading-relaxed">{desc}</p>
+        <p className="text-[12px] text-black/60 leading-relaxed">{desc}</p>
       </div>
     </motion.div>
   )
@@ -208,7 +208,7 @@ export default function Services() {
             transition={{ duration: 0.7, delay: 0.15 }}
             className="inline-flex items-center gap-2.5 mb-8">
             <span className="block w-7 h-[1.5px] bg-[#C17B3E]" />
-            <span className="text-[10px] font-black tracking-[0.35em] uppercase text-white/45">What We Deliver</span>
+            <span className="text-[10px] font-black tracking-[0.35em] uppercase text-white/70">What We Deliver</span>
           </motion.div>
 
           <div className="overflow-hidden mb-3">
@@ -222,14 +222,14 @@ export default function Services() {
             <motion.h1 initial={{ y: '105%' }} animate={{ y: 0 }}
               transition={{ duration: 1, delay: 0.4, ease }}
               className="text-[clamp(3.2rem,8.5vw,8rem)] font-black leading-[0.93] tracking-tighter text-transparent"
-              style={{ WebkitTextStroke: '1.5px rgba(255,255,255,0.16)' }}>
+              style={{ WebkitTextStroke: '1.5px rgba(255,255,255,0.45)' }}>
               Build Legacies.
             </motion.h1>
           </div>
 
           <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }}
             transition={{ delay: 0.62, duration: 0.9 }}
-            className="text-white/32 text-[15px] md:text-lg font-light leading-relaxed max-w-lg mb-12">
+            className="text-white/65 text-[15px] md:text-lg font-light leading-relaxed max-w-lg mb-12">
             Four service pillars covering every stage — from first pour to final handover.
           </motion.p>
 
@@ -251,7 +251,7 @@ export default function Services() {
                   }}>
                   <SI size={17} className="mb-2.5" style={{ color: isA ? s.accent : 'rgba(255,255,255,0.28)' }} />
                   <p className="text-white text-[11px] font-bold leading-snug mb-0.5">{s.shortLabel}</p>
-                  <p className="text-white/22 text-[9px] font-light">{s.tag}</p>
+                  <p className="text-white/55 text-[9px] font-light">{s.tag}</p>
                 </motion.button>
               )
             })}
@@ -264,7 +264,7 @@ export default function Services() {
             {[['12+', 'Years on Site'], ['200+', 'Projects Delivered'], ['100%', 'Client-Owned Designs'], ['4', 'Service Pillars']].map(([v, l]) => (
               <div key={l}>
                 <p className="text-[clamp(1.6rem,3vw,2.4rem)] font-black text-white leading-none tracking-tighter">{v}</p>
-                <p className="text-[9px] text-white/20 mt-1.5 uppercase tracking-[0.18em]">{l}</p>
+                <p className="text-[9px] text-white/55 mt-1.5 uppercase tracking-[0.18em]">{l}</p>
               </div>
             ))}
           </motion.div>
@@ -272,7 +272,7 @@ export default function Services() {
 
         <motion.div animate={{ y: [0, 9, 0] }} transition={{ repeat: Infinity, duration: 2.2, ease: 'easeInOut' }}
           className="absolute bottom-9 left-1/2 -translate-x-1/2 z-20 hidden md:block">
-          <FiChevronDown size={18} className="text-white/22" />
+          <FiChevronDown size={18} className="text-white/50" />
         </motion.div>
       </section>
 
@@ -299,11 +299,11 @@ export default function Services() {
                   </div>
                   <div className="text-left">
                     <p className="text-[11px] font-black tracking-wide whitespace-nowrap transition-colors duration-200"
-                      style={{ color: isA ? '#111' : 'rgba(0,0,0,0.38)' }}>
+                      style={{ color: isA ? '#111' : 'rgba(0,0,0,0.58)' }}>
                       {s.shortLabel}
                     </p>
                     <p className="text-[9px] tracking-wide whitespace-nowrap hidden md:block transition-colors duration-200"
-                      style={{ color: isA ? `${s.accent}bb` : 'rgba(0,0,0,0.22)' }}>
+                      style={{ color: isA ? `${s.accent}bb` : 'rgba(0,0,0,0.50)' }}>
                       {s.tag}
                     </p>
                   </div>
@@ -391,7 +391,7 @@ export default function Services() {
                   key={svc.id + '-body'}
                   initial={{ opacity: 0 }} animate={{ opacity: 1 }}
                   transition={{ delay: 0.24 }}
-                  className="text-[14px] text-black/45 font-light leading-relaxed mb-8 max-w-[52ch]">
+                  className="text-[14px] text-black/65 font-light leading-relaxed mb-8 max-w-[52ch]">
                   {svc.body}
                 </motion.p>
 
@@ -449,7 +449,7 @@ export default function Services() {
                     </motion.h3>
                   </div>
                   <motion.p {...fadeUp} transition={{ duration: 0.65, delay: 0.14 }}
-                    className="text-[13px] text-black/38 font-light leading-relaxed max-w-[38ch]">
+                    className="text-[13px] text-black/58 font-light leading-relaxed max-w-[38ch]">
                     All managed in-house — planned, executed, and inspected by our own team.
                   </motion.p>
                 </div>
@@ -486,7 +486,7 @@ export default function Services() {
                       <p className="text-white text-[clamp(1.1rem,2vw,1.4rem)] font-black tracking-tight leading-snug mb-2">
                         One team. One contract. All delivered.
                       </p>
-                      <p className="text-white/32 text-[13px] font-light leading-relaxed max-w-xl">
+                      <p className="text-white/60 text-[13px] font-light leading-relaxed max-w-xl">
                         Karrcholai coordinates every aspect — design to handover — so nothing falls through the cracks.
                       </p>
                     </div>
@@ -528,7 +528,7 @@ export default function Services() {
               </motion.h2>
             </div>
             <motion.p {...fadeUp} transition={{ duration: 0.65, delay: 0.15 }}
-              className="text-[13px] text-white/28 font-light leading-relaxed max-w-[34ch] md:text-right">
+              className="text-[13px] text-white/60 font-light leading-relaxed max-w-[34ch] md:text-right">
               From foundation to handover — residential, managed, renovated, or green.
             </motion.p>
           </div>
@@ -571,12 +571,12 @@ export default function Services() {
                         <SI size={14} />
                       </div>
                       <span className="text-[9px] font-black uppercase tracking-widest"
-                        style={{ color: isA ? `${s.accent}88` : 'rgba(255,255,255,0.18)' }}>{s.tag}</span>
+                        style={{ color: isA ? `${s.accent}88` : 'rgba(255,255,255,0.50)' }}>{s.tag}</span>
                     </div>
                     <h3 className="text-[14px] font-black text-white mb-1.5 tracking-tight leading-snug">{s.label}</h3>
-                    <p className="text-[11px] text-white/28 font-light leading-relaxed mb-4 line-clamp-2">{s.tagline}</p>
+                    <p className="text-[11px] text-white/55 font-light leading-relaxed mb-4 line-clamp-2">{s.tagline}</p>
                     <div className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest transition-all duration-300"
-                      style={{ color: isA ? s.accent : 'rgba(255,255,255,0.22)' }}>
+                      style={{ color: isA ? s.accent : 'rgba(255,255,255,0.50)' }}>
                       Explore <FiArrowRight size={10} />
                     </div>
                   </div>
@@ -610,7 +610,7 @@ export default function Services() {
               <h2 className="text-[clamp(2rem,4.5vw,3.8rem)] font-black text-white tracking-tighter leading-[1.05] mb-5">
                 Let's build something<br />worth living in.
               </h2>
-              <p className="text-white/32 text-[14px] font-light leading-relaxed max-w-md mx-auto mb-10">
+              <p className="text-white/60 text-[14px] font-light leading-relaxed max-w-md mx-auto mb-10">
                 From first conversation to the day you get your keys — one team, no middlemen, no surprises.
               </p>
               <div className="flex gap-3 justify-center flex-wrap">
@@ -619,7 +619,7 @@ export default function Services() {
                   Start a Project <FiArrowRight size={12} />
                 </Link>
                 <Link to="/projects"
-                  className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl border border-white/10 text-[11px] font-bold tracking-widest uppercase text-white/55 transition-all hover:border-white/22 hover:text-white">
+                  className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl border border-white/10 text-[11px] font-bold tracking-widest uppercase text-white/75 transition-all hover:border-white/22 hover:text-white">
                   View Our Work <BsArrowRight size={12} />
                 </Link>
               </div>

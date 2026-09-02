@@ -1,7 +1,7 @@
 import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
-import archViz from '../../assets/asthetic parts/Architectural visualization.jpg'
+import archViz from '../../assets/asthetic parts/A Importância dos Desenhos Arquitetônicos na Prática Profissional_.jpg'
 
 const InteriorShowcaseSection = () => {
   const ref    = useRef(null)
@@ -94,9 +94,9 @@ const InteriorShowcaseSection = () => {
             <div className="relative rounded-2xl overflow-hidden shadow-[0_40px_80px_-10px_rgba(0,0,0,0.6)]">
               <img
                 src={archViz}
-                alt="Architectural visualization — Karrcholai Construction"
+                alt="Architectural drawings in professional practice — Karrcholai Construction"
                 className="w-full block object-cover object-bottom"
-                style={{ height: '85vh' }}
+                style={{ height: '55vh', maxHeight: '520px' }}
                 loading="lazy"
                 decoding="async"
               />
@@ -104,7 +104,7 @@ const InteriorShowcaseSection = () => {
               <div className="absolute inset-0 shadow-[inset_0_0_60px_rgba(0,0,0,0.35)] rounded-2xl pointer-events-none" />
               {/* bottom-right label badge */}
               <div className="absolute bottom-5 right-5 bg-black/50 backdrop-blur-sm border border-white/10 px-4 py-2 rounded-full">
-                <span className="text-white/70 text-[9px] font-bold tracking-[0.35em] uppercase">Architectural Visualization</span>
+                <span className="text-white/70 text-[9px] font-bold tracking-[0.35em] uppercase">Architectural Drawings</span>
               </div>
             </div>
           </motion.div>

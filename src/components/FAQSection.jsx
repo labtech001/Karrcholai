@@ -23,10 +23,10 @@ function FAQItem({ q, a, accent, dark, index }) {
 
   const borderClr  = dark ? 'rgba(255,255,255,0.07)' : 'rgba(26,26,26,0.07)'
   const questionClr = dark
-    ? open ? '#ffffff' : 'rgba(232,229,223,0.75)'
-    : open ? '#1a1a1a' : 'rgba(26,26,26,0.75)'
-  const answerClr  = dark ? 'rgba(232,229,223,0.5)' : 'rgba(26,26,26,0.5)'
-  const numClr     = open ? accent : dark ? 'rgba(255,255,255,0.18)' : 'rgba(26,26,26,0.2)'
+    ? open ? '#ffffff' : 'rgba(232,229,223,0.85)'
+    : open ? '#1a1a1a' : 'rgba(26,26,26,0.8)'
+  const answerClr  = dark ? 'rgba(232,229,223,0.7)' : 'rgba(26,26,26,0.65)'
+  const numClr     = open ? accent : dark ? 'rgba(255,255,255,0.45)' : 'rgba(26,26,26,0.45)'
 
   return (
     <motion.div
@@ -68,7 +68,7 @@ function FAQItem({ q, a, accent, dark, index }) {
         >
           <span
             className="text-sm font-black leading-none"
-            style={{ color: open ? '#fff' : dark ? 'rgba(255,255,255,0.6)' : 'rgba(26,26,26,0.5)' }}
+            style={{ color: open ? '#fff' : dark ? 'rgba(255,255,255,0.75)' : 'rgba(26,26,26,0.65)' }}
           >
             +
           </span>
@@ -197,7 +197,7 @@ export default function FAQSection({
             </p>
             <p
               className="text-[11px] font-light leading-relaxed"
-              style={{ color: dark ? 'rgba(255,255,255,0.35)' : 'rgba(26,26,26,0.45)' }}
+              style={{ color: dark ? 'rgba(255,255,255,0.6)' : 'rgba(26,26,26,0.65)' }}
             >
               Call us at{' '}
               <a

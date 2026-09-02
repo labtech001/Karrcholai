@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { motion } from 'framer-motion';
 
 /* ─── Design tokens ─────────────────────────────────── */
@@ -41,7 +41,7 @@ function PanelHeader({ n, tag, title, color = G }) {
           <span style={{ fontSize: 22, fontWeight: 900, color: W, lineHeight: 1 }}>{n}</span>
         </div>
         <div>
-          <p style={{ fontSize: 9, fontWeight: 800, color: 'rgba(255,255,255,0.6)', letterSpacing: '0.42em', textTransform: 'uppercase', margin: '0 0 3px' }}>{tag}</p>
+          <p style={{ fontSize: 9, fontWeight: 800, color: 'rgba(255,255,255,0.70)', letterSpacing: '0.42em', textTransform: 'uppercase', margin: '0 0 3px' }}>{tag}</p>
           <h3 style={{ fontSize: 'clamp(1rem,2.2vw,1.4rem)', fontWeight: 900, color: W, margin: 0, lineHeight: 1.2 }}>{title}</h3>
         </div>
       </div>
@@ -181,7 +181,7 @@ function RoomTable() {
           <thead>
             <tr style={{ background: BG }}>
               {['Space', 'Size', 'Assessment'].map(h => (
-                <th key={h} style={{ padding: '10px 18px', textAlign: 'left', fontWeight: 800, fontSize: 9, letterSpacing: '0.3em', textTransform: 'uppercase', color: 'rgba(0,0,0,0.4)', borderBottom: '1px solid rgba(0,0,0,0.07)' }}>{h}</th>
+                <th key={h} style={{ padding: '10px 18px', textAlign: 'left', fontWeight: 800, fontSize: 9, letterSpacing: '0.3em', textTransform: 'uppercase', color: 'rgba(0,0,0,0.60)', borderBottom: '1px solid rgba(0,0,0,0.07)' }}>{h}</th>
               ))}
             </tr>
           </thead>
@@ -189,7 +189,7 @@ function RoomTable() {
             {rows.map((r, i) => (
               <motion.tr key={i} initial={{ opacity: 0, x: -6 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.04, duration: 0.4 }} style={{ borderBottom: '1px solid rgba(0,0,0,0.05)' }}>
                 <td style={{ padding: '11px 18px', fontWeight: 700, color: INK, fontSize: 13 }}>{r.space}</td>
-                <td style={{ padding: '11px 18px', color: 'rgba(0,0,0,0.45)', fontFamily: 'monospace', fontSize: 12 }}>{r.size}</td>
+                <td style={{ padding: '11px 18px', color: 'rgba(0,0,0,0.65)', fontFamily: 'monospace', fontSize: 12 }}>{r.size}</td>
                 <td style={{ padding: '11px 18px' }}><Pill text={r.verdict} /></td>
               </motion.tr>
             ))}
@@ -215,7 +215,7 @@ function PlotStats() {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 2, background: 'rgba(0,0,0,0.04)', borderRadius: 18, overflow: 'hidden' }}>
         {stats.map((s, i) => (
           <div key={i} style={{ background: i % 2 === 0 ? W : BG, padding: '14px 10px', textAlign: 'center' }}>
-            <p style={{ fontSize: 8, fontWeight: 700, color: 'rgba(0,0,0,0.35)', textTransform: 'uppercase', letterSpacing: '0.28em', margin: '0 0 4px' }}>{s.label}</p>
+            <p style={{ fontSize: 8, fontWeight: 700, color: 'rgba(0,0,0,0.55)', textTransform: 'uppercase', letterSpacing: '0.28em', margin: '0 0 4px' }}>{s.label}</p>
             <p style={{ fontSize: 17, fontWeight: 900, color: G, margin: 0 }}>{s.value}</p>
           </div>
         ))}
@@ -279,15 +279,15 @@ export default function FirstStoneSection() {
           <div style={{ position: 'absolute', bottom: -60, right: -60, width: 220, height: 220, borderRadius: '50%', background: 'rgba(255,255,255,0.04)', pointerEvents: 'none' }} />
           <div style={{ position: 'absolute', top: -40, left: -40, width: 160, height: 160, borderRadius: '50%', background: 'rgba(255,255,255,0.03)', pointerEvents: 'none' }} />
           <div style={{ padding: '10px 24px 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <span style={{ fontSize: 9, fontWeight: 800, color: 'rgba(255,255,255,0.35)', letterSpacing: '0.45em', textTransform: 'uppercase' }}>Karrcholai · The Journal</span>
+            <span style={{ fontSize: 9, fontWeight: 800, color: 'rgba(255,255,255,0.70)', letterSpacing: '0.45em', textTransform: 'uppercase' }}>Karrcholai · The Journal</span>
             <span style={{ fontSize: 9, fontWeight: 800, color: T, letterSpacing: '0.3em', textTransform: 'uppercase' }}>July 2026</span>
           </div>
           <div style={{ padding: '28px 32px 36px', textAlign: 'center', position: 'relative' }}>
             <div style={{ marginBottom: 10 }}>
-              <span style={{ fontSize: 9, fontWeight: 800, color: 'rgba(255,255,255,0.45)', letterSpacing: '0.5em', textTransform: 'uppercase' }}>Plan Review — Issue 001</span>
+              <span style={{ fontSize: 9, fontWeight: 800, color: 'rgba(255,255,255,0.70)', letterSpacing: '0.5em', textTransform: 'uppercase' }}>Plan Review — Issue 001</span>
             </div>
             <h1 style={{ fontSize: 'clamp(1.8rem,5vw,3rem)', fontWeight: 900, color: W, margin: '0 0 8px', lineHeight: 1.05, letterSpacing: '-0.02em' }}>The First Stone</h1>
-            <p style={{ fontSize: 'clamp(0.95rem,2vw,1.2rem)', fontWeight: 600, color: 'rgba(255,255,255,0.65)', margin: '0 0 20px', lineHeight: 1.5 }}>Is This House Plan Right for My Family?</p>
+            <p style={{ fontSize: 'clamp(0.95rem,2vw,1.2rem)', fontWeight: 600, color: 'rgba(255,255,255,0.80)', margin: '0 0 20px', lineHeight: 1.5 }}>Is This House Plan Right for My Family?</p>
             <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 8 }}>
               {["30′ × 65′ Plot", "2 Bedrooms", "North Facing", "Ground Floor"].map((tag, i) => (
                 <span key={i} style={{ fontSize: 10, fontWeight: 700, color: W, background: 'rgba(255,255,255,0.12)', borderRadius: 20, padding: '4px 12px', letterSpacing: '0.08em', border: '1px solid rgba(255,255,255,0.2)' }}>{tag}</span>
@@ -305,7 +305,7 @@ export default function FirstStoneSection() {
             <span style={{ fontSize: 9, fontWeight: 900, color: T, letterSpacing: '0.48em', textTransform: 'uppercase' }}>The Story</span>
             <div style={{ flex: 1, height: 1, background: 'rgba(0,0,0,0.08)' }} />
           </div>
-          <p style={{ fontSize: 13, color: 'rgba(0,0,0,0.45)', textAlign: 'center', margin: '0 0 20px', lineHeight: 1.6 }}>
+          <p style={{ fontSize: 13, color: 'rgba(0,0,0,0.60)', textAlign: 'center', margin: '0 0 20px', lineHeight: 1.6 }}>
             A real family brought their contractor's plan to Karrcholai before breaking ground.<br />This is how that conversation went.
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
@@ -623,13 +623,13 @@ export default function FirstStoneSection() {
               <span style={{ fontSize: 9, fontWeight: 800, color: 'rgba(255,255,255,0.7)', letterSpacing: '0.42em', textTransform: 'uppercase' }}>Final Word</span>
             </div>
             <h2 style={{ fontSize: 'clamp(1.15rem,2.8vw,1.7rem)', fontWeight: 900, color: W, margin: '0 0 10px', lineHeight: 1.25 }}>A Good Starting Point.<br />Some Areas Can Be Better.</h2>
-            <p style={{ fontSize: 13.5, color: 'rgba(255,255,255,0.58)', lineHeight: 1.75, maxWidth: 460, margin: '0 auto 28px' }}>This 2-bedroom plan is a solid foundation for a comfortable family home — with specific areas that deserve a closer look before construction begins.</p>
+            <p style={{ fontSize: 13.5, color: 'rgba(255,255,255,0.72)', lineHeight: 1.75, maxWidth: 460, margin: '0 auto 28px' }}>This 2-bedroom plan is a solid foundation for a comfortable family home — with specific areas that deserve a closer look before construction begins.</p>
             <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
               <a href="/contact" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: T, color: W, fontSize: 12, fontWeight: 800, letterSpacing: '0.18em', textTransform: 'uppercase', padding: '13px 26px', borderRadius: 12, textDecoration: 'none', boxShadow: `0 4px 20px ${T}55` }}>
                 🏗️ Get Your Plan Reviewed
               </a>
             </div>
-            <p style={{ fontSize: 10, fontWeight: 700, color: 'rgba(255,255,255,0.25)', margin: '24px 0 0', letterSpacing: '0.3em', textTransform: 'uppercase' }}>Karrcholai Construction · Tamil Nadu · Stone · Grove · Living</p>
+            <p style={{ fontSize: 10, fontWeight: 700, color: 'rgba(255,255,255,0.65)', margin: '24px 0 0', letterSpacing: '0.3em', textTransform: 'uppercase' }}>Karrcholai Construction · Tamil Nadu · Stone · Grove · Living</p>
           </div>
         </div>
       </Up>
