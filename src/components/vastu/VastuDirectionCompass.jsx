@@ -214,6 +214,42 @@ const VASTU_DATA = {
   },
 }
 
+// ─── Bramasthnam data ─────────────────────────────────────────────────────────
+const BRAMASTHNAM_DATA = {
+  label: 'Bramasthnam',
+  tamil: 'பிரம்மஸ்தானம்',
+  subtitle: 'The Sacred Centre of the Home',
+  color: '#7C3AED',
+  bgLight: '#F5F3FF',
+  borderColor: '#C4B5FD',
+  elementIcon: '🪷',
+  element: 'Space · Brahma',
+  description: 'Bramasthnam (பிரம்மஸ்தானம்) is the exact centre of the house — the seat of Brahma, the creator. It is the most sacred energy zone of the entire plot. All Vastu energy flows from the periphery inward and converges here.',
+  what_to_place: [
+    {
+      icon: '🪔',
+      name: 'Puja Room',
+      tamil: 'பூஜை அறை',
+      note: 'The only room permitted in the Bramasthnam. A prayer room here channels divine energy through the entire home.',
+    },
+    {
+      icon: '🌿',
+      name: 'Open Courtyard (Nalukettu)',
+      tamil: 'திறந்த வெளி / நடுமுற்றம்',
+      note: 'Traditional Tamil and Kerala homes leave the centre completely open as a sky-lit courtyard — the most auspicious Vastu practice.',
+    },
+  ],
+  rules: [
+    'Keep the centre of the house completely open or place only a Puja room here',
+    'Never build a toilet, bathroom, kitchen, staircase, or pillar at the centre',
+    'No heavy furniture, storage, or beds should occupy the Bramasthnam',
+    'The centre must remain clean, light, and unobstructed at all times',
+    'Avoid cutting or truncating the central zone — it weakens the entire home',
+    'Underground tanks, sumps, or septic systems directly under the centre are strictly forbidden',
+  ],
+  vastu_tip: '🪷 Bramasthnam is Brahma\'s seat — the divine nucleus of your home. Leave it open or sacred. Any obstruction here suppresses the flow of positive energy to every room. In traditional Tamil homes, this is always an open sky-lit courtyard.',
+}
+
 // ─── Compass geometry helpers ─────────────────────────────────────────────────
 const CX = 200, CY = 200, R = 190
 
@@ -254,7 +290,7 @@ const DIRECTION_COLORS = {
 }
 
 // ─── Compass SVG ──────────────────────────────────────────────────────────────
-function CompassSVG({ selected, hovered, onSelect, onHover }) {
+function CompassSVG({ selected, hovered, onSelect, onHover, onCenterClick, centerHovered, onCenterHover }) {
   const R_OUTER = 172
   const R_INNER = 72
 
@@ -419,9 +455,65 @@ function CompassSVG({ selected, hovered, onSelect, onHover }) {
         )
       })}
 
-      {/* Inner white circle — large clean background for the compass rose */}
-      <circle cx={CX} cy={CY} r={R_INNER + 4} fill="#FFFFFF" stroke="#E2E8F0" strokeWidth={1} />
-      <circle cx={CX} cy={CY} r={R_INNER + 2} fill="#FAFCFF" stroke="#CBD5E1" strokeWidth={1} />
+      {/* Inner white circle — clickable Bramasthnam */}
+      <circle
+        cx={CX} cy={CY} r={R_INNER + 4}
+        fill={centerHovered ? '#EDE9FE' : '#FFFFFF'}
+        stroke={centerHovered ? '#7C3AED' : '#E2E8F0'}
+        strokeWidth={centerHovered ? 2 : 1}
+        style={{ cursor: 'pointer', transition: 'fill 0.18s, stroke 0.18s' }}
+        onClick={onCenterClick}
+        onMouseEnter={() => onCenterHover(true)}
+        onMouseLeave={() => onCenterHover(false)}
+      />
+      <circle
+        cx={CX} cy={CY} r={R_INNER + 2}
+        fill={centerHovered ? '#F5F3FF' : '#FAFCFF'}
+        stroke={centerHovered ? '#C4B5FD' : '#CBD5E1'}
+        strokeWidth={1}
+        style={{ cursor: 'pointer', pointerEvents: 'none' }}
+      />
+      {/* Bramasthnam label in center circle */}
+      {!centerHovered && (
+        <text
+          x={CX} y={CY - 8}
+          textAnchor="middle" dominantBaseline="central"
+          fontSize={7} fontWeight={700}
+          fill="#94A3B8"
+          fontFamily="sans-serif"
+          style={{ pointerEvents: 'none' }}
+        >பிரம்ம</text>
+      )}
+      {!centerHovered && (
+        <text
+          x={CX} y={CY + 4}
+          textAnchor="middle" dominantBaseline="central"
+          fontSize={7} fontWeight={700}
+          fill="#94A3B8"
+          fontFamily="sans-serif"
+          style={{ pointerEvents: 'none' }}
+        >ஸ்தானம்</text>
+      )}
+      {centerHovered && (
+        <text
+          x={CX} y={CY - 6}
+          textAnchor="middle" dominantBaseline="central"
+          fontSize={7} fontWeight={700}
+          fill="#7C3AED"
+          fontFamily="sans-serif"
+          style={{ pointerEvents: 'none' }}
+        >🪷 Click to</text>
+      )}
+      {centerHovered && (
+        <text
+          x={CX} y={CY + 6}
+          textAnchor="middle" dominantBaseline="central"
+          fontSize={7} fontWeight={700}
+          fill="#7C3AED"
+          fontFamily="sans-serif"
+          style={{ pointerEvents: 'none' }}
+        >explore</text>
+      )}
 
       {/* ── Compass Rose: 4-pointed needle star ── */}
       <g style={{ pointerEvents: 'none' }}>
@@ -509,6 +601,231 @@ function CompassSVG({ selected, hovered, onSelect, onHover }) {
         )
       })}
     </svg>
+  )
+}
+
+// ─── Bramasthnam Info Panel ───────────────────────────────────────────────────
+function BramasthnamPanel({ onClose }) {
+  const d = BRAMASTHNAM_DATA
+  return (
+    <motion.div
+      key="bramasthnam"
+      initial={{ opacity: 0, x: 28, scale: 0.97 }}
+      animate={{ opacity: 1, x: 0, scale: 1 }}
+      exit={{ opacity: 0, x: 28, scale: 0.97 }}
+      transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+      className="flex flex-col h-full overflow-y-auto"
+      style={{ scrollbarWidth: 'thin' }}
+    >
+      {/* Header */}
+      <div className="sticky top-0 z-10 px-5 pt-5 pb-4"
+        style={{ background: d.bgLight, borderBottom: `2px solid ${d.borderColor}` }}>
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <span className="text-2xl">{d.elementIcon}</span>
+              <span className="text-xs font-black uppercase tracking-widest"
+                style={{ color: d.color }}>{d.element}</span>
+            </div>
+            <h2 className="text-xl font-black text-slate-900 leading-tight">{d.label}</h2>
+            <p className="text-sm font-bold mt-0.5" style={{ color: d.color }}>{d.tamil}</p>
+            <p className="text-[10px] text-slate-500 mt-1 font-medium">{d.subtitle}</p>
+          </div>
+          <button
+            onClick={onClose}
+            className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 mt-0.5 transition-colors"
+            style={{ background: `${d.color}20`, border: `1.5px solid ${d.borderColor}` }}
+            aria-label="Close panel"
+          >
+            <span className="text-slate-600 font-bold text-sm leading-none">✕</span>
+          </button>
+        </div>
+      </div>
+
+      <div className="px-5 py-4 space-y-5">
+
+        {/* Description */}
+        <div className="p-3.5 rounded-2xl border"
+          style={{ background: `${d.color}08`, borderColor: d.borderColor }}>
+          <p className="text-xs font-medium text-slate-700 leading-relaxed">{d.description}</p>
+        </div>
+
+        {/* Vastu tip */}
+        <div className="p-3.5 rounded-2xl border border-violet-200 bg-violet-50">
+          <p className="text-xs font-medium text-slate-700 leading-relaxed">{d.vastu_tip}</p>
+        </div>
+
+        {/* What to place */}
+        <div>
+          <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2.5">
+            What Can Be Placed Here
+          </p>
+          <div className="space-y-2">
+            {d.what_to_place.map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.06 + i * 0.08 }}
+                className="flex gap-3 p-3 rounded-xl border"
+                style={{ background: d.bgLight, borderColor: d.borderColor + '80' }}
+              >
+                <span className="text-xl shrink-0 mt-0.5">{item.icon}</span>
+                <div className="min-w-0">
+                  <p className="text-xs font-black text-slate-800">{item.name}</p>
+                  <p className="text-[10px] font-semibold mt-0.5" style={{ color: d.color }}>{item.tamil}</p>
+                  <p className="text-[10px] text-slate-500 mt-1 leading-relaxed">{item.note}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        {/* Rules */}
+        <div>
+          <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2.5">
+            Vastu Rules for the Centre
+          </p>
+          <ul className="space-y-2">
+            {d.rules.map((rule, i) => (
+              <motion.li
+                key={i}
+                initial={{ opacity: 0, x: -8 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.1 + i * 0.05 }}
+                className="flex gap-2.5 text-[11px] text-slate-700 leading-relaxed"
+              >
+                <span className="mt-0.5 shrink-0 w-4 h-4 rounded-full flex items-center justify-center text-white text-[8px] font-black"
+                  style={{ background: d.color }}>
+                  {i + 1}
+                </span>
+                {rule}
+              </motion.li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Warning box */}
+        <div className="flex gap-2.5 p-3 rounded-xl bg-red-50 border border-red-200">
+          <span className="text-base shrink-0">⚠️</span>
+          <p className="text-[10px] text-red-600 font-medium leading-relaxed">
+            <strong className="text-red-700">Strictly Avoid:</strong> Toilets, kitchen, staircase, pillar, heavy storage, bedroom, or underground water tank at the Bramasthnam. These cause serious Vastu dosha.
+          </p>
+        </div>
+      </div>
+    </motion.div>
+  )
+}
+
+// ─── Bramasthnam Mobile Modal ─────────────────────────────────────────────────
+function BramasthnamMobileModal({ onClose }) {
+  const d = BRAMASTHNAM_DATA
+
+  useEffect(() => {
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = prev }
+  }, [])
+
+  useEffect(() => {
+    const handler = (e) => { if (e.key === 'Escape') onClose() }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
+  }, [onClose])
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
+      className="fixed inset-0 z-[9999] flex items-end"
+      style={{ background: 'rgba(0,0,0,0.55)', backdropFilter: 'blur(4px)' }}
+      onClick={onClose}
+    >
+      <motion.div
+        initial={{ y: '100%' }}
+        animate={{ y: 0 }}
+        exit={{ y: '100%' }}
+        transition={{ type: 'spring', stiffness: 320, damping: 32 }}
+        onClick={e => e.stopPropagation()}
+        className="w-full rounded-t-3xl overflow-hidden"
+        style={{ background: '#fff', maxHeight: '82vh', display: 'flex', flexDirection: 'column', borderTop: `3px solid ${d.borderColor}` }}
+      >
+        <div className="flex justify-center pt-3 pb-1 shrink-0">
+          <div className="w-10 h-1 rounded-full bg-slate-200" />
+        </div>
+
+        {/* Header */}
+        <div className="shrink-0 px-5 pt-3 pb-4"
+          style={{ background: d.bgLight, borderBottom: `1.5px solid ${d.borderColor}` }}>
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-xl">{d.elementIcon}</span>
+                <span className="text-[10px] font-black uppercase tracking-widest" style={{ color: d.color }}>{d.element}</span>
+              </div>
+              <h2 className="text-lg font-black text-slate-900 leading-tight">{d.label}</h2>
+              <p className="text-xs font-bold mt-0.5" style={{ color: d.color }}>{d.tamil}</p>
+              <p className="text-[10px] text-slate-500 mt-0.5 font-medium">{d.subtitle}</p>
+            </div>
+            <button onClick={onClose}
+              className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0"
+              style={{ background: `${d.color}20`, border: `1.5px solid ${d.borderColor}` }}
+              aria-label="Close">
+              <span className="text-slate-600 font-bold text-sm leading-none">✕</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Content */}
+        <div className="overflow-y-auto flex-1 px-5 py-4 space-y-4"
+          style={{ scrollbarWidth: 'thin', WebkitOverflowScrolling: 'touch' }}>
+
+          <div className="p-3 rounded-2xl border"
+            style={{ background: `${d.color}08`, borderColor: d.borderColor }}>
+            <p className="text-xs font-medium text-slate-700 leading-relaxed">{d.vastu_tip}</p>
+          </div>
+
+          <div>
+            <p className="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-2">What Can Be Placed Here</p>
+            <div className="space-y-2">
+              {d.what_to_place.map((item, i) => (
+                <div key={i} className="flex gap-3 p-3 rounded-xl border"
+                  style={{ background: d.bgLight, borderColor: d.borderColor + '80' }}>
+                  <span className="text-lg shrink-0">{item.icon}</span>
+                  <div>
+                    <p className="text-xs font-black text-slate-800">{item.name}</p>
+                    <p className="text-[10px] font-semibold mt-0.5" style={{ color: d.color }}>{item.tamil}</p>
+                    <p className="text-[10px] text-slate-500 mt-1 leading-relaxed">{item.note}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <p className="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-2">Vastu Rules</p>
+            <ul className="space-y-2">
+              {d.rules.map((rule, i) => (
+                <li key={i} className="flex gap-2.5 text-[11px] text-slate-700 leading-relaxed">
+                  <span className="mt-0.5 shrink-0 w-4 h-4 rounded-full flex items-center justify-center text-white text-[8px] font-black"
+                    style={{ background: d.color }}>{i + 1}</span>
+                  {rule}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="flex gap-2.5 p-3 rounded-xl bg-red-50 border border-red-200 mb-2">
+            <span className="text-base shrink-0">⚠️</span>
+            <p className="text-[10px] text-red-600 font-medium leading-relaxed">
+              <strong className="text-red-700">Strictly Avoid:</strong> Toilets, kitchen, staircase, pillar, heavy storage, bedroom, or underground water tank at the Bramasthnam.
+            </p>
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
   )
 }
 
@@ -822,6 +1139,8 @@ function EmptyState() {
 export default function VastuDirectionCompass() {
   const [selected, setSelected] = useState(null)
   const [hovered,  setHovered]  = useState(null)
+  const [bramasthnamOpen, setBramasthnamOpen] = useState(false)
+  const [centerHovered, setCenterHovered] = useState(false)
   const [isMobile, setIsMobile] = useState(() =>
     typeof window !== 'undefined' ? window.innerWidth < 1024 : false
   )
@@ -833,10 +1152,19 @@ export default function VastuDirectionCompass() {
   }, [])
 
   const handleSelect = (id) => {
+    setBramasthnamOpen(false)
     setSelected(prev => prev === id ? null : id)
   }
 
+  const handleCenterClick = () => {
+    setSelected(null)
+    setBramasthnamOpen(prev => !prev)
+  }
+
   const selectedData = selected ? VASTU_DATA[selected] : null
+  const panelBorderColor = bramasthnamOpen
+    ? BRAMASTHNAM_DATA.borderColor
+    : selectedData?.borderColor
 
   return (
     <div className="w-full max-w-5xl mx-auto font-sans">
@@ -848,6 +1176,12 @@ export default function VastuDirectionCompass() {
             key={selected}
             dirId={selected}
             onClose={() => setSelected(null)}
+          />
+        )}
+        {isMobile && bramasthnamOpen && (
+          <BramasthnamMobileModal
+            key="bramasthnam-mobile"
+            onClose={() => setBramasthnamOpen(false)}
           />
         )}
       </AnimatePresence>
@@ -901,6 +1235,9 @@ export default function VastuDirectionCompass() {
               hovered={hovered}
               onSelect={handleSelect}
               onHover={setHovered}
+              onCenterClick={handleCenterClick}
+              centerHovered={centerHovered}
+              onCenterHover={setCenterHovered}
             />
           </div>
 
@@ -919,8 +1256,8 @@ export default function VastuDirectionCompass() {
             ) : (
               <p className="text-[10px] text-slate-300 font-medium">
                 {isMobile
-                  ? 'Tap a direction to see Vastu details'
-                  : 'Hover or click a direction · Compass does not rotate — it shows true directions'}
+                  ? 'Tap a direction or the centre to see Vastu details'
+                  : 'Hover or click a direction · Click the centre for Bramasthnam · Compass shows true directions'}
               </p>
             )}
           </div>
@@ -948,11 +1285,13 @@ export default function VastuDirectionCompass() {
           <div className="bg-white rounded-3xl border border-stone-200 shadow-sm overflow-hidden"
             style={{
               minHeight: '520px',
-              borderColor: selectedData ? selectedData.borderColor : undefined,
-              borderWidth: selectedData ? '2px' : '1px',
+              borderColor: panelBorderColor ?? undefined,
+              borderWidth: (selected || bramasthnamOpen) ? '2px' : '1px',
             }}>
             <AnimatePresence mode="wait">
-              {selected ? (
+              {bramasthnamOpen ? (
+                <BramasthnamPanel key="bramasthnam" onClose={() => setBramasthnamOpen(false)} />
+              ) : selected ? (
                 <InfoPanel key={selected} dirId={selected} onClose={() => setSelected(null)} />
               ) : (
                 <motion.div key="empty" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
