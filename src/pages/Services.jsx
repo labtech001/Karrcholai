@@ -115,7 +115,7 @@ const BUILD_STEPS = [
   { n: '04', t: 'Construction Execution',             b: 'From foundation and structural work to masonry, plastering and other major construction activities — executed in the right sequence.' },
   { n: '05', t: 'Electrical & Plumbing Coordination', b: 'We coordinate MEP services with construction activities to ensure proper integration at each required stage.' },
   { n: '06', t: 'Finishing Works',                    b: 'Flooring, painting, doors, windows, sanitary fixtures and other finishing activities coordinated to approved requirements.' },
-  { n: '07', t: 'CHOLAI — Better Living',             b: 'Landscape, rainwater harvesting, traditional flooring and solar energy — considered as part of the project, not afterthoughts.' },
+  { n: '07', t: 'Sustainable Features',             b: 'Landscape, rainwater harvesting, traditional flooring and solar energy — considered as part of the project, not afterthoughts.' },
   { n: '08', t: 'Final Inspection & Handover',        b: 'We coordinate final inspections, identify pending corrections, and support the completion process through to handover.' },
 ]
 
@@ -411,7 +411,7 @@ export default function Services() {
               <div className="bg-white/[0.06] rounded-[20px] border border-white/10 p-5 mb-8">
                 <p className="text-[#B85C38] font-black tracking-wider uppercase text-[9px] mb-2">Indicative Cost</p>
                 <p className="font-black text-2xl md:text-3xl text-white leading-none tracking-tighter mb-1">
-                  &#8377; ______ / sq.ft.*
+                  &#8377; 2,500 / sq.ft.*
                 </p>
                 <p className="text-white/40 text-[11px] mb-4">*Based on specifications, built-up area and site conditions.</p>
                 <div className="grid grid-cols-2 gap-1">
@@ -540,8 +540,8 @@ export default function Services() {
                 <p className="text-[#B85C38] font-black tracking-wider uppercase text-[9px] mb-4">PMC Fee Structure</p>
                 <div className="grid grid-cols-2 gap-3">
                   {[
-                    { label: 'Option A', desc: 'Percentage of Project Cost', value: '___ %', sub: 'of total project cost' },
-                    { label: 'Option B', desc: 'Per Square Foot',            value: '₹ ___', sub: 'per sq.ft.' },
+                    { label: 'Option A', desc: 'Percentage of Project Cost', value: '10%', sub: 'of total project cost' },
+                    { label: 'Option B', desc: 'Per Square Foot',            value: '₹100', sub: 'per sq.ft.' },
                   ].map((opt, i) => (
                     <div key={i} className="p-3.5 bg-[#fdfbf7] rounded-[14px] border border-[#1a1a1a]/6 hover:border-[#B85C38]/25 transition-colors duration-300">
                       <p className="text-[9px] font-black uppercase tracking-wider text-[#B85C38] mb-1">{opt.label}</p>
@@ -714,187 +714,129 @@ export default function Services() {
 
           </div>
         </div>
-      </section>
 
+        {/* ── Consultation sub-section inside Complete My Home ── */}
+        <div className="max-w-7xl mx-auto px-6 md:px-12 pb-20 md:pb-28">
+          <div className="border-t border-white/[0.07] pt-14 md:pt-20">
 
-      {/* ════════════════════════════════════════════
-          6. CONSULTATION
-      ════════════════════════════════════════════ */}
-      <section className="bg-white py-20 md:py-28 px-6">
-        <div className="max-w-7xl mx-auto">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+              <motion.div {...fadeUp}>
+                <span className="text-[#B85C38] font-black tracking-widest uppercase text-[10px] mb-3 block">Not Sure Where to Start?</span>
+                <h2 className="font-black text-[clamp(2rem,4.5vw,4rem)] text-white leading-[0.95] tracking-tighter">
+                  Professional Consultation<br />
+                  <span className="text-white/30">from &#8377;1,000</span>
+                </h2>
+              </motion.div>
+              <motion.p {...fadeUp} className="text-white/50 text-sm max-w-xs font-light leading-relaxed border-l-2 border-[#B85C38]/40 pl-5 md:mb-1">
+                Get an experienced construction professional&apos;s opinion before your next decision.
+              </motion.p>
+            </div>
 
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-            <motion.div {...fadeUp}>
-              <span className="text-[#B85C38] font-black tracking-widest uppercase text-[10px] mb-3 block">Not Sure Where to Start?</span>
-              <h2 className="font-black text-[clamp(2.2rem,5vw,4.5rem)] leading-[0.95] tracking-tighter">
-                Professional Consultation<br />
-                <span className="text-[#1a1a1a]/35">from &#8377;1,000</span>
-              </h2>
-            </motion.div>
-            <motion.p {...fadeUp} className="text-[#1a1a1a]/55 text-sm max-w-xs font-light leading-relaxed border-l-2 border-[#B85C38]/40 pl-5 md:mb-1">
-              Get an experienced construction professional&apos;s opinion before your next decision.
-            </motion.p>
-          </div>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-8">
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-8">
-
-            {/* Online */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }} transition={{ duration: 0.6 }}
-              className="group p-7 bg-[#fdfbf7] rounded-[24px] border border-[#1a1a1a]/6 hover:border-[#B85C38]/40 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500 flex flex-col"
-            >
-              <div className="w-12 h-12 rounded-2xl bg-white border border-[#1a1a1a]/8 flex items-center justify-center mb-5 group-hover:bg-[#B85C38] group-hover:border-transparent transition-all duration-400">
-                <FiMonitor size={18} className="text-[#1a1a1a]/40 group-hover:text-white transition-colors duration-400" />
-              </div>
-              <p className="text-[#B85C38] font-black tracking-widest uppercase text-[9px] mb-1">Online Consultation</p>
-              <p className="font-black text-[2rem] text-[#1a1a1a] leading-none tracking-tighter mb-0.5">&#8377;1,000</p>
-              <p className="text-[#1a1a1a]/40 text-[11px] mb-5">Up to 60 minutes</p>
-
-              <div className="space-y-2 mb-7 flex-1">
-                {['Construction planning', 'Cost advice', 'Contractor selection', 'Material selection', 'Quality concerns', 'Waterproofing', 'PMC requirements', 'Incomplete-house assessment'].map((item, i) => (
-                  <div key={i} className="flex items-start gap-2">
-                    <FiCheck size={11} className="text-[#B85C38] flex-shrink-0 mt-0.5" />
-                    <span className="text-[12px] text-[#1a1a1a]/65 font-light">{item}</span>
-                  </div>
-                ))}
-              </div>
-
-              <Link to="/contact"
-                className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-[#1a1a1a] text-white text-[11px] font-bold tracking-wider uppercase rounded-full transition-all duration-300 hover:bg-[#B85C38]"
-              >
-                Book Online — &#8377;1,000 <FiArrowRight size={10} />
-              </Link>
-            </motion.div>
-
-            {/* Site Visit — featured */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1 }}
-              className="group relative p-7 bg-[#1a1a1a] rounded-[24px] border border-white/[0.07] hover:border-[#B85C38]/40 hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-500 overflow-hidden flex flex-col"
-            >
-              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_80%_0%,rgba(184,92,56,0.18),transparent_60%)] pointer-events-none" />
-              <span className="absolute top-5 right-5 text-[8px] font-black tracking-widest uppercase px-3 py-1.5 rounded-full bg-[#B85C38] text-white">
-                Recommended
-              </span>
-              <div className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center mb-5 group-hover:bg-[#B85C38] transition-colors duration-400">
-                <FiMapPin size={18} className="text-white/50 group-hover:text-white transition-colors duration-400" />
-              </div>
-              <p className="text-[#B85C38] font-black tracking-widest uppercase text-[9px] mb-1">Site Visit</p>
-              <p className="font-black text-[2rem] text-white leading-none tracking-tighter mb-0.5">&#8377;2,000</p>
-              <p className="text-white/40 text-[11px] mb-3">Per visit + travel at actual</p>
-              <p className="text-white/60 text-[12px] font-light leading-relaxed mb-5">
-                See the problem. Understand the site. Recommend the solution.
-              </p>
-
-              <div className="space-y-2 mb-7 flex-1">
-                {['Physical site inspection', 'Discussion with homeowner', 'Review of visible construction', 'Identification of major concerns', 'Practical recommendations', 'Discussion of next steps'].map((item, i) => (
-                  <div key={i} className="flex items-start gap-2">
-                    <FiCheck size={11} className="text-[#B85C38] flex-shrink-0 mt-0.5" />
-                    <span className="text-[12px] text-white/60 font-light">{item}</span>
-                  </div>
-                ))}
-              </div>
-
-              <Link to="/contact"
-                className="relative z-10 w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-[#B85C38] text-white text-[11px] font-bold tracking-wider uppercase rounded-full transition-all duration-300 hover:bg-[#a34e30]"
-              >
-                Book Site Visit — &#8377;2,000 <FiArrowRight size={10} />
-              </Link>
-            </motion.div>
-
-            {/* Travel */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.2 }}
-              className="group p-7 bg-[#fdfbf7] rounded-[24px] border border-[#1a1a1a]/6 hover:border-[#B85C38]/40 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500 flex flex-col"
-            >
-              <div className="w-12 h-12 rounded-2xl bg-white border border-[#1a1a1a]/8 flex items-center justify-center mb-5 group-hover:bg-[#B85C38] group-hover:border-transparent transition-all duration-400">
-                <FiTruck size={18} className="text-[#1a1a1a]/40 group-hover:text-white transition-colors duration-400" />
-              </div>
-              <p className="text-[#1a1a1a]/35 font-black tracking-widest uppercase text-[9px] mb-1">Travel</p>
-              <p className="font-black text-[2rem] text-[#1a1a1a] leading-none tracking-tighter mb-0.5">At Actual</p>
-              <p className="text-[#1a1a1a]/40 text-[11px] mb-5">Where applicable</p>
-
-              <p className="text-[#1a1a1a]/60 text-[12px] font-light leading-relaxed mb-6 flex-1">
-                Travel expenses at actual cost — applicable for locations outside our standard service area.
-                Discussed and agreed before the visit.
-              </p>
-
-              <div className="p-4 bg-[#B85C38]/[0.07] rounded-[16px] border-l-[3px] border-[#B85C38]">
-                <p className="text-[11px] text-[#1a1a1a]/65 font-light leading-relaxed">
-                  <strong className="font-black text-[#1a1a1a]">Service area:</strong> Karur, Chennai, Coimbatore, Madurai, Trichy, Erode and surrounding areas across Tamil Nadu.
-                </p>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Disclaimer */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="p-5 md:p-6 bg-[#fdfbf7] rounded-[18px] border border-[#1a1a1a]/6 text-center max-w-3xl mx-auto"
-          >
-            <p className="text-[9px] font-black uppercase tracking-widest text-[#1a1a1a]/35 mb-2">Important Note</p>
-            <p className="text-[12px] text-[#1a1a1a]/60 font-light leading-relaxed">
-              Consultation and site-visit fees cover professional consultation and preliminary assessment only.
-              Detailed drawings, structural design, BOQ preparation, quantity surveying, detailed estimation,
-              testing, approvals and project execution / PMC services are charged separately.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-
-      {/* ════════════════════════════════════════════
-          7. CHOLAI — dark section
-      ════════════════════════════════════════════ */}
-      <section className="bg-[#1a1a1a] py-20 md:py-28 px-6">
-        <div className="max-w-7xl mx-auto">
-
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-            <motion.div {...fadeUp}>
-              <span className="text-[#B85C38] font-black tracking-widest uppercase text-[10px] mb-3 block">CHOLAI — Better Living</span>
-              <h2 className="font-black text-[clamp(2.2rem,5vw,4.5rem)] text-white leading-[0.95] tracking-tighter">
-                Beyond Construction.<br />
-                <span className="text-white/30">A Home Worth Living In.</span>
-              </h2>
-            </motion.div>
-            <motion.p {...fadeUp} className="text-white/50 text-sm max-w-xs font-light leading-relaxed border-l-2 border-[#B85C38]/40 pl-5 md:mb-1">
-              Planned at design stage — not retrofitted after construction is complete.
-            </motion.p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {[
-              { Icon: FaLeaf,      label: 'Landscape & Green Spaces',           img: imgLand,  desc: 'Planning outdoor areas that complement the home and create comfortable, usable green spaces.', color: '#22C55E' },
-              { Icon: FaCloudRain, label: 'Rainwater & Water Conservation',     img: imgRain,  desc: 'Planning systems to collect and manage rainwater responsibly and support better water use.', color: '#60A5FA' },
-              { Icon: FaSun,       label: 'Solar Energy Solutions',             img: imgSolar, desc: 'Planning suitable solar solutions to support energy efficiency and responsible energy use.', color: '#FBBF24' },
-              { Icon: FaRecycle,   label: 'Traditional / Sustainable Materials', img: imgFloor, desc: 'Athangudi tiles, lime plaster, natural stone — cool, beautiful and rooted in Tamil culture.', color: '#F97316' },
-            ].map(({ Icon, label, img, desc, color }, i) => (
+              {/* Online */}
               <motion.div
-                key={i}
                 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }} transition={{ duration: 0.6, delay: i * 0.1 }}
-                className="group rounded-[20px] overflow-hidden hover:-translate-y-1 transition-all duration-500"
+                viewport={{ once: true }} transition={{ duration: 0.6 }}
+                className="group p-7 bg-white/[0.04] rounded-[24px] border border-white/[0.08] hover:border-[#B85C38]/40 hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-500 flex flex-col"
               >
-                <div className="relative h-48 overflow-hidden">
-                  <img src={img} alt={label}
-                    className="w-full h-full object-cover opacity-65 group-hover:opacity-85 group-hover:scale-105 transition-all duration-700" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a]/90 via-[#1a1a1a]/20 to-transparent" />
-                  <div className="absolute top-4 left-4 w-9 h-9 rounded-xl flex items-center justify-center"
-                    style={{ background: `${color}25`, color }}>
-                    <Icon size={15} />
-                  </div>
-                  <div className="absolute bottom-0 left-0 h-[2px] w-full origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"
-                    style={{ background: color }} />
+                <div className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center mb-5 group-hover:bg-[#B85C38] group-hover:border-transparent transition-all duration-400">
+                  <FiMonitor size={18} className="text-white/40 group-hover:text-white transition-colors duration-400" />
                 </div>
-                <div className="p-5 bg-white/[0.04] border border-white/[0.06] border-t-0 rounded-b-[20px]">
-                  <h3 className="font-black text-[14px] text-white mb-1.5 tracking-tight">{label}</h3>
-                  <p className="text-[12px] text-white/60 font-light leading-relaxed">{desc}</p>
+                <p className="text-[#B85C38] font-black tracking-widest uppercase text-[9px] mb-1">Online Consultation</p>
+                <p className="font-black text-[2rem] text-white leading-none tracking-tighter mb-0.5">&#8377;1,000</p>
+                <p className="text-white/40 text-[11px] mb-5">Up to 60 minutes</p>
+
+                <div className="space-y-2 mb-7 flex-1">
+                  {['Construction planning', 'Construction cost advice', 'Contractor selection', 'Material selection', 'Quality concerns', 'Waterproofing', 'PMC requirements', 'Incomplete-house assessment'].map((item, i) => (
+                    <div key={i} className="flex items-start gap-2">
+                      <FiCheck size={11} className="text-[#B85C38] flex-shrink-0 mt-0.5" />
+                      <span className="text-[12px] text-white/60 font-light">{item}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <Link to="/contact"
+                  className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-white/10 text-white text-[11px] font-bold tracking-wider uppercase rounded-full transition-all duration-300 hover:bg-[#B85C38] border border-white/15 hover:border-[#B85C38]"
+                >
+                  Book Online — &#8377;1,000 <FiArrowRight size={10} />
+                </Link>
+              </motion.div>
+
+              {/* Site Visit — featured */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1 }}
+                className="group relative p-7 bg-[#B85C38] rounded-[24px] border border-[#B85C38] hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-500 overflow-hidden flex flex-col"
+              >
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_80%_0%,rgba(255,255,255,0.12),transparent_60%)] pointer-events-none" />
+                <span className="absolute top-5 right-5 text-[8px] font-black tracking-widest uppercase px-3 py-1.5 rounded-full bg-white text-[#B85C38]">
+                  Recommended
+                </span>
+                <div className="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center mb-5">
+                  <FiMapPin size={18} className="text-white" />
+                </div>
+                <p className="text-white/80 font-black tracking-widest uppercase text-[9px] mb-1">Site Visit</p>
+                <p className="font-black text-[2rem] text-white leading-none tracking-tighter mb-0.5">&#8377;2,000</p>
+                <p className="text-white/70 text-[11px] mb-3">Per visit + travel expense &#8377;2,000</p>                <p className="text-white/80 text-[12px] font-light leading-relaxed mb-5">
+                  See the problem. Understand the site. Recommend the solution.
+                </p>
+
+                <div className="space-y-2 mb-7 flex-1">
+                  {['Physical site inspection', 'Discussion with homeowner', 'Review of visible construction', 'Identification of major concerns', 'Practical recommendations', 'Discussion of possible next steps'].map((item, i) => (
+                    <div key={i} className="flex items-start gap-2">
+                      <FiCheck size={11} className="text-white flex-shrink-0 mt-0.5" />
+                      <span className="text-[12px] text-white/80 font-light">{item}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <Link to="/contact"
+                  className="relative z-10 w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-white text-[#B85C38] text-[11px] font-bold tracking-wider uppercase rounded-full transition-all duration-300 hover:bg-[#1a1a1a] hover:text-white"
+                >
+                  Book Site Visit — &#8377;2,000 <FiArrowRight size={10} />
+                </Link>
+              </motion.div>
+
+              {/* Travel */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.2 }}
+                className="group p-7 bg-white/[0.04] rounded-[24px] border border-white/[0.08] hover:border-[#B85C38]/40 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500 flex flex-col"
+              >
+                <div className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center mb-5 group-hover:bg-[#B85C38] group-hover:border-transparent transition-all duration-400">
+                  <FiTruck size={18} className="text-white/40 group-hover:text-white transition-colors duration-400" />
+                </div>
+                <p className="text-white/40 font-black tracking-widest uppercase text-[9px] mb-1">Travel</p>
+                <p className="font-black text-[2rem] text-white leading-none tracking-tighter mb-0.5">At Actual Cost</p>
+                <p className="text-white/40 text-[11px] mb-5">Where applicable</p>
+
+                <p className="text-white/60 text-[12px] font-light leading-relaxed mb-6 flex-1">
+                  Travel expenses at actual cost — applicable for locations outside the standard service area.
+                  Discussed and agreed before the visit.
+                </p>
+
+                <div className="p-4 bg-[#B85C38]/[0.15] rounded-[16px] border-l-[3px] border-[#B85C38]">
+                  <p className="text-[11px] text-white/70 font-light leading-relaxed">
+                    <strong className="font-black text-white">Service area:</strong> Karur, Chennai, Coimbatore, Madurai, Trichy, Erode and surrounding areas across Tamil Nadu.
+                  </p>
                 </div>
               </motion.div>
-            ))}
+            </div>
+
+            {/* Disclaimer */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="p-5 md:p-6 bg-white/[0.04] rounded-[18px] border border-white/[0.07] text-center max-w-3xl mx-auto"
+            >
+              <p className="text-[9px] font-black uppercase tracking-widest text-white/25 mb-2">Important Note</p>
+              <p className="text-[12px] text-white/50 font-light leading-relaxed">
+                Consultation and site-visit fees cover professional consultation and preliminary assessment only.
+                Detailed drawings, structural design, BOQ preparation, quantity surveying, detailed estimation,
+                testing, approvals and project execution / PMC services are charged separately.
+              </p>
+            </motion.div>
           </div>
         </div>
       </section>

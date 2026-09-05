@@ -5,6 +5,8 @@ import UnifiedFooter from '../components/UnifiedFooter'
 import {
   FaHardHat, FaClock, FaDollarSign, FaShieldAlt, FaQuoteLeft,
   FaProjectDiagram, FaHandHoldingUsd, FaStar, FaLeaf,
+  FaLayerGroup, FaFistRaised, FaMedal, FaPaintBrush, FaYinYang,
+  FaChartLine, FaHourglass, FaBalanceScale,
 } from 'react-icons/fa'
 
 import founderImg from '../../assets/Founder.jpeg'
@@ -717,6 +719,134 @@ const AboutUs = () => {
             </div>
           </div>
 
+        </section>
+
+        {/* ══════════════════════════════════════════
+            3.5 KARRCHOLAI VALUES
+        ══════════════════════════════════════════ */}
+        <section className="bg-[#f8f6f3] py-20 md:py-28 px-6">
+          <div className="container mx-auto max-w-5xl">
+
+            {/* Header */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+              className="text-center mb-14"
+            >
+              <p className="text-secondary text-[10px] font-black uppercase tracking-[0.5em] mb-3">Our Identity</p>
+              <h2 className="text-3xl md:text-5xl font-black text-dark tracking-tighter leading-tight mb-4">
+                The meaning behind <span className="text-secondary">KARRCHOLAI</span>
+              </h2>
+              <p className="text-dark/55 text-sm max-w-lg mx-auto leading-relaxed">
+                Every letter of our name stands for a principle we carry into every project, every decision, every home we build.
+              </p>
+            </motion.div>
+
+            {/* Values grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {[
+                {
+                  letter: 'K', label: 'Keystone',
+                  desc: 'The foundational block. Every great structure begins with the right cornerstone — in planning, in materials, in people.',
+                  icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M3 10.5L12 3l9 7.5V21h-6v-6H9v6H3V10.5z"/></svg>,
+                },
+                {
+                  letter: 'A', label: 'Architecture',
+                  desc: 'Thoughtful design that balances form, function and the life of the people who will live within.',
+                  icon: <FaLayerGroup />,
+                },
+                {
+                  letter: 'R', label: 'Resilience',
+                  desc: 'Structures built to endure — not just inspections, but decades of real life.',
+                  icon: <FaFistRaised />,
+                },
+                {
+                  letter: 'R', label: 'Reliability',
+                  desc: 'Consistent delivery on every commitment, at every stage of the project.',
+                  icon: <FaMedal />,
+                },
+                {
+                  letter: 'C', label: 'Craftsmanship',
+                  desc: 'Precision in every finish. Quality that lives in the details long after handover.',
+                  icon: <FaPaintBrush />,
+                },
+                {
+                  letter: 'H', label: 'Harmony',
+                  desc: 'Balance between nature, space and the families who call it home.',
+                  icon: <FaYinYang />,
+                },
+                {
+                  letter: 'O', label: 'Optimization',
+                  desc: 'Smart use of resources. Every square foot, every rupee — thoughtfully maximised.',
+                  icon: <FaChartLine />,
+                },
+                {
+                  letter: 'L', label: 'Longevity',
+                  desc: 'We build for generations, not just occupancy certificates.',
+                  icon: <FaHourglass />,
+                },
+                {
+                  letter: 'A', label: 'Aesthetics',
+                  desc: 'Beauty that is purposeful, timeless and rooted in the culture of the home.',
+                  icon: <FaLeaf />,
+                },
+                {
+                  letter: 'I', label: 'Integrity',
+                  desc: 'Transparent, honest and accountable — from the first conversation to the final handover.',
+                  icon: <FaBalanceScale />,
+                },
+              ].map((item, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 18 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.05 }}
+                  className="group flex items-start gap-5 bg-white rounded-2xl p-6 border border-dark/5 hover:border-secondary/25 hover:shadow-lg transition-all duration-300"
+                >
+                  {/* Letter circle */}
+                  <div className="w-11 h-11 rounded-xl bg-secondary flex items-center justify-center text-white font-black text-lg shrink-0 shadow-md shadow-secondary/20 group-hover:scale-105 transition-transform duration-300">
+                    {item.letter}
+                  </div>
+
+                  {/* Text */}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2.5 mb-1.5">
+                      <span className="text-secondary/70 text-sm group-hover:text-secondary transition-colors duration-300">
+                        {item.icon}
+                      </span>
+                      <h3 className="text-dark font-bold text-base tracking-tight group-hover:text-secondary transition-colors duration-300">
+                        {item.label}
+                      </h3>
+                    </div>
+                    <p className="text-dark/55 text-[13px] leading-relaxed">
+                      {item.desc}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Bottom strip */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.5, duration: 0.7 }}
+              className="mt-10 text-center"
+            >
+              <div className="inline-flex items-center gap-1.5 px-6 py-3 rounded-full bg-dark text-white text-[11px] font-black uppercase tracking-[0.35em]">
+                {['K','A','R','R','C','H','O','L','A','I'].map((l, i) => (
+                  <span key={i} style={{ color: i % 2 === 0 ? '#C9754A' : 'white' }}>{l}</span>
+                ))}
+                <span className="mx-2 text-white/30">·</span>
+                <span className="text-white/60 normal-case font-normal tracking-normal text-[10px]">Ten principles. One commitment.</span>
+              </div>
+            </motion.div>
+
+          </div>
         </section>
 
         {/* ══════════════════════════════════════════
