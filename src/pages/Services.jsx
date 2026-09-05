@@ -1,97 +1,71 @@
 ﻿import { useState, useRef } from 'react'
 import { motion, AnimatePresence, useScroll, useTransform, useSpring } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { FiArrowRight, FiPhone, FiChevronDown, FiCheck } from 'react-icons/fi'
-import { FaLeaf, FaCloudRain, FaSun, FaTh } from 'react-icons/fa'
+import {
+  FiArrowRight, FiPhone, FiChevronDown, FiCheck,
+  FiMonitor, FiMapPin, FiTruck
+} from 'react-icons/fi'
+import { FaLeaf, FaCloudRain, FaSun, FaRecycle } from 'react-icons/fa'
 import Navbar from '../components/Navbar'
 import UnifiedFooter from '../components/UnifiedFooter'
 import FAQSection from '../components/FAQSection'
 import { Helmet } from 'react-helmet-async'
 
-import imgPmc   from '../../assets/pmc.jpeg'
-import imgRes   from '../../assets/Residential_construction.jpg'
-import imgSolar from '../../assets/solar panel.jpg.jpeg'
-import imgRain  from '../../assets/rainwater.jpg.jpeg'
-import imgFloor from '../../assets/red-floor.jpg'
-import imgLand  from '../../assets/lancape.jpg.jpeg'
-import imgHero  from '../../assets/pexels-kawserhamid-176342.jpg'
+import imgHero      from '../../assets/pexels-kawserhamid-176342.jpg'
+import imgBuild     from '../../assets/Residential_construction.jpg'
+import imgManage    from '../../assets/pmc.jpeg'
+import imgComplete  from '../../assets/renovation.jpg.jpeg'
+import imgSolar     from '../../assets/solar panel.jpg.jpeg'
+import imgRain      from '../../assets/rainwater.jpg.jpeg'
+import imgLand      from '../../assets/lancape.jpg.jpeg'
+import imgFloor     from '../../assets/red-floor.jpg'
+import imgConstruct from '../../assets/construction.jpg'
 
-// ─── Data ─────────────────────────────────────────────────────────────────────
+// ─── Shared fade-up variant ───────────────────────────────────────────────────
+const fadeUp = {
+  initial: { opacity: 0, y: 30 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true },
+  transition: { duration: 0.8, ease: 'easeOut' },
+}
 
-const PMC_STEPS = [
-  { n: '01', t: 'Understand Your Requirements',     b: 'We begin by understanding your lifestyle, priorities, budget, site conditions and expectations — establishing a practical direction before construction starts.' },
-  { n: '02', t: 'Plan Before Execution',            b: 'We review drawings, specifications, quantities and construction sequence to identify potential issues before they become site problems.' },
-  { n: '03', t: 'Coordinate the Work',              b: 'We coordinate architects, structural consultants, contractors, suppliers and specialist teams — maintaining the right sequence and reducing conflicts on site.' },
-  { n: '04', t: 'Monitor Site Execution',           b: 'Regular observation of workmanship, dimensions, materials and construction practices at important stages. Our experience helps identify issues early.' },
-  { n: '05', t: 'Manage Materials & Wastage',       b: 'We monitor material requirements, usage and wastage to support better resource utilisation, cost awareness and responsible construction.' },
-  { n: '06', t: 'Monitor Quality',                  b: 'Stage-wise checking and consistent attention to workmanship — identifying and addressing issues during construction, not after.' },
-  { n: '07', t: 'Track Progress & Decisions',       b: 'We keep you informed about important activities, requirements, issues and decisions so the project progresses with clarity.' },
-  { n: '08', t: 'Coordinate CHOLAI Solutions',      b: 'We integrate landscape, rainwater harvesting, traditional flooring and solar solutions into the project — considered alongside the building, not as afterthoughts.', cholai: true },
-  { n: '09', t: 'Resolve Construction Challenges',  b: 'Unexpected site conditions, coordination issues and changes can occur. Our practical experience helps assess situations and work toward solutions on cost, quality and time.' },
-  { n: '10', t: 'Support Through Handover',         b: 'Our involvement continues through finishing stages, final inspections and necessary corrections — bringing the project to an organised handover.' },
-]
-
-const TURNKEY_STEPS = [
-  { n: '01', t: 'Requirement & Project Planning',        b: 'We understand your requirements, lifestyle, priorities, budget and site conditions — establishing a practical direction for your project.' },
-  { n: '02', t: 'Design & Technical Coordination',       b: 'We coordinate with architects, structural consultants and other professionals to align drawings, specifications and technical requirements with site execution.' },
-  { n: '03', t: 'Estimation & Material Planning',        b: 'We review project quantities and material needs to support better cost awareness, planned procurement and reduced material wastage.' },
-  { n: '04', t: 'Construction Execution',                b: 'From foundation and structural work to masonry, plastering and other major construction activities — executed according to the planned sequence.' },
-  { n: '05', t: 'Electrical & Plumbing Coordination',    b: 'We coordinate MEP services with construction activities to ensure proper integration at the required stages.' },
-  { n: '06', t: 'Finishing Works',                       b: 'We coordinate flooring, painting, doors, windows, sanitary fixtures and other finishing activities according to the approved requirements.' },
-  { n: '07', t: 'CHOLAI — Better Living Solutions',      b: 'Landscape, rainwater harvesting, traditional flooring and solar energy — considered as part of the project rather than added only after construction is complete.', cholai: true },
-  { n: '08', t: 'Site Coordination & Quality Monitoring', b: 'We monitor site progress, coordinate different teams and observe important stages of workmanship to identify issues and support timely corrections.' },
-  { n: '09', t: 'Material & Waste Management',           b: 'We plan material requirements, monitor usage and work to reduce avoidable wastage — supporting both cost efficiency and responsible construction.' },
-  { n: '10', t: 'Final Inspection & Handover',           b: 'We coordinate final inspections, identify pending works and corrections, and support the completion process through to handover.' },
-]
-
-const CHOLAI_ITEMS = [
-  { Icon: FaLeaf,      label: 'Landscape & Green Spaces',        img: imgLand,  desc: 'Planning outdoor areas that complement the home and create comfortable, usable green spaces.' },
-  { Icon: FaCloudRain, label: 'Rainwater & Water Conservation',  img: imgRain,  desc: 'Planning systems to collect and manage rainwater responsibly and support better water use.' },
-  { Icon: FaTh,        label: 'Traditional Flooring & Materials', img: imgFloor, desc: 'Athangudi tiles, lime plaster, natural stone — cool, beautiful and rooted in Tamil culture.' },
-  { Icon: FaSun,       label: 'Solar Energy Solutions',           img: imgSolar, desc: 'Planning suitable solar solutions to support energy efficiency and responsible energy use.' },
-]
-
-// ─── Accordion (reusable for both services) ───────────────────────────────────
-function Accordion({ steps, onDark = false }) {
-  const [open, setOpen] = useState(null)
-  const toggle = (i) => setOpen(open === i ? null : i)
-
-  const borderColor    = onDark ? 'border-white/10'        : 'border-dark/[0.07]'
-  const numColor       = (active) => onDark
-    ? (active ? 'text-secondary' : 'text-white/20')
-    : (active ? 'text-secondary' : 'text-dark/25')
-  const titleColor     = (active) => onDark
-    ? (active ? 'text-white' : 'text-white/60')
-    : (active ? 'text-dark' : 'text-dark/60')
-  const chevronColor   = (active) => onDark
-    ? (active ? 'text-secondary' : 'text-white/20')
-    : (active ? 'text-secondary' : 'text-dark/25')
-  const bodyColor      = onDark ? 'text-white/45' : 'text-dark/55'
-
+// ─── Hero parallax bg ─────────────────────────────────────────────────────────
+function HeroBg() {
+  const ref = useRef(null)
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
+  const y = useTransform(scrollYProgress, [0, 1], ['0%', '28%'])
   return (
-    <div className={`divide-y ${onDark ? 'divide-white/[0.08]' : 'divide-dark/[0.06]'}`}>
+    <div ref={ref} className="absolute inset-0 overflow-hidden">
+      <motion.div style={{ y }} className="absolute inset-0 scale-110">
+        <img src={imgHero} alt="" className="w-full h-full object-cover object-center" />
+      </motion.div>
+      <div className="absolute inset-0 bg-gradient-to-b from-[#1a1a1a]/60 via-[#1a1a1a]/30 to-[#1a1a1a]/85" />
+    </div>
+  )
+}
+
+// ─── Dark accordion (white text on dark bg) ───────────────────────────────────
+function DarkAccordion({ steps }) {
+  const [open, setOpen] = useState(null)
+  return (
+    <div className="divide-y divide-white/[0.07]">
       {steps.map((s, i) => {
         const active = open === i
         return (
           <div key={i}>
             <button
-              onClick={() => toggle(i)}
+              onClick={() => setOpen(active ? null : i)}
               className="w-full flex items-center gap-4 py-4 text-left cursor-pointer select-none"
             >
-              <span className={`text-[9px] font-bold tracking-[0.35em] flex-shrink-0 transition-colors duration-200 ${numColor(active)}`}>
+              <span className={`text-[9px] font-black tracking-widest flex-shrink-0 w-8 transition-colors duration-200 ${active ? 'text-[#B85C38]' : 'text-white/25'}`}>
                 {s.n}
               </span>
-              <span className={`flex-1 font-sans text-[13px] font-semibold transition-colors duration-200 flex items-center gap-2 ${titleColor(active)}`}>
+              <span className={`flex-1 text-[13px] font-bold transition-colors duration-200 ${active ? 'text-white' : 'text-white/60'}`}>
                 {s.t}
-                {s.cholai && (
-                  <span className="text-[7px] font-bold tracking-[0.4em] uppercase px-2 py-0.5 rounded bg-primary/10 text-primary flex-shrink-0">
-                    CHOLAI
-                  </span>
-                )}
               </span>
               <FiChevronDown
                 size={13}
-                className={`flex-shrink-0 transition-all duration-200 ${chevronColor(active)}`}
+                className={`flex-shrink-0 transition-all duration-200 ${active ? 'text-[#B85C38]' : 'text-white/25'}`}
                 style={{ transform: active ? 'rotate(180deg)' : 'rotate(0deg)' }}
               />
             </button>
@@ -105,9 +79,7 @@ function Accordion({ steps, onDark = false }) {
                   transition={{ duration: 0.28, ease: [0.4, 0, 0.2, 1] }}
                   style={{ overflow: 'hidden' }}
                 >
-                  <p className={`font-sans text-[13px] font-light leading-relaxed pb-4 pl-10 pr-6 ${bodyColor}`}>
-                    {s.b}
-                  </p>
+                  <p className="text-[13px] font-light text-white/70 leading-relaxed pb-4 pl-12 pr-6">{s.b}</p>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -118,93 +90,136 @@ function Accordion({ steps, onDark = false }) {
   )
 }
 
-// ─── CHOLAI expandable (cream bg) ─────────────────────────────────────────────
-function CholaiExpand() {
-  const [open, setOpen] = useState(false)
+// ─── Light accordion (dark text on cream bg) ──────────────────────────────────
+function LightAccordion({ steps }) {
+  const [open, setOpen] = useState(null)
   return (
-    <div className="mt-10 border-t border-dark/[0.07] pt-8">
-      <button
-        onClick={() => setOpen(o => !o)}
-        className="flex items-center gap-3 cursor-pointer group w-full text-left"
-      >
-        <span className="w-5 h-[1px] bg-primary/40 group-hover:w-8 transition-all duration-300" />
-        <span className="font-sans text-[11px] font-bold tracking-[0.28em] uppercase text-dark/45 group-hover:text-primary transition-colors duration-300">
-          CHOLAI Solutions Included
-        </span>
-        <FiChevronDown
-          size={12}
-          className="ml-auto text-dark/30 transition-all duration-300"
-          style={{ transform: open ? 'rotate(180deg)' : 'rotate(0deg)' }}
-        />
-      </button>
-      <AnimatePresence initial={false}>
-        {open && (
-          <motion.div
-            key="exp"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-            style={{ overflow: 'hidden' }}
-          >
-            <div className="pt-6 grid grid-cols-2 gap-3">
-              {CHOLAI_ITEMS.map(({ Icon, label }, i) => (
-                <div key={i} className="flex items-center gap-2.5 p-3 bg-primary/[0.04] rounded-xl border border-primary/10">
-                  <Icon size={13} className="text-primary flex-shrink-0" />
-                  <span className="font-sans text-[11px] font-semibold text-dark/65 leading-snug">{label}</span>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+    <div className="divide-y divide-[#1a1a1a]/[0.07]">
+      {steps.map((s, i) => {
+        const active = open === i
+        return (
+          <div key={i}>
+            <button
+              onClick={() => setOpen(active ? null : i)}
+              className="w-full flex items-center gap-4 py-4 text-left cursor-pointer select-none"
+            >
+              <span className={`text-[9px] font-black tracking-widest flex-shrink-0 w-8 transition-colors duration-200 ${active ? 'text-[#B85C38]' : 'text-[#1a1a1a]/25'}`}>
+                {s.n}
+              </span>
+              <span className={`flex-1 text-[13px] font-bold transition-colors duration-200 ${active ? 'text-[#1a1a1a]' : 'text-[#1a1a1a]/60'}`}>
+                {s.t}
+              </span>
+              <FiChevronDown
+                size={13}
+                className={`flex-shrink-0 transition-all duration-200 ${active ? 'text-[#B85C38]' : 'text-[#1a1a1a]/25'}`}
+                style={{ transform: active ? 'rotate(180deg)' : 'rotate(0deg)' }}
+              />
+            </button>
+            <AnimatePresence initial={false}>
+              {active && (
+                <motion.div
+                  key="body"
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.28, ease: [0.4, 0, 0.2, 1] }}
+                  style={{ overflow: 'hidden' }}
+                >
+                  <p className="text-[13px] font-light text-[#1a1a1a]/70 leading-relaxed pb-4 pl-12 pr-6">{s.b}</p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        )
+      })}
     </div>
   )
 }
 
-// ─── CHOLAI expandable (dark bg) ──────────────────────────────────────────────
-function CholaiExpandDark() {
-  const [open, setOpen] = useState(false)
-  return (
-    <div className="mt-8 border-t border-white/[0.08] pt-7">
-      <button
-        onClick={() => setOpen(o => !o)}
-        className="flex items-center gap-3 cursor-pointer group w-full text-left"
-      >
-        <span className="w-5 h-[1px] bg-primary/50 group-hover:w-8 transition-all duration-300" />
-        <span className="font-sans text-[11px] font-bold tracking-[0.28em] uppercase text-white/35 group-hover:text-primary transition-colors duration-300">
-          CHOLAI Solutions Included
-        </span>
-        <FiChevronDown
-          size={12}
-          className="ml-auto text-white/25 transition-all duration-300"
-          style={{ transform: open ? 'rotate(180deg)' : 'rotate(0deg)' }}
-        />
-      </button>
-      <AnimatePresence initial={false}>
-        {open && (
-          <motion.div
-            key="expd"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-            style={{ overflow: 'hidden' }}
-          >
-            <div className="pt-5 grid grid-cols-2 gap-3">
-              {CHOLAI_ITEMS.map(({ Icon, label }, i) => (
-                <div key={i} className="flex items-center gap-2.5 p-3 bg-white/[0.05] rounded-xl border border-white/[0.08]">
-                  <Icon size={13} className="text-primary flex-shrink-0" />
-                  <span className="font-sans text-[11px] font-semibold text-white/55 leading-snug">{label}</span>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  )
-}
+// ─── Data ─────────────────────────────────────────────────────────────────────
+const SERVICES = [
+  {
+    id: 'build-detail',
+    num: '01',
+    label: 'BUILD MY HOME',
+    title: 'I have a plot. I want to build my house.',
+    headline: 'Complete Construction Execution',
+    sub: 'From Start to Handover',
+    desc: 'Planning, coordination and complete construction execution for your new home — from the initial groundwork to finishing and handover.',
+    img: imgBuild,
+    includes: ['Construction execution', 'Contractor coordination', 'Site supervision', 'Quality monitoring', 'Material coordination', 'Finishing works', 'Handover'],
+    cta: 'Explore Build My Home',
+    href: 'build-detail',
+  },
+  {
+    id: 'manage-detail',
+    num: '02',
+    label: 'MANAGE MY HOME',
+    title: 'I am building my house. I need someone to professionally manage it.',
+    headline: 'Project Management Consultancy',
+    sub: 'For Your Construction',
+    desc: 'You own the project. We bring professional planning, coordination and site management to keep your home construction organised, controlled and on track.',
+    img: imgManage,
+    includes: ['Project planning', 'Contractor coordination', 'Site supervision', 'Quality monitoring', 'Progress tracking', 'Cost monitoring', 'Material coordination', 'Client reporting'],
+    cta: 'Explore Manage My Home',
+    href: 'manage-detail',
+  },
+  {
+    id: 'complete-detail',
+    num: '03',
+    label: 'COMPLETE MY HOME',
+    title: 'My house is incomplete. I want to finish it and make it sustainable.',
+    headline: 'Complete Your Incomplete Home',
+    sub: 'Improve It for Better Living',
+    desc: 'Already started but unable to complete? We assess existing work, identify what is required and complete the remaining construction while introducing sustainable features.',
+    img: imgComplete,
+    includes: ['Assessment of existing construction', 'Remaining construction works', 'Repair / alteration works', 'Waterproofing', 'Landscape', 'Rainwater harvesting', 'Solar', 'Waste-management solutions'],
+    cta: 'Explore Complete My Home',
+    href: 'complete-detail',
+  },
+]
+
+const BUILD_COST_TABLE = [
+  { item: 'Civil & structural works', ok: true },
+  { item: 'Masonry & plastering',     ok: true },
+  { item: 'Flooring',                 ok: true },
+  { item: 'Doors & windows',          ok: true },
+  { item: 'Electrical',               ok: true },
+  { item: 'Plumbing',                 ok: true },
+  { item: 'Painting',                 ok: true },
+  { item: 'Basic sanitary fixtures',  ok: true },
+  { item: 'Other specifications',     ok: false, note: 'As agreed' },
+]
+
+const BUILD_STEPS = [
+  { n: '01', t: 'Requirement & Planning',             b: 'We understand your lifestyle, budget, site conditions and expectations — establishing a practical direction before any work begins.' },
+  { n: '02', t: 'Design & Technical Coordination',    b: 'We coordinate with architects, structural consultants and other professionals to align drawings and specifications with site execution.' },
+  { n: '03', t: 'Estimation & Material Planning',     b: 'We review quantities and material needs to support better cost awareness, planned procurement and reduced material wastage.' },
+  { n: '04', t: 'Construction Execution',             b: 'From foundation and structural work to masonry, plastering and other major construction activities — executed in the right sequence.' },
+  { n: '05', t: 'Electrical & Plumbing Coordination', b: 'We coordinate MEP services with construction activities to ensure proper integration at each required stage.' },
+  { n: '06', t: 'Finishing Works',                    b: 'Flooring, painting, doors, windows, sanitary fixtures and other finishing activities coordinated to approved requirements.' },
+  { n: '07', t: 'CHOLAI — Better Living',             b: 'Landscape, rainwater harvesting, traditional flooring and solar energy — considered as part of the project, not afterthoughts.' },
+  { n: '08', t: 'Final Inspection & Handover',        b: 'We coordinate final inspections, identify pending corrections, and support the completion process through to handover.' },
+]
+
+const PMC_STEPS = [
+  { n: '01', t: 'Understand Your Requirements',  b: 'We begin by understanding your lifestyle, priorities, budget, site conditions and expectations.' },
+  { n: '02', t: 'Plan Before Execution',         b: 'We review drawings, specifications, quantities and construction sequence to identify potential issues before they reach site.' },
+  { n: '03', t: 'Coordinate the Work',           b: 'We coordinate architects, consultants, contractors, suppliers and specialist teams — maintaining the right sequence.' },
+  { n: '04', t: 'Monitor Site Execution',        b: 'Regular observation of workmanship, dimensions, materials and construction practices at important stages.' },
+  { n: '05', t: 'Manage Materials & Wastage',    b: 'We monitor material requirements, usage and wastage to support better resource utilisation and cost awareness.' },
+  { n: '06', t: 'Monitor Quality',               b: 'Stage-wise checking and consistent attention to workmanship — identifying and addressing issues during construction, not after.' },
+  { n: '07', t: 'Track Progress & Decisions',    b: 'We keep you informed about important activities, requirements, issues and decisions so the project progresses with clarity.' },
+  { n: '08', t: 'Support Through Handover',      b: 'Our involvement continues through finishing stages, final inspections and corrections — bringing the project to an organised handover.' },
+]
+
+const COMPLETE_STEPS = [
+  { step: '01', label: 'Site Assessment' },
+  { step: '02', label: 'Existing Work Evaluation' },
+  { step: '03', label: 'Remaining Work Calculation' },
+  { step: '04', label: 'Sustainable Feature Planning' },
+  { step: '05', label: 'Detailed Scope-Based Estimate' },
+]
 
 // ─── Main export ──────────────────────────────────────────────────────────────
 export default function Services() {
@@ -213,642 +228,782 @@ export default function Services() {
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30 })
 
   return (
-    <div ref={containerRef} className="bg-cream min-h-screen overflow-x-hidden text-dark selection:bg-secondary selection:text-white">
+    <div ref={containerRef} className="bg-[#fdfbf7] min-h-screen overflow-x-hidden text-[#1a1a1a] selection:bg-[#B85C38] selection:text-white">
       <Helmet>
-        <title>PMC & Turnkey Construction Services | KARRCHOLAI Tamil Nadu</title>
-        <meta name="description" content="KARRCHOLAI offers experience-led Project Management Consultancy and Turnkey Construction in Tamil Nadu — with CHOLAI better-living solutions built in from day one." />
+        <title>Services — Build, Manage & Complete Your Home | KARRCHOLAI</title>
+        <meta name="description" content="KARRCHOLAI offers three home services: Build My Home (turnkey construction), Manage My Home (PMC), and Complete My Home (renovation + sustainability). Tamil Nadu." />
         <link rel="canonical" href="https://karrcholai.com/services" />
       </Helmet>
 
       {/* Scroll progress bar */}
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-[2px] origin-left z-[100] bg-secondary"
-        style={{ scaleX }}
-      />
+      <motion.div className="fixed top-0 left-0 right-0 h-1 bg-[#B85C38] z-[100] origin-left" style={{ scaleX }} />
 
       <Navbar />
 
-      {/* ════════════════════════════════════════════════════
-          1. HERO — full-bleed, left-aligned, like Karr/About
-      ════════════════════════════════════════════════════ */}
-      <section
-        className="relative w-full flex items-center justify-center overflow-hidden bg-dark"
-        style={{ minHeight: '100svh' }}
-      >
-        {/* Parallax bg */}
+      {/* ════════════════════════════════════════════
+          1. HERO
+      ════════════════════════════════════════════ */}
+      <section className="relative w-full flex items-center overflow-hidden bg-[#1a1a1a]" style={{ minHeight: '100svh' }}>
         <HeroBg />
-
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-16 pt-32 pb-20 flex flex-col items-start">
+        <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 pt-36 pb-24 w-full">
 
           <motion.span
-            initial={{ opacity: 0, y: -12 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="font-sans text-secondary font-bold tracking-[0.55em] uppercase text-[10px] mb-5 block"
+            className="text-[#B85C38] font-black tracking-widest uppercase text-[10px] mb-6 block"
           >
-            Experience-Led Construction
+            KARRCHOLAI — Services
           </motion.span>
 
-          {/* Lora serif heading — matches About page H1 exactly */}
           <motion.h1
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, delay: 0.35, ease: 'easeOut' }}
-            className="font-serif text-[clamp(3rem,8vw,7.5rem)] font-semibold text-white leading-[1.05] tracking-tight mb-6 max-w-3xl"
+            initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.35, ease: [0.76, 0, 0.24, 1] }}
+            className="font-black text-[clamp(3.2rem,8vw,7.5rem)] text-white leading-none tracking-tighter mb-6 max-w-4xl"
           >
-            Build with<br />
-            <em className="not-italic text-secondary">Confidence.</em>
+            Your Home.<br />
+            <span className="text-white/50">Your Stage.</span><br />
+            Our <span className="text-[#B85C38]">Expertise.</span>
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="font-sans text-white/60 text-[15px] font-light leading-relaxed max-w-[48ch] mb-10"
+            className="text-white/70 text-base md:text-lg font-light leading-relaxed max-w-xl mb-12"
           >
-            Building a home involves much more than construction work. It requires planning,
-            coordination, cost awareness, material management, quality control and timely
-            decisions at every stage. KARRCHOLAI brings{' '}
-            <strong className="text-white/80 font-semibold">12+ years of practical site experience</strong>
-            {' '}to manage all of it for you.
+            Whether you are starting from scratch, currently building, or need to finish what&apos;s
+            already been started — KARRCHOLAI has a service built for your exact situation.
           </motion.p>
 
-          {/* Quick-jump pills */}
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.75 }}
-            className="flex flex-col sm:flex-row gap-3 mb-16"
+            className="flex flex-wrap gap-3 mb-20"
           >
             {[
-              { id: 'pmc',     label: 'Project Management (PMC)' },
-              { id: 'turnkey', label: 'Turnkey Construction' },
+              { id: 'build-detail',    label: '01 — Build My Home' },
+              { id: 'manage-detail',   label: '02 — Manage My Home' },
+              { id: 'complete-detail', label: '03 — Complete My Home' },
             ].map((s) => (
-              <a
+              <button
                 key={s.id}
-                href={`#${s.id}`}
-                onClick={(e) => { e.preventDefault(); document.getElementById(s.id)?.scrollIntoView({ behavior: 'smooth', block: 'start' }) }}
-                className="group inline-flex items-center gap-3 px-6 py-3 bg-white/10 backdrop-blur-sm border border-white/20 text-white font-sans text-[11px] font-semibold tracking-[0.18em] uppercase rounded-full transition-all duration-300 hover:bg-white hover:text-dark hover:-translate-y-0.5"
+                onClick={() => document.getElementById(s.id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+                className="inline-flex items-center gap-3 px-6 py-3 bg-white/10 backdrop-blur-sm border border-white/25 text-white text-[11px] font-bold tracking-wider uppercase rounded-full transition-all duration-300 hover:bg-[#B85C38] hover:border-[#B85C38] hover:-translate-y-0.5 cursor-pointer"
               >
                 {s.label}
-                <FiArrowRight size={12} className="opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300" />
-              </a>
+                <FiArrowRight size={11} />
+              </button>
             ))}
           </motion.div>
 
-          {/* Stats row — same as Karr page */}
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
             transition={{ delay: 0.95, duration: 0.8 }}
-            className="flex gap-10 md:gap-16 flex-wrap pt-8 border-t border-white/[0.12] w-full max-w-2xl"
+            className="flex gap-10 md:gap-16 flex-wrap pt-8 border-t border-white/10 w-full max-w-2xl"
           >
-            {[['12+', 'Years on Site'], ['200+', 'Projects'], ['10', 'PMC Stages'], ['4', 'CHOLAI Solutions']].map(([v, l]) => (
+            {[['12+', 'Years on Site'], ['200+', 'Projects'], ['3', 'Services'], ['4', 'CHOLAI Solutions']].map(([v, l]) => (
               <div key={l}>
-                <p className="font-sans text-[clamp(1.6rem,3vw,2.4rem)] font-bold text-white leading-none">{v}</p>
-                <p className="font-sans text-[9px] text-white/40 mt-1.5 uppercase tracking-[0.25em]">{l}</p>
+                <p className="font-black text-[clamp(1.8rem,3.5vw,2.8rem)] text-white leading-none tracking-tighter">{v}</p>
+                <p className="text-[9px] text-white/50 mt-1.5 uppercase tracking-wider">{l}</p>
               </div>
             ))}
           </motion.div>
         </div>
 
-        {/* Scroll indicator */}
         <motion.div
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.2 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 hidden md:flex flex-col items-center gap-3"
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 hidden md:block"
         >
           <motion.div
             animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
-            className="w-[1px] h-14 bg-gradient-to-b from-secondary to-transparent"
+            className="w-[1px] h-14 bg-gradient-to-b from-[#B85C38] to-transparent"
           />
         </motion.div>
       </section>
 
 
-      {/* ════════════════════════════════════════════════════
-          2. BRAND SPLIT — cream, two-panel, like About "Two names. One vision."
-      ════════════════════════════════════════════════════ */}
-      <section className="bg-cream py-20 md:py-28 px-6 overflow-hidden">
+      {/* ════════════════════════════════════════════
+          2. THREE SERVICE CARDS — cream bg
+      ════════════════════════════════════════════ */}
+      <section className="bg-[#fdfbf7] py-16 md:py-24 px-6">
         <div className="max-w-7xl mx-auto">
 
-          {/* Header */}
-          <div className="max-w-2xl mb-14 md:mb-18">
-            <motion.span
-              initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="font-sans text-secondary font-bold tracking-[0.55em] uppercase text-[10px] mb-4 block"
-            >
-              Two Names. One Vision.
-            </motion.span>
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }} transition={{ delay: 0.08 }}
-              className="font-serif text-[clamp(2.2rem,5vw,4rem)] font-semibold text-dark leading-[1.1] tracking-tight"
-            >
-              KARR builds it.<br />
-              CHOLAI makes it{' '}
-              <em className="not-italic text-secondary">worth living in.</em>
-            </motion.h2>
+          <div className="mb-12 md:mb-16 flex flex-col md:flex-row justify-between items-end gap-8">
+            <motion.div {...fadeUp} className="max-w-xl">
+              <span className="text-[#B85C38] font-black tracking-widest uppercase text-[10px] mb-4 block">Where Are You?</span>
+              <h2 className="font-black text-4xl md:text-6xl leading-none tracking-tighter">
+                A service for<br />
+                <span className="text-[#1a1a1a]/40">your exact stage.</span>
+              </h2>
+            </motion.div>
+            <motion.p {...fadeUp} className="text-[#1a1a1a]/70 text-base max-w-xs font-light border-l-2 border-[#B85C38]/40 pl-6">
+              Tell us where you stand. We have a structured, professional service for each stage of your home journey.
+            </motion.p>
           </div>
 
-          {/* Split panels — same layout as About KARR/CHOLAI */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 rounded-2xl overflow-hidden border border-dark/[0.07] shadow-sm">
-
-            {/* KARR — dark */}
-            <motion.div
-              initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
-              viewport={{ once: true }} transition={{ duration: 0.7 }}
-              className="relative bg-dark px-8 md:px-12 py-12 md:py-16 overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_rgba(184,92,56,0.1),_transparent_65%)] pointer-events-none" />
-              <div className="absolute -right-8 top-1/2 -translate-y-1/2 text-[150px] font-bold text-white/[0.025] leading-none select-none pointer-events-none font-serif">K</div>
-
-              <div className="relative z-10">
-                <div className="flex items-center gap-3 mb-7">
-                  <div className="w-11 h-11 rounded-2xl bg-secondary flex items-center justify-center shadow-lg shadow-secondary/25 flex-shrink-0">
-                    <span className="font-serif text-white font-semibold text-lg">K</span>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {SERVICES.map((svc, i) => (
+              <motion.div
+                key={svc.id}
+                initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }} transition={{ duration: 0.7, delay: i * 0.12 }}
+                className="group bg-white rounded-[28px] border border-[#1a1a1a]/5 hover:border-[#B85C38]/40 hover:shadow-xl hover:-translate-y-1 transition-all duration-500 overflow-hidden flex flex-col"
+              >
+                {/* Image */}
+                <div className="relative h-56 overflow-hidden">
+                  <img src={svc.img} alt={svc.headline}
+                    className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a]/75 via-[#1a1a1a]/20 to-transparent" />
+                  <div className="absolute top-4 left-5">
+                    <span className="text-[9px] font-black tracking-wider uppercase text-[#B85C38] bg-[#1a1a1a]/70 backdrop-blur-sm px-3 py-1.5 rounded-full border border-[#B85C38]/40">
+                      {svc.num}
+                    </span>
                   </div>
-                  <div>
-                    <span className="font-sans text-secondary text-[9px] font-bold uppercase tracking-[0.45em] block">KARR</span>
-                    <span className="font-sans text-white text-[15px] font-semibold">Construction &amp; Project Management</span>
+                  <div className="absolute bottom-4 left-5 right-5">
+                    <p className="text-[9px] font-black tracking-wider uppercase text-[#B85C38] mb-1">{svc.label}</p>
+                    <h3 className="font-black text-white text-lg md:text-xl leading-tight tracking-tight">{svc.headline}</h3>
                   </div>
                 </div>
 
-                <p className="font-sans text-white/60 text-[14px] font-light leading-relaxed mb-8 max-w-md">
-                  KARR is your complete home-building responsibility — from the first conversation
-                  to the day you receive your keys. We coordinate planning, structure, civil work,
-                  MEP, supervision and handover under a single accountable team.
-                </p>
+                {/* Body */}
+                <div className="flex flex-col flex-1 p-6">
+                  <p className="text-[#1a1a1a]/60 text-[12px] italic leading-relaxed mb-4 pl-4 border-l-2 border-[#B85C38]/25">
+                    &ldquo;{svc.title}&rdquo;
+                  </p>
+                  <p className="text-[#1a1a1a]/70 text-[13px] font-light leading-relaxed mb-5">{svc.desc}</p>
 
-                <div className="space-y-0 divide-y divide-white/[0.07]">
-                  {[
-                    'Project Management Consultancy (PMC)',
-                    'Turnkey Construction',
-                    'Vastu & Manaiyadi Planning',
-                    'Vendor & Contractor Coordination',
-                    'Material & Cost Management',
-                    'Documentation & Handover',
-                  ].map((f, i) => (
-                    <div key={i} className="flex items-center gap-3 py-3">
-                      <span className="w-1.5 h-1.5 rounded-full bg-secondary flex-shrink-0" />
-                      <span className="font-sans text-[13px] text-white/65 font-light">{f}</span>
+                  <div className="mb-5">
+                    <p className="text-[9px] font-black tracking-wider uppercase text-[#B85C38] mb-3">Includes</p>
+                    <div className="grid grid-cols-1 gap-1.5">
+                      {svc.includes.slice(0, 6).map((inc, j) => (
+                        <div key={j} className="flex items-center gap-2">
+                          <FiCheck size={10} className="text-[#B85C38] flex-shrink-0" />
+                          <span className="text-[12px] text-[#1a1a1a]/70 font-light">{inc}</span>
+                        </div>
+                      ))}
+                      {svc.includes.length > 6 && (
+                        <span className="text-[11px] text-[#1a1a1a]/40 font-light pl-4">+ {svc.includes.length - 6} more</span>
+                      )}
                     </div>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-
-            {/* CHOLAI — cream/light */}
-            <motion.div
-              initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
-              viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.1 }}
-              className="relative bg-[#f8f6f0] px-8 md:px-12 py-12 md:py-16 overflow-hidden border-t lg:border-t-0 lg:border-l border-dark/[0.07]"
-            >
-              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_rgba(45,75,55,0.06),_transparent_60%)] pointer-events-none" />
-              <div className="absolute -left-8 top-1/2 -translate-y-1/2 text-[150px] font-bold text-dark/[0.04] leading-none select-none pointer-events-none font-serif">C</div>
-
-              <div className="relative z-10">
-                <div className="flex items-center gap-3 mb-7">
-                  <div className="w-11 h-11 rounded-2xl bg-dark flex items-center justify-center shadow-xl shadow-dark/10 flex-shrink-0">
-                    <span className="font-serif text-secondary font-semibold text-lg">C</span>
                   </div>
-                  <div>
-                    <span className="font-sans text-secondary text-[9px] font-bold uppercase tracking-[0.45em] block">CHOLAI</span>
-                    <span className="font-sans text-dark text-[15px] font-semibold">Greenery &amp; Sustainability</span>
+
+                  <div className="mt-auto pt-4 border-t border-[#1a1a1a]/6">
+                    <button
+                      onClick={() => document.getElementById(svc.href)?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+                      className="inline-flex items-center gap-2 text-[11px] font-black tracking-wider uppercase text-[#B85C38] cursor-pointer hover:gap-3 transition-all duration-300"
+                    >
+                      {svc.cta} <FiArrowRight size={11} />
+                    </button>
                   </div>
                 </div>
-
-                <p className="font-sans text-dark/60 text-[14px] font-light leading-relaxed mb-8 max-w-md">
-                  CHOLAI is the better-living layer — sustainability solutions planned at design
-                  stage, not retrofitted after construction. A home should not end with its walls.
-                  CHOLAI extends it into spaces, resources and systems that make living better.
-                </p>
-
-                <div className="grid grid-cols-1 gap-3">
-                  {[
-                    { icon: '🌿', label: 'Landscape & Green Spaces',       desc: 'Creating healthier outdoor environments' },
-                    { icon: '💧', label: 'Rainwater & Water Conservation',  desc: 'Managing water responsibly from day one' },
-                    { icon: '☀️', label: 'Solar Energy Solutions',           desc: 'Reducing dependence on conventional energy' },
-                    { icon: '🏺', label: 'Traditional Flooring & Materials', desc: 'Athangudi tiles, lime plaster, stone finishes' },
-                  ].map((item, i) => (
-                    <div key={i} className="flex items-center gap-3 p-3 bg-white rounded-xl border border-dark/5 hover:border-secondary/25 hover:shadow-sm transition-all duration-300">
-                      <span className="text-lg flex-shrink-0">{item.icon}</span>
-                      <div>
-                        <p className="font-sans text-[13px] font-semibold text-dark">{item.label}</p>
-                        <p className="font-sans text-[11px] text-dark/50 mt-0.5">{item.desc}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            ))}
           </div>
-
-          {/* Closing strip */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }} transition={{ delay: 0.2 }}
-            className="mt-8 p-6 rounded-2xl border border-secondary/15 bg-secondary/[0.04] text-center"
-          >
-            <p className="font-sans text-[11px] font-bold uppercase tracking-[0.4em] text-secondary">
-              From Stone to Oasis — We Build Better Living
-            </p>
-          </motion.div>
-
         </div>
       </section>
 
 
-      {/* ════════════════════════════════════════════════════
-          3. PMC — dark bg, two-column like Karr PMC section
-      ════════════════════════════════════════════════════ */}
-      <section id="pmc" className="bg-dark py-0 overflow-hidden">
+      {/* ════════════════════════════════════════════
+          3. BUILD MY HOME — dark section
+      ════════════════════════════════════════════ */}
+      <section id="build-detail" className="bg-[#1a1a1a] overflow-hidden">
 
-        {/* Full-bleed image header */}
-        <div className="relative h-[52vh] overflow-hidden">
-          <img src={imgPmc} alt="Project Management Consultancy" className="absolute inset-0 w-full h-full object-cover opacity-40" />
-          <div className="absolute inset-0 bg-gradient-to-r from-dark via-dark/60 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-dark via-transparent to-dark/40" />
-          <div className="relative z-10 h-full max-w-7xl mx-auto px-6 md:px-12 lg:px-16 flex flex-col justify-end pb-14">
-            <motion.span
-              initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              className="font-sans text-secondary font-bold tracking-[0.55em] uppercase text-[10px] mb-3 block"
+        {/* Image header — FIX: opacity-70 + lighter gradient */}
+        <div className="relative h-[60vh] overflow-hidden">
+          <img src={imgBuild} alt="Build My Home"
+            className="absolute inset-0 w-full h-full object-cover opacity-70" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#1a1a1a]/80 via-[#1a1a1a]/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] via-transparent to-transparent" />
+          <div className="relative z-10 h-full max-w-7xl mx-auto px-6 md:px-12 flex flex-col justify-end pb-14">
+            <motion.p
+              initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
+              className="text-[#B85C38] font-black tracking-widest uppercase text-[10px] mb-3"
             >
-              KARR — Service 01
-            </motion.span>
+              01 — BUILD MY HOME
+            </motion.p>
             <motion.h2
               initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }} transition={{ delay: 0.08 }}
-              className="font-serif text-[clamp(2.8rem,6vw,6rem)] font-semibold text-white leading-[1.05] tracking-tight"
+              viewport={{ once: true }} transition={{ delay: 0.1 }}
+              className="font-black text-[clamp(2.8rem,6vw,6rem)] text-white leading-none tracking-tighter"
             >
-              Project Management<br />
-              <em className="not-italic text-white/40">Consultancy</em>
+              Complete<br />
+              <span className="text-white/40">Construction.</span>
             </motion.h2>
+            <motion.p
+              initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
+              viewport={{ once: true }} transition={{ delay: 0.2 }}
+              className="text-white/70 text-sm font-light mt-3 max-w-md"
+            >
+              I have a plot. I want to build my house.
+            </motion.p>
           </div>
         </div>
 
-        {/* PMC content — 2 col */}
-        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16 py-16 md:py-24">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+        {/* Content */}
+        <div className="max-w-7xl mx-auto px-6 md:px-12 py-16 md:py-24">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-start">
 
-            {/* Left — narrative */}
-            <motion.div
-              initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }} transition={{ duration: 0.7 }}
-            >
-              <p className="font-sans text-white/65 text-[15px] font-light leading-relaxed mb-8">
-                Our Project Management Consultancy is built on{' '}
-                <strong className="text-white font-semibold">12+ years of practical construction experience</strong>.
-                Our approach comes from working through real projects, understanding site conditions,
-                coordinating different teams and addressing construction challenges as they arise.
+            {/* LEFT — Includes + CTAs */}
+            <motion.div {...fadeUp}>
+              <p className="text-[#B85C38] font-black tracking-widest uppercase text-[10px] mb-4">What&apos;s Included</p>
+              <h3 className="font-black text-3xl md:text-4xl text-white leading-tight tracking-tighter mb-5">
+                From Groundwork<br />
+                <span className="text-white/35">to Handover.</span>
+              </h3>
+              <p className="text-white/70 text-base font-light leading-relaxed mb-8">
+                Planning, coordination and complete construction execution — every activity, every team, every stage managed under one accountable contract.
               </p>
 
-              {/* Pull quote */}
-              <blockquote className="font-serif text-[15px] text-white/70 italic font-medium leading-relaxed border-l-2 border-secondary pl-5 mb-8">
-                "We combine practical construction knowledge with structured planning, regular
-                site monitoring and clear communication to keep your project moving in the
-                right direction."
-              </blockquote>
-
-              {/* Approach chain */}
-              <div className="mb-8">
-                <p className="font-sans text-secondary text-[9px] font-bold uppercase tracking-[0.45em] mb-3 flex items-center gap-2">
-                  <span className="w-5 h-[1px] bg-secondary" />
-                  Our Approach
-                </p>
-                <div className="flex flex-wrap items-center gap-1">
-                  {['Experience', 'Planning', 'Coordination', 'Monitoring', 'CHOLAI', 'Handover'].map((s, i, arr) => (
-                    <span key={i} className="flex items-center gap-1">
-                      <span className="font-sans text-[12px] font-semibold text-white/65">{s}</span>
-                      {i < arr.length - 1 && <span className="text-secondary/40 text-[10px]">→</span>}
-                    </span>
-                  ))}
-                </div>
+              <div className="mb-10">
+                {SERVICES[0].includes.map((inc, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, x: -12 }} whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }} transition={{ delay: i * 0.05 }}
+                    className="flex items-center gap-3 py-3 border-b border-white/[0.06] last:border-0"
+                  >
+                    <div className="w-6 h-6 rounded-full bg-[#B85C38]/20 flex items-center justify-center flex-shrink-0">
+                      <FiCheck size={11} className="text-[#B85C38]" />
+                    </div>
+                    <span className="text-[14px] text-white/80 font-bold">{inc}</span>
+                  </motion.div>
+                ))}
               </div>
 
-              {/* Why experience box */}
-              <div className="bg-white/[0.04] rounded-2xl border border-white/[0.08] p-6 mb-8">
-                <p className="font-sans text-[9px] font-bold tracking-[0.4em] uppercase text-white/30 mb-3">Why Experience Matters</p>
-                <p className="font-sans text-[13px] text-white/55 font-light leading-relaxed">
-                  12+ years of practical construction helps us understand how decisions affect
-                  the project — from work sequence and workmanship to materials, services,
-                  landscape and long-term usability.{' '}
-                  <span className="text-white/75 font-medium">Our experience becomes your support throughout.</span>
-                </p>
-              </div>
-
-              {/* CTAs */}
-              <div className="flex gap-3 flex-wrap">
+              {/* FIX: Consistent buttons, no arbitrary tracking, no whitespace-nowrap */}
+              <div className="flex flex-wrap gap-4 items-center mt-8">
                 <Link to="/contact"
-                  className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-secondary hover:bg-[#a34e30] text-white font-sans text-[10px] font-bold tracking-[0.2em] uppercase rounded-full transition-all duration-300 hover:-translate-y-0.5 shadow-lg shadow-secondary/25"
+                  className="px-10 py-5 bg-[#B85C38] text-white text-sm font-bold tracking-wider uppercase hover:bg-[#a34e30] transition-all duration-500 rounded-full"
                 >
-                  Discuss Your Project <FiArrowRight size={11} />
+                  Start Building
                 </Link>
                 <a href="tel:+916385062939"
-                  className="inline-flex items-center gap-2 px-6 py-3.5 bg-white/10 border border-white/20 text-white font-sans text-[10px] font-bold tracking-[0.2em] uppercase rounded-full transition-all duration-300 hover:bg-white hover:text-dark"
+                  className="px-10 py-5 border border-white/30 text-white text-sm font-bold tracking-wider uppercase hover:bg-white/10 transition-all duration-300 rounded-full"
                 >
-                  <FiPhone size={11} /> Call Now
+                  Call Now
                 </a>
               </div>
             </motion.div>
 
-            {/* Right — accordion */}
-            <motion.div
-              initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }} transition={{ delay: 0.15, duration: 0.7 }}
-            >
-              <div className="mb-6">
-                <span className="font-sans text-secondary text-[9px] font-bold uppercase tracking-[0.45em] mb-2 block">How We Manage Your Project</span>
-                <h3 className="font-serif text-[clamp(1.6rem,2.8vw,2.4rem)] font-semibold text-white leading-[1.1]">
-                  10 Stages.<br />
-                  <span className="text-white/30">Every Step Covered.</span>
-                </h3>
+            {/* RIGHT — Process + Pricing */}
+            <motion.div {...fadeUp} transition={{ duration: 0.8, delay: 0.15 }}>
+              <p className="text-[#B85C38] font-black tracking-widest uppercase text-[10px] mb-4">Construction Process</p>
+              <h3 className="font-black text-3xl md:text-4xl text-white leading-tight tracking-tighter mb-8">
+                8 Stages.<br />
+                <span className="text-white/35">Every Step Covered.</span>
+              </h3>
+
+              <div className="bg-white/5 rounded-[24px] border border-white/10 px-6 py-2 mb-8">
+                <DarkAccordion steps={BUILD_STEPS} />
               </div>
 
-              <div className="bg-white/[0.04] rounded-2xl border border-white/[0.08] px-6 py-2">
-                <Accordion steps={PMC_STEPS} onDark={true} />
-              </div>
+              {/* Pricing card */}
+              <div className="bg-white/5 rounded-[24px] border border-white/10 p-6 md:p-8">
+                <p className="text-[#B85C38] font-black tracking-wider uppercase text-[10px] mb-3">Indicative Cost</p>
+                <p className="font-black text-3xl md:text-4xl text-white leading-none tracking-tighter mb-1">
+                  &#8377; ______ / sq.ft.*
+                </p>
+                <p className="text-white/50 text-[12px] mb-7">*Based on specifications, built-up area and site conditions.</p>
 
-              <CholaiExpandDark />
+                <div className="divide-y divide-white/[0.06] mb-6">
+                  {BUILD_COST_TABLE.map((row, i) => (
+                    <div key={i} className="flex items-center justify-between py-3">
+                      <span className="text-[13px] text-white/70 font-light">{row.item}</span>
+                      {row.ok
+                        ? <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-emerald-400"><FiCheck size={10} /> Included</span>
+                        : <span className="text-[11px] text-white/50 italic">{row.note}</span>
+                      }
+                    </div>
+                  ))}
+                </div>
+
+                <p className="text-[12px] text-white/60 font-light leading-relaxed mb-6">
+                  Final construction cost is prepared based on your approved design, specifications, built-up area and site conditions.
+                </p>
+
+                <Link to="/contact"
+                  className="w-full inline-flex items-center justify-center gap-2.5 px-6 py-4 border border-white/25 text-white text-sm font-bold tracking-wider uppercase rounded-full transition-all duration-300 hover:bg-[#B85C38] hover:border-[#B85C38]"
+                >
+                  Request Detailed Estimate <FiArrowRight size={11} />
+                </Link>
+              </div>
             </motion.div>
-
           </div>
         </div>
       </section>
 
 
-      {/* ════════════════════════════════════════════════════
-          4. TURNKEY — cream bg, two-column
-      ════════════════════════════════════════════════════ */}
-      <section id="turnkey" className="bg-[#f8f6f3] py-0 overflow-hidden">
+      {/* ════════════════════════════════════════════
+          4. MANAGE MY HOME — cream section
+      ════════════════════════════════════════════ */}
+      <section id="manage-detail" className="bg-[#fdfbf7] overflow-hidden">
 
-        {/* Full-bleed image header */}
-        <div className="relative h-[52vh] overflow-hidden">
-          <img src={imgRes} alt="Turnkey Construction" className="absolute inset-0 w-full h-full object-cover opacity-55" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#f8f6f3] via-[#f8f6f3]/50 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#f8f6f3] via-transparent to-transparent" />
-          <div className="relative z-10 h-full max-w-7xl mx-auto px-6 md:px-12 lg:px-16 flex flex-col justify-end pb-14">
-            <motion.span
-              initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              className="font-sans text-secondary font-bold tracking-[0.55em] uppercase text-[10px] mb-3 block"
+        {/* Image header — FIX: opacity-70 + lighter gradient */}
+        <div className="relative h-[60vh] overflow-hidden">
+          <img src={imgManage} alt="Manage My Home"
+            className="absolute inset-0 w-full h-full object-cover opacity-70" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#fdfbf7]/80 via-[#fdfbf7]/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#fdfbf7] via-transparent to-transparent" />
+          <div className="relative z-10 h-full max-w-7xl mx-auto px-6 md:px-12 flex flex-col justify-end pb-14">
+            <motion.p
+              initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
+              className="text-[#B85C38] font-black tracking-widest uppercase text-[10px] mb-3"
             >
-              KARR — Service 02
-            </motion.span>
+              02 — MANAGE MY HOME
+            </motion.p>
             <motion.h2
               initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }} transition={{ delay: 0.08 }}
-              className="font-serif text-[clamp(2.8rem,6vw,6rem)] font-semibold text-dark leading-[1.05] tracking-tight"
+              viewport={{ once: true }} transition={{ delay: 0.1 }}
+              className="font-black text-[clamp(2.8rem,6vw,6rem)] text-[#1a1a1a] leading-none tracking-tighter"
             >
-              Turnkey<br />
-              <em className="not-italic text-dark/30">Construction</em>
+              Project Management<br />
+              <span className="text-[#1a1a1a]/30">Consultancy.</span>
             </motion.h2>
+            <motion.p
+              initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
+              viewport={{ once: true }} transition={{ delay: 0.2 }}
+              className="text-[#1a1a1a]/70 text-sm font-light mt-3 max-w-md"
+            >
+              I am building my house. I need someone to professionally manage it.
+            </motion.p>
           </div>
         </div>
 
-        {/* Turnkey content — 2 col */}
-        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16 py-16 md:py-24">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+        {/* Content */}
+        <div className="max-w-7xl mx-auto px-6 md:px-12 py-16 md:py-24">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-start">
 
-            {/* Left — narrative */}
-            <motion.div
-              initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }} transition={{ duration: 0.7 }}
-            >
-              <p className="font-sans text-dark/65 text-[15px] font-light leading-relaxed mb-8">
-                Building a home involves many decisions, professionals, materials and
-                construction activities. Managing each part separately can become stressful
-                and time-consuming.
-                <br /><br />
-                With KARRCHOLAI's Turnkey service, we coordinate the{' '}
-                <strong className="text-dark font-semibold">complete construction journey</strong>
-                {' '}— from understanding your requirements to execution, finishing and handover.
+            {/* LEFT — Includes + CTAs */}
+            <motion.div {...fadeUp}>
+              <p className="text-[#B85C38] font-black tracking-widest uppercase text-[10px] mb-4">What We Manage</p>
+              <h3 className="font-black text-3xl md:text-4xl text-[#1a1a1a] leading-tight tracking-tighter mb-5">
+                You own it.<br />
+                <span className="text-[#1a1a1a]/30">We run it.</span>
+              </h3>
+              <p className="text-[#1a1a1a]/70 text-base font-light leading-relaxed mb-8">
+                Professional planning, coordination and site management to keep your home construction organised, controlled and on track — while you stay informed.
               </p>
 
-              {/* Three pillars */}
-              <div className="space-y-3 mb-8">
-                {[
-                  { label: 'One Point of Coordination', desc: "You don't have to manage every contractor, supplier and specialist independently." },
-                  { label: 'One Connected Process',     desc: 'Every stage connects to the next — decisions made early protect cost, quality and time later.' },
-                  { label: 'One Complete Environment',  desc: 'CHOLAI solutions are integrated into the project, not added as afterthoughts.' },
-                ].map((p, i) => (
+              <div className="mb-8">
+                {SERVICES[1].includes.map((inc, i) => (
                   <motion.div
                     key={i}
-                    initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.08 }}
-                    className="group flex gap-4 p-5 bg-white rounded-2xl border border-dark/[0.06] hover:border-secondary/25 hover:shadow-md transition-all duration-300"
+                    initial={{ opacity: 0, x: -12 }} whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }} transition={{ delay: i * 0.05 }}
+                    className="flex items-center gap-3 py-3 border-b border-[#1a1a1a]/[0.07] last:border-0"
                   >
-                    <FiCheck size={15} className="text-secondary flex-shrink-0 mt-0.5" />
-                    <div>
-                      <p className="font-sans text-[13px] font-semibold text-dark mb-0.5">{p.label}</p>
-                      <p className="font-sans text-[12px] text-dark/50 font-light leading-relaxed">{p.desc}</p>
+                    <div className="w-6 h-6 rounded-full bg-[#B85C38]/15 flex items-center justify-center flex-shrink-0">
+                      <FiCheck size={11} className="text-[#B85C38]" />
+                    </div>
+                    <span className="text-[14px] text-[#1a1a1a]/80 font-bold">{inc}</span>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Important callout */}
+              <div className="p-5 bg-[#B85C38]/8 rounded-[20px] border-l-4 border-[#B85C38] mb-8">
+                <p className="font-black text-[10px] uppercase tracking-wider text-[#B85C38] mb-2">Important</p>
+                <p className="text-[13px] text-[#1a1a1a]/70 font-light leading-relaxed">
+                  <strong className="font-black text-[#1a1a1a]">Construction cost ≠ PMC fee.</strong>{' '}
+                  The PMC fee covers professional planning, coordination, site supervision, quality monitoring, progress tracking and reporting — separate from construction costs.
+                </p>
+              </div>
+
+              {/* FIX: Consistent buttons */}
+              <div className="flex flex-wrap gap-4 items-center mt-8">
+                <Link to="/contact"
+                  className="px-10 py-5 bg-[#B85C38] text-white text-sm font-bold tracking-wider uppercase hover:bg-[#a34e30] transition-all duration-500 rounded-full"
+                >
+                  Discuss PMC
+                </Link>
+                <a href="tel:+916385062939"
+                  className="px-10 py-5 border border-[#1a1a1a]/30 text-[#1a1a1a] text-sm font-bold tracking-wider uppercase hover:border-[#1a1a1a]/60 transition-all duration-300 rounded-full"
+                >
+                  Call Now
+                </a>
+              </div>
+            </motion.div>
+
+            {/* RIGHT — PMC process + Fee */}
+            <motion.div {...fadeUp} transition={{ duration: 0.8, delay: 0.15 }}>
+              <p className="text-[#B85C38] font-black tracking-widest uppercase text-[10px] mb-4">PMC Process</p>
+              <h3 className="font-black text-3xl md:text-4xl text-[#1a1a1a] leading-tight tracking-tighter mb-8">
+                8 Stages.<br />
+                <span className="text-[#1a1a1a]/30">Complete Oversight.</span>
+              </h3>
+
+              <div className="bg-white rounded-[24px] border border-[#1a1a1a]/8 shadow-sm px-6 py-2 mb-8">
+                <LightAccordion steps={PMC_STEPS} />
+              </div>
+
+              {/* Fee structure */}
+              <div className="bg-white rounded-[24px] border border-[#1a1a1a]/8 shadow-sm p-6 md:p-8">
+                <p className="text-[#B85C38] font-black tracking-wider uppercase text-[10px] mb-5">PMC Fee Structure</p>
+
+                <div className="space-y-3 mb-6">
+                  {[
+                    { label: 'Option A', desc: 'Percentage of Project Cost', value: '___ %', sub: 'of total project cost' },
+                    { label: 'Option B', desc: 'Per Square Foot',            value: '&#8377; ___', sub: 'per sq.ft.' },
+                  ].map((opt, i) => (
+                    <div key={i} className="flex items-center justify-between p-4 bg-[#fdfbf7] rounded-[16px] border border-[#1a1a1a]/6 hover:border-[#B85C38]/25 transition-colors duration-300">
+                      <div>
+                        <p className="text-[9px] font-black uppercase tracking-wider text-[#B85C38] mb-0.5">{opt.label}</p>
+                        <p className="font-bold text-[14px] text-[#1a1a1a]">{opt.desc}</p>
+                      </div>
+                      <div className="text-right ml-4">
+                        <p className="font-black text-[1.4rem] text-[#1a1a1a] leading-none" dangerouslySetInnerHTML={{ __html: opt.value }} />
+                        <p className="text-[10px] text-[#1a1a1a]/50 mt-0.5">{opt.sub}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <p className="text-[12px] text-[#1a1a1a]/70 font-light leading-relaxed mb-5">
+                  The PMC fee covers professional planning, coordination, site supervision, quality monitoring, progress tracking and client reporting.
+                </p>
+
+                <Link to="/contact"
+                  className="w-full inline-flex items-center justify-center gap-2.5 px-6 py-4 bg-[#1a1a1a] text-white text-sm font-bold tracking-wider uppercase rounded-full transition-all duration-300 hover:bg-[#B85C38]"
+                >
+                  Get a PMC Quote <FiArrowRight size={11} />
+                </Link>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+
+      {/* ════════════════════════════════════════════
+          5. COMPLETE MY HOME — dark section
+      ════════════════════════════════════════════ */}
+      <section id="complete-detail" className="bg-[#1a1a1a] overflow-hidden">
+
+        {/* Image header — FIX: opacity-70 + lighter gradient */}
+        <div className="relative h-[60vh] overflow-hidden">
+          <img src={imgConstruct} alt="Complete My Home"
+            className="absolute inset-0 w-full h-full object-cover opacity-70" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#1a1a1a]/80 via-[#1a1a1a]/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a] via-transparent to-transparent" />
+          <div className="relative z-10 h-full max-w-7xl mx-auto px-6 md:px-12 flex flex-col justify-end pb-14">
+            <motion.p
+              initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
+              className="text-[#B85C38] font-black tracking-widest uppercase text-[10px] mb-3"
+            >
+              03 — COMPLETE MY HOME
+            </motion.p>
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }} transition={{ delay: 0.1 }}
+              className="font-black text-[clamp(2.8rem,6vw,6rem)] text-white leading-none tracking-tighter"
+            >
+              Complete. <span className="text-[#B85C38]">Improve.</span><br />
+              <span className="text-white/40">Live Better.</span>
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
+              viewport={{ once: true }} transition={{ delay: 0.2 }}
+              className="text-white/70 text-sm font-light mt-3 max-w-md"
+            >
+              My house is incomplete. I want to finish it and make it more sustainable.
+            </motion.p>
+          </div>
+        </div>
+
+        {/* Content */}
+        <div className="max-w-7xl mx-auto px-6 md:px-12 py-16 md:py-24">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-start">
+
+            {/* LEFT — Scope + sustainable */}
+            <motion.div {...fadeUp}>
+              <p className="text-[#B85C38] font-black tracking-widest uppercase text-[10px] mb-4">Scope of Work</p>
+              <h3 className="font-black text-3xl md:text-4xl text-white leading-tight tracking-tighter mb-5">
+                Every incomplete<br />
+                <span className="text-white/35">home is different.</span>
+              </h3>
+              <p className="text-white/70 text-base font-light leading-relaxed mb-8">
+                We assess the existing construction, identify what is required and help complete the remaining work — while introducing practical sustainable features.
+              </p>
+
+              <div className="mb-8">
+                {SERVICES[2].includes.map((inc, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, x: -12 }} whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }} transition={{ delay: i * 0.05 }}
+                    className="flex items-center gap-3 py-3 border-b border-white/[0.06] last:border-0"
+                  >
+                    <div className="w-6 h-6 rounded-full bg-[#B85C38]/20 flex items-center justify-center flex-shrink-0">
+                      <FiCheck size={11} className="text-[#B85C38]" />
+                    </div>
+                    <span className="text-[14px] text-white/80 font-bold">{inc}</span>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* FIX: Sustainable additions — simple horizontal pill row, not ugly small boxes */}
+              <div className="bg-white/5 rounded-[24px] border border-white/10 p-5 mb-8">
+                <p className="text-[9px] font-black uppercase tracking-wider text-white/50 mb-4">Sustainable Additions</p>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                  {[
+                    { Icon: FaLeaf,      label: 'Landscape',    color: '#22C55E' },
+                    { Icon: FaCloudRain, label: 'Rainwater',    color: '#60A5FA' },
+                    { Icon: FaSun,       label: 'Solar',        color: '#FBBF24' },
+                    { Icon: FaRecycle,   label: 'Waste Mgmt',   color: '#F97316' },
+                  ].map(({ Icon, label, color }, i) => (
+                    <div key={i} className="p-4 bg-white/5 rounded-2xl border border-white/10 text-center flex flex-col items-center gap-2">
+                      <div className="w-9 h-9 rounded-xl flex items-center justify-center mx-auto" style={{ background: `${color}25`, color }}>
+                        <Icon size={16} />
+                      </div>
+                      <p className="font-bold text-[12px] text-white/80 leading-tight">{label}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* FIX: Consistent buttons, mt-8 not auto-margin */}
+              <div className="flex flex-wrap gap-4 items-center mt-8">
+                <Link to="/contact"
+                  className="px-10 py-5 bg-[#B85C38] text-white text-sm font-bold tracking-wider uppercase hover:bg-[#a34e30] transition-all duration-500 rounded-full"
+                >
+                  Request Assessment
+                </Link>
+                <a href="tel:+916385062939"
+                  className="px-10 py-5 border border-white/30 text-white text-sm font-bold tracking-wider uppercase hover:bg-white/10 transition-all duration-300 rounded-full"
+                >
+                  Call Now
+                </a>
+              </div>
+            </motion.div>
+
+            {/* RIGHT — Assessment process + pricing */}
+            <motion.div {...fadeUp} transition={{ duration: 0.8, delay: 0.15 }}>
+              <p className="text-[#B85C38] font-black tracking-widest uppercase text-[10px] mb-4">Assessment Process</p>
+              <h3 className="font-black text-3xl md:text-4xl text-white leading-tight tracking-tighter mb-10">
+                We see it first.<br />
+                <span className="text-white/35">Then we plan.</span>
+              </h3>
+
+              <div className="mb-10">
+                {COMPLETE_STEPS.map(({ step, label }, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }} transition={{ delay: i * 0.08 }}
+                    className="flex items-start gap-4"
+                  >
+                    <div className="flex flex-col items-center flex-shrink-0">
+                      <div className="w-10 h-10 rounded-full bg-[#B85C38]/15 border border-[#B85C38]/35 flex items-center justify-center">
+                        <span className="text-[10px] font-black text-[#B85C38]">{step}</span>
+                      </div>
+                      {i < COMPLETE_STEPS.length - 1 && (
+                        <div className="w-[1px] h-8 bg-white/10 mt-1" />
+                      )}
+                    </div>
+                    <div className="pt-2.5 pb-2">
+                      <p className="font-bold text-[14px] text-white/80">{label}</p>
+                      {i === COMPLETE_STEPS.length - 1 && (
+                        <p className="text-[11px] text-[#B85C38] font-black mt-1">&#8595; Scope-based estimate prepared</p>
+                      )}
                     </div>
                   </motion.div>
                 ))}
               </div>
 
-              {/* Approach chain */}
-              <div className="mb-8 p-5 bg-white rounded-2xl border border-dark/[0.06]">
-                <p className="font-sans text-secondary text-[9px] font-bold uppercase tracking-[0.45em] mb-3 flex items-center gap-2">
-                  <span className="w-5 h-[1px] bg-secondary" />
-                  Turnkey Approach
+              <div className="bg-white/5 rounded-[24px] border border-white/10 p-6 mb-6">
+                <p className="text-[#B85C38] font-black tracking-wider uppercase text-[10px] mb-3">Pricing Model</p>
+                <p className="text-[14px] text-white/70 font-light leading-relaxed">
+                  Every incomplete home has a different condition, remaining scope and requirement.
+                  We assess first and prepare a{' '}
+                  <strong className="text-white font-black">scope-based estimate</strong> — not a generic rate.
                 </p>
-                <div className="flex flex-wrap items-center gap-1">
-                  {['Understand', 'Plan', 'Coordinate', 'Build', 'Monitor', 'Integrate', 'Handover'].map((s, i, arr) => (
-                    <span key={i} className="flex items-center gap-1">
-                      <span className="font-sans text-[12px] font-semibold text-dark/60">{s}</span>
-                      {i < arr.length - 1 && <span className="text-secondary/40 text-[10px]">→</span>}
-                    </span>
-                  ))}
-                </div>
               </div>
 
-              {/* CTAs */}
-              <div className="flex gap-3 flex-wrap">
-                <Link to="/contact"
-                  className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-dark hover:bg-secondary text-white font-sans text-[10px] font-bold tracking-[0.2em] uppercase rounded-full transition-all duration-500 hover:-translate-y-0.5"
-                >
-                  Start a Turnkey Project <FiArrowRight size={11} />
-                </Link>
-                <a href="tel:+916385062939"
-                  className="inline-flex items-center gap-2 px-6 py-3.5 border border-dark/20 text-dark/65 font-sans text-[10px] font-bold tracking-[0.2em] uppercase rounded-full transition-all duration-300 hover:border-dark/50 hover:text-dark"
-                >
-                  <FiPhone size={11} /> Call Now
-                </a>
-              </div>
+              <Link to="/contact"
+                className="w-full inline-flex items-center justify-center gap-2.5 px-6 py-4 border border-white/25 text-white text-sm font-bold tracking-wider uppercase rounded-full transition-all duration-300 hover:bg-[#B85C38] hover:border-[#B85C38]"
+              >
+                Request Site Assessment <FiArrowRight size={11} />
+              </Link>
             </motion.div>
-
-            {/* Right — accordion */}
-            <motion.div
-              initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }} transition={{ delay: 0.15, duration: 0.7 }}
-            >
-              <div className="mb-6">
-                <span className="font-sans text-secondary text-[9px] font-bold uppercase tracking-[0.45em] mb-2 block">What We Manage</span>
-                <h3 className="font-serif text-[clamp(1.6rem,2.8vw,2.4rem)] font-semibold text-dark leading-[1.1]">
-                  From Planning.<br />
-                  <span className="text-dark/30">To Handover.</span>
-                </h3>
-              </div>
-
-              <div className="bg-white rounded-2xl border border-dark/[0.06] shadow-sm px-6 py-2">
-                <Accordion steps={TURNKEY_STEPS} onDark={false} />
-              </div>
-
-              <CholaiExpand />
-            </motion.div>
-
           </div>
         </div>
       </section>
 
 
-      {/* ════════════════════════════════════════════════════
-          5. CHOLAI — dark, image grid like About "Responsibility"
-      ════════════════════════════════════════════════════ */}
-      <section className="bg-[#0e0e0e] py-20 md:py-28 px-6 overflow-hidden">
+      {/* ════════════════════════════════════════════
+          6. CONSULTATION — white bg
+      ════════════════════════════════════════════ */}
+      <section className="bg-white py-16 md:py-24 px-6">
         <div className="max-w-7xl mx-auto">
 
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-14">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }} transition={{ duration: 0.7 }}
-            >
-              <span className="font-sans text-secondary font-bold tracking-[0.55em] uppercase text-[10px] mb-4 block">
-                CHOLAI — Better Living
-              </span>
-              <h2 className="font-serif text-[clamp(2rem,4.5vw,3.8rem)] font-semibold text-white leading-[1.1] tracking-tight">
-                Beyond Construction.<br />
-                <em className="not-italic text-white/35">Better Living.</em>
+          <div className="mb-12 md:mb-16 flex flex-col md:flex-row justify-between items-end gap-8">
+            <motion.div {...fadeUp} className="max-w-xl">
+              <span className="text-[#B85C38] font-black tracking-widest uppercase text-[10px] mb-4 block">Not Sure Where to Start?</span>
+              <h2 className="font-black text-4xl md:text-6xl leading-none tracking-tighter">
+                Professional Consultation<br />
+                <span className="text-[#1a1a1a]/40">from &#8377;1,000</span>
               </h2>
             </motion.div>
-            <motion.p
-              initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
-              viewport={{ once: true }} transition={{ delay: 0.15 }}
-              className="font-sans text-white/50 text-[14px] font-light leading-relaxed max-w-[38ch] lg:text-right"
+            <motion.p {...fadeUp} className="text-[#1a1a1a]/70 text-base max-w-xs font-light border-l-2 border-[#B85C38]/40 pl-6">
+              Get an experienced construction professional&apos;s opinion before you make your next decision.
+            </motion.p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
+
+            {/* Online */}
+            <motion.div
+              initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }} transition={{ duration: 0.6 }}
+              className="group p-8 bg-[#fdfbf7] rounded-[28px] border border-[#1a1a1a]/5 hover:border-[#B85C38]/40 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500 flex flex-col"
             >
-              A home should not end with the building itself. Through CHOLAI, we plan the spaces,
-              resources and systems that contribute to better living — at the right stage.
+              <div className="w-14 h-14 rounded-full bg-white border border-[#1a1a1a]/8 flex items-center justify-center mb-6 group-hover:bg-[#B85C38] group-hover:border-transparent transition-all duration-500">
+                <FiMonitor size={20} className="text-[#1a1a1a]/40 group-hover:text-white transition-colors duration-500" />
+              </div>
+              <p className="text-[#B85C38] font-black tracking-wider uppercase text-[10px] mb-1">Online Consultation</p>
+              <p className="font-black text-[2.2rem] text-[#1a1a1a] leading-none tracking-tighter mb-1">&#8377;1,000</p>
+              <p className="text-[#1a1a1a]/50 text-[12px] mb-6">Up to 60 minutes</p>
+
+              <div className="space-y-2.5 mb-8 flex-1">
+                {['Construction planning', 'Construction cost advice', 'Contractor selection', 'Material selection', 'Quality concerns', 'Waterproofing', 'PMC requirements', 'Incomplete-house assessment'].map((item, i) => (
+                  <div key={i} className="flex items-start gap-2.5">
+                    <FiCheck size={12} className="text-[#B85C38] flex-shrink-0 mt-0.5" />
+                    <span className="text-[13px] text-[#1a1a1a]/70 font-light">{item}</span>
+                  </div>
+                ))}
+              </div>
+
+              <Link to="/contact"
+                className="w-full inline-flex items-center justify-center gap-2 px-5 py-4 bg-[#1a1a1a] text-white text-sm font-bold tracking-wider uppercase rounded-full transition-all duration-300 hover:bg-[#B85C38] mt-auto"
+              >
+                Book Online — &#8377;1,000 <FiArrowRight size={10} />
+              </Link>
+            </motion.div>
+
+            {/* Site Visit — featured dark */}
+            <motion.div
+              initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1 }}
+              className="group relative p-8 bg-[#1a1a1a] rounded-[28px] border border-white/[0.08] hover:border-[#B85C38]/40 hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-500 overflow-hidden flex flex-col"
+            >
+              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_80%_20%,_rgba(184,92,56,0.15),_transparent_60%)] pointer-events-none" />
+              <div className="absolute top-5 right-5">
+                <span className="text-[8px] font-black tracking-wider uppercase px-3 py-1.5 rounded-full bg-[#B85C38] text-white">Recommended</span>
+              </div>
+              <div className="w-14 h-14 rounded-full bg-white/10 flex items-center justify-center mb-6 group-hover:bg-[#B85C38] transition-colors duration-500">
+                <FiMapPin size={20} className="text-white/60 group-hover:text-white transition-colors duration-500" />
+              </div>
+              <p className="text-[#B85C38] font-black tracking-wider uppercase text-[10px] mb-1">Site Visit</p>
+              <p className="font-black text-[2.2rem] text-white leading-none tracking-tighter mb-1">&#8377;2,000</p>
+              <p className="text-white/50 text-[12px] mb-4">Per visit + travel at actual cost</p>
+              <p className="text-white/70 text-[13px] font-light leading-relaxed mb-6">
+                See the problem. Understand the site. Recommend the solution.
+              </p>
+
+              <div className="space-y-2.5 mb-8 flex-1">
+                {['Physical site inspection', 'Discussion with homeowner', 'Review of visible construction', 'Identification of major concerns', 'Practical recommendations', 'Discussion of possible next steps'].map((item, i) => (
+                  <div key={i} className="flex items-start gap-2.5">
+                    <FiCheck size={12} className="text-[#B85C38] flex-shrink-0 mt-0.5" />
+                    <span className="text-[13px] text-white/70 font-light">{item}</span>
+                  </div>
+                ))}
+              </div>
+
+              <Link to="/contact"
+                className="relative z-10 w-full inline-flex items-center justify-center gap-2 px-5 py-4 bg-[#B85C38] text-white text-sm font-bold tracking-wider uppercase rounded-full transition-all duration-300 hover:bg-[#a34e30] mt-auto"
+              >
+                Book Site Visit — &#8377;2,000 <FiArrowRight size={10} />
+              </Link>
+            </motion.div>
+
+            {/* Travel */}
+            <motion.div
+              initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.2 }}
+              className="group p-8 bg-[#fdfbf7] rounded-[28px] border border-[#1a1a1a]/5 hover:border-[#B85C38]/40 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500 flex flex-col"
+            >
+              <div className="w-14 h-14 rounded-full bg-white border border-[#1a1a1a]/8 flex items-center justify-center mb-6 group-hover:bg-[#B85C38] group-hover:border-transparent transition-all duration-500">
+                <FiTruck size={20} className="text-[#1a1a1a]/40 group-hover:text-white transition-colors duration-500" />
+              </div>
+              <p className="font-black tracking-wider uppercase text-[10px] text-[#1a1a1a]/40 mb-1">Travel</p>
+              <p className="font-black text-[2.2rem] text-[#1a1a1a] leading-none tracking-tighter mb-1">At Actual Cost</p>
+              <p className="text-[#1a1a1a]/50 text-[12px] mb-6">Where applicable</p>
+
+              <p className="text-[#1a1a1a]/70 text-[13px] font-light leading-relaxed mb-6 flex-1">
+                Travel expenses at actual cost — applicable for locations outside the standard service area.
+                Discussed and agreed before the visit.
+              </p>
+
+              <div className="p-4 bg-[#B85C38]/[0.08] rounded-[16px] border-l-4 border-[#B85C38] mt-auto">
+                <p className="text-[12px] text-[#1a1a1a]/70 font-light leading-relaxed">
+                  <strong className="font-black text-[#1a1a1a]">Service area:</strong> Karur, Chennai, Coimbatore, Madurai, Trichy, Erode and surrounding areas across Tamil Nadu.
+                </p>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Disclaimer */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="p-6 md:p-8 bg-[#fdfbf7] rounded-[20px] border border-[#1a1a1a]/6 text-center max-w-4xl mx-auto"
+          >
+            <p className="text-[9px] font-black uppercase tracking-wider text-[#1a1a1a]/40 mb-3">Important Note</p>
+            <p className="text-[13px] text-[#1a1a1a]/70 font-light leading-relaxed">
+              Consultation and site-visit fees cover professional consultation and preliminary assessment only.
+              Detailed drawings, structural design, BOQ preparation, quantity surveying, detailed estimation,
+              testing, approvals and project execution / PMC services are charged separately based on the agreed scope.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+
+      {/* ════════════════════════════════════════════
+          7. CHOLAI — dark section with image cards
+      ════════════════════════════════════════════ */}
+      <section className="bg-[#1a1a1a] py-16 md:py-24 px-6 overflow-hidden">
+        <div className="max-w-7xl mx-auto">
+
+          <div className="mb-12 md:mb-16 flex flex-col md:flex-row justify-between items-end gap-8">
+            <motion.div {...fadeUp}>
+              <span className="text-[#B85C38] font-black tracking-widest uppercase text-[10px] mb-4 block">CHOLAI — Better Living</span>
+              <h2 className="font-black text-4xl md:text-6xl text-white leading-none tracking-tighter">
+                Beyond Construction.<br />
+                <span className="text-white/35">A Home Worth Living In.</span>
+              </h2>
+            </motion.div>
+            <motion.p {...fadeUp} className="text-white/70 text-base max-w-xs font-light border-l-2 border-[#B85C38]/40 pl-6">
+              Integrated into every service — planned at design stage, not retrofitted after construction is complete.
             </motion.p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {CHOLAI_ITEMS.map(({ Icon, label, img, desc }, i) => {
-              const accents = ['#2D4B37', '#2563EB', '#B85C38', '#D97706']
-              const ac = accents[i]
-              return (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: i * 0.1 }}
-                  className="group relative bg-white/[0.03] rounded-2xl border border-white/[0.07] overflow-hidden hover:border-white/15 transition-all duration-500"
-                >
-                  {/* Hover bottom bar */}
-                  <div className="absolute bottom-0 left-0 h-[2px] w-0 group-hover:w-full transition-all duration-600 ease-out"
-                    style={{ background: ac }} />
-
-                  <div className="h-44 overflow-hidden relative">
-                    <img src={img} alt={label} loading="lazy"
-                      className="w-full h-full object-cover opacity-55 group-hover:scale-105 group-hover:opacity-70 transition-all duration-700" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0e0e0e]/80 via-transparent to-transparent" />
-                    <div className="absolute top-4 left-4 w-9 h-9 rounded-xl flex items-center justify-center"
-                      style={{ background: `${ac}25`, color: ac }}>
-                      <Icon size={14} />
-                    </div>
-                  </div>
-
-                  <div className="p-6">
-                    <h3 className="font-sans text-[14px] font-semibold text-white mb-2">{label}</h3>
-                    <div className="w-6 h-[2px] mb-3 transition-all duration-300 group-hover:w-10" style={{ background: ac }} />
-                    <p className="font-sans text-[13px] text-white/45 font-light leading-relaxed">{desc}</p>
-                  </div>
-                </motion.div>
-              )
-            })}
-          </div>
-        </div>
-      </section>
-
-
-      {/* ════════════════════════════════════════════════════
-          6. TRUST / PROCESS — cream, cards like Karr page
-      ════════════════════════════════════════════════════ */}
-      <section className="bg-cream py-20 md:py-28 px-6">
-        <div className="max-w-7xl mx-auto">
-
-          {/* Section header */}
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-14">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }} transition={{ duration: 0.7 }}
-            >
-              <span className="font-sans text-secondary font-bold tracking-[0.55em] uppercase text-[10px] mb-4 block">
-                Why Trust KARRCHOLAI
-              </span>
-              <h2 className="font-serif text-[clamp(2rem,4.5vw,3.8rem)] font-semibold text-dark leading-[1.1] tracking-tight">
-                Engineering Expertise<br />
-                <em className="not-italic text-secondary">You Can Trust.</em>
-              </h2>
-            </motion.div>
-            <motion.p
-              initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
-              viewport={{ once: true }} transition={{ delay: 0.15 }}
-              className="font-sans text-dark/55 text-[14px] font-light leading-relaxed max-w-[36ch] lg:text-right"
-            >
-              Three non-negotiable principles that guide every project we take on.
-            </motion.p>
-          </div>
-
-          {/* Stat cards — same as Karr estimation cards */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
             {[
-              { stat: '12+',  label: 'Years on Site',          desc: 'Practical Tamil Nadu construction — local materials, contractors, soil conditions.' },
-              { stat: '200+', label: 'Projects Delivered',     desc: 'Homes across Karur, Chennai, Coimbatore, Madurai, Trichy and Erode.' },
-              { stat: '1',    label: 'Contract, No Surprises', desc: 'Every contractor, material and milestone under one accountable agreement.' },
-              { stat: '4',    label: 'CHOLAI Solutions',       desc: 'Landscape, rainwater, solar and traditional materials — all at design stage.' },
-            ].map((item, i) => (
+              { Icon: FaLeaf,      label: 'Landscape & Green Spaces',           img: imgLand,  desc: 'Planning outdoor areas that complement the home and create comfortable, usable green spaces.', color: '#22C55E' },
+              { Icon: FaCloudRain, label: 'Rainwater & Water Conservation',     img: imgRain,  desc: 'Planning systems to collect and manage rainwater responsibly and support better water use.', color: '#60A5FA' },
+              { Icon: FaSun,       label: 'Solar Energy Solutions',             img: imgSolar, desc: 'Planning suitable solar solutions to support energy efficiency and responsible energy use.', color: '#FBBF24' },
+              { Icon: FaRecycle,   label: 'Traditional / Sustainable Materials', img: imgFloor, desc: 'Athangudi tiles, lime plaster, natural stone — cool, beautiful and rooted in Tamil culture.', color: '#F97316' },
+            ].map(({ Icon, label, img, desc, color }, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.55, delay: i * 0.09 }}
-                className="group bg-white rounded-2xl p-6 md:p-8 border border-dark/[0.06] hover:border-secondary/30 hover:shadow-xl transition-all duration-500 relative overflow-hidden"
+                viewport={{ once: true }} transition={{ duration: 0.6, delay: i * 0.1 }}
+                className="group relative rounded-[24px] overflow-hidden hover:-translate-y-1 transition-all duration-500"
               >
-                <div className="absolute bottom-0 left-0 h-[3px] w-0 bg-gradient-to-r from-secondary to-secondary/40 group-hover:w-full transition-all duration-700 ease-out" />
-                <p className="font-sans text-[clamp(2rem,3.5vw,2.8rem)] font-bold text-dark leading-none mb-2">{item.stat}</p>
-                <p className="font-sans text-[10px] font-bold text-secondary tracking-[0.25em] uppercase mb-3">{item.label}</p>
-                <p className="font-sans text-[12px] text-dark/45 font-light leading-relaxed">{item.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Philosophy cards — same as About Core Philosophy */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {[
-              { num: '01', title: 'Structured Planning',     desc: 'Every successful project begins with thorough pre-construction planning — drawings, budgets and timelines reviewed before work begins.' },
-              { num: '02', title: 'Stage-wise Quality',      desc: 'Work is checked against specifications at each critical stage — foundation, structure, MEP, finishing and handover.' },
-              { num: '03', title: 'Transparent Cost',        desc: 'Detailed cost breakdowns and proactive updates on any variations. Our clients always know where their investment is going.' },
-            ].map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.55, delay: i * 0.1 }}
-                className="group bg-white rounded-2xl p-8 border border-dark/[0.06] hover:border-secondary/30 hover:shadow-xl transition-all duration-500 overflow-hidden relative"
-              >
-                <div className="absolute bottom-0 left-0 h-[3px] w-0 bg-gradient-to-r from-secondary to-secondary/40 group-hover:w-full transition-all duration-700 ease-out" />
-                <div className="absolute -top-6 -right-6 w-20 h-20 bg-secondary/5 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700 pointer-events-none" />
-                <div className="relative z-10">
-                  <div className="flex items-start justify-between mb-5">
-                    <div className="w-10 h-10 rounded-xl bg-secondary/10 flex items-center justify-center group-hover:bg-secondary transition-colors duration-300">
-                      <span className="font-sans text-[11px] font-bold text-secondary group-hover:text-white transition-colors duration-300">{item.num}</span>
-                    </div>
+                <div className="relative h-56 overflow-hidden">
+                  <img src={img} alt={label}
+                    className="w-full h-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-700" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a]/90 via-[#1a1a1a]/30 to-transparent" />
+                  <div className="absolute top-4 left-4 w-10 h-10 rounded-xl flex items-center justify-center"
+                    style={{ background: `${color}30`, color }}>
+                    <Icon size={16} />
                   </div>
-                  <h4 className="font-sans text-[15px] font-bold text-dark mb-3 group-hover:text-secondary transition-colors duration-300">{item.title}</h4>
-                  <p className="font-sans text-[13px] text-dark/55 font-light leading-relaxed">{item.desc}</p>
+                  <div className="absolute bottom-0 left-0 h-[3px] w-full origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out"
+                    style={{ background: color }} />
+                </div>
+                <div className="p-6 bg-white/[0.04] border border-white/[0.07] border-t-0 rounded-b-[24px]">
+                  <h3 className="font-black text-[15px] text-white mb-2 tracking-tight">{label}</h3>
+                  <p className="text-[13px] text-white/70 font-light leading-relaxed">{desc}</p>
                 </div>
               </motion.div>
             ))}
@@ -857,64 +1012,108 @@ export default function Services() {
       </section>
 
 
-      {/* ════════════════════════════════════════════════════
-          7. FINAL CTA — dark, editorial like Karr
-      ════════════════════════════════════════════════════ */}
-      <section className="bg-dark py-24 md:py-36 px-6 overflow-hidden">
-        <div className="max-w-7xl mx-auto relative">
-          <div className="absolute top-0 left-1/3 w-[500px] h-[300px] rounded-full blur-[140px] opacity-[0.07] bg-secondary pointer-events-none" />
-          <div className="absolute bottom-0 right-1/4 w-[400px] h-[250px] rounded-full blur-[120px] opacity-[0.05] bg-primary pointer-events-none" />
+      {/* ════════════════════════════════════════════
+          8. TRUST / STATS — cream bg
+      ════════════════════════════════════════════ */}
+      <section className="bg-[#fdfbf7] py-16 md:py-24 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12 md:mb-16">
+            <motion.span {...fadeUp} className="text-[#B85C38] font-black tracking-widest uppercase text-[10px] mb-4 block">
+              Why KARRCHOLAI
+            </motion.span>
+            <motion.h2 {...fadeUp} className="font-black text-4xl md:text-7xl leading-none tracking-tighter">
+              Experience You<br />
+              <span className="text-[#1a1a1a]/35">Can Trust.</span>
+            </motion.h2>
+          </div>
 
-          <div className="relative z-10 flex flex-col lg:flex-row lg:items-end justify-between gap-14">
-            <div>
-              <motion.span
-                initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                className="font-sans text-secondary font-bold tracking-[0.55em] uppercase text-[10px] mb-6 block"
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-5">
+            {[
+              { stat: '12+',  label: 'Years on Site',      desc: 'Practical Tamil Nadu construction — local materials, contractors, soil conditions.' },
+              { stat: '200+', label: 'Projects Delivered',  desc: 'Homes across Karur, Chennai, Coimbatore, Madurai, Trichy and Erode.' },
+              { stat: '3',    label: 'Home Services',       desc: 'Build, Manage or Complete — a service for your exact stage.' },
+              { stat: '4',    label: 'CHOLAI Solutions',    desc: 'Landscape, rainwater, solar and traditional materials — at design stage.' },
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }} transition={{ duration: 0.55, delay: i * 0.09 }}
+                className="group p-6 md:p-8 bg-white rounded-[24px] border border-[#1a1a1a]/5 hover:border-[#B85C38]/40 hover:shadow-xl transition-all duration-500 relative overflow-hidden"
               >
-                Ready to Begin?
-              </motion.span>
-              <motion.h2
-                initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }} transition={{ delay: 0.1 }}
-                className="font-serif text-[clamp(2.8rem,7vw,6.5rem)] font-semibold text-white leading-[1.05] tracking-tight"
-              >
-                Let's build<br />
-                <em className="not-italic text-secondary">something</em><br />
-                worth living in.
-              </motion.h2>
-            </div>
+                <div className="absolute bottom-0 left-0 h-[3px] w-0 bg-gradient-to-r from-[#B85C38] to-[#B85C38]/40 group-hover:w-full transition-all duration-700 ease-out" />
+                <p className="font-black text-[clamp(2rem,3.5vw,2.8rem)] text-[#1a1a1a] leading-none tracking-tighter mb-2">{item.stat}</p>
+                <p className="text-[10px] font-black text-[#B85C38] tracking-wider uppercase mb-3">{item.label}</p>
+                <p className="text-[12px] text-[#1a1a1a]/70 font-light leading-relaxed">{item.desc}</p>
+              </motion.div>
+            ))}
+          </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }} transition={{ delay: 0.22 }}
-              className="flex flex-col gap-5 lg:items-end"
-            >
-              <p className="font-sans text-white/45 text-[14px] font-light leading-relaxed max-w-[36ch] lg:text-right">
-                KARRCHOLAI — Experience-led Project Management for your home.
-                One team, one contract, from first conversation to key handover.
-              </p>
-              <div className="flex gap-3 flex-wrap lg:justify-end">
-                <Link to="/contact"
-                  className="inline-flex items-center gap-2.5 px-8 py-4 bg-secondary hover:bg-[#a34e30] text-white font-sans text-[10px] font-bold tracking-[0.2em] uppercase rounded-full transition-all duration-300 hover:-translate-y-0.5 shadow-xl shadow-secondary/25"
-                >
-                  Start Your Project <FiArrowRight size={12} />
-                </Link>
-                <Link to="/projects"
-                  className="inline-flex items-center gap-2 px-7 py-4 bg-white/10 border border-white/20 text-white font-sans text-[10px] font-bold tracking-[0.2em] uppercase rounded-full transition-all duration-300 hover:bg-white hover:text-dark"
-                >
-                  View Our Work
-                </Link>
-              </div>
-            </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {[
+              { num: '01', title: 'Structured Planning', desc: 'Every successful project begins with thorough pre-construction planning — drawings, budgets and timelines reviewed before work begins.' },
+              { num: '02', title: 'Stage-wise Quality',  desc: 'Work is checked against specifications at each critical stage — foundation, structure, MEP, finishing and handover.' },
+              { num: '03', title: 'Transparent Cost',    desc: 'Detailed cost breakdowns and proactive updates on any variations. Our clients always know where their investment is going.' },
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }} transition={{ duration: 0.55, delay: i * 0.1 }}
+                className="group p-8 bg-white rounded-[24px] border border-[#1a1a1a]/5 hover:border-[#B85C38]/40 hover:shadow-xl transition-all duration-500 relative overflow-hidden"
+              >
+                <div className="absolute bottom-0 left-0 h-[3px] w-0 bg-gradient-to-r from-[#B85C38] to-[#B85C38]/40 group-hover:w-full transition-all duration-700 ease-out" />
+                <div className="w-10 h-10 rounded-xl bg-[#B85C38]/10 flex items-center justify-center mb-5 group-hover:bg-[#B85C38] transition-colors duration-300">
+                  <span className="font-black text-[11px] text-[#B85C38] group-hover:text-white transition-colors duration-300">{item.num}</span>
+                </div>
+                <h4 className="font-black text-[15px] text-[#1a1a1a] mb-3 group-hover:text-[#B85C38] transition-colors duration-300 tracking-tight">{item.title}</h4>
+                <p className="text-[13px] text-[#1a1a1a]/70 font-light leading-relaxed">{item.desc}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
 
-      {/* ════════════════════════════════════════════════════
-          8. FAQ
-      ════════════════════════════════════════════════════ */}
+      {/* ════════════════════════════════════════════
+          9. FINAL CTA — green bg
+      ════════════════════════════════════════════ */}
+      <section className="bg-[#2D4B37] py-16 md:py-24 px-6 overflow-hidden relative">
+        <div className="absolute inset-0 stone-texture opacity-10 pointer-events-none" />
+        <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <motion.div {...fadeUp}>
+            <span className="text-white/50 font-black tracking-widest uppercase text-[10px] mb-4 block">Ready to Begin?</span>
+            <h2 className="font-black text-4xl md:text-7xl text-white leading-none tracking-tighter mb-6">
+              Ready to begin<br />
+              <span className="text-white/50">your project?</span>
+            </h2>
+            <p className="text-white/70 font-light text-base leading-relaxed max-w-md">
+              KARRCHOLAI — Experience-led construction management for your home.
+              One team, one contract, from first conversation to key handover.
+            </p>
+          </motion.div>
+          <motion.div {...fadeUp} transition={{ duration: 0.8, delay: 0.2 }} className="flex flex-col gap-4">
+            <Link to="/contact"
+              className="w-full py-5 bg-white text-[#1a1a1a] text-sm font-bold tracking-wider uppercase hover:bg-[#B85C38] hover:text-white transition-all duration-500 rounded-full text-center"
+            >
+              Start Your Project
+            </Link>
+            <Link to="/projects"
+              className="w-full py-5 border-2 border-white/30 text-white text-sm font-bold tracking-wider uppercase hover:bg-white/10 transition-all duration-300 rounded-full text-center"
+            >
+              View Our Work
+            </Link>
+            <a href="tel:+916385062939"
+              className="w-full py-5 bg-white/10 text-white text-sm font-bold tracking-wider uppercase hover:bg-white/20 transition-all duration-300 rounded-full text-center inline-flex items-center justify-center gap-2"
+            >
+              <FiPhone size={13} /> Call Now
+            </a>
+          </motion.div>
+        </div>
+      </section>
+
+
+      {/* ════════════════════════════════════════════
+          10. FAQ
+      ════════════════════════════════════════════ */}
       <div className="bg-[#f8f6f3]">
         <FAQSection
           dark={false}
@@ -922,34 +1121,18 @@ export default function Services() {
           subtitle="Common Questions"
           title="Everything You Need to Know"
           faqs={[
-            { q: 'What is the difference between KARR and CHOLAI?', a: 'KARR is the construction and project management layer — everything from planning through to key handover. CHOLAI is the better-living layer — landscape, rainwater harvesting, solar energy and traditional flooring. Both are coordinated together so these elements are planned from the start, not added as afterthoughts.' },
-            { q: 'What is PMC in construction and why do I need it?', a: 'PMC stands for Project Management Consultancy. We act as your on-site representative — managing contractors, budgets, timelines, material procurement, workmanship inspections and documentation. It means you have an experienced person looking after your project at every stage.' },
-            { q: 'What is the difference between PMC and Turnkey?', a: 'With PMC, we manage and supervise your project as a consultant — coordinating professionals you have appointed. With Turnkey, we take responsibility for the complete construction journey — coordinating everything from design and procurement through execution and handover. Both include CHOLAI solutions.' },
-            { q: 'Are CHOLAI solutions like solar and rainwater harvesting extra cost?', a: 'CHOLAI solutions are planned as part of the project at design stage — this means they are coordinated efficiently without the premium of retrofitting. Whether selected elements become part of the contract depends on your priorities and budget, which we discuss at the start.' },
-            { q: 'Do you offer Vastu-compliant construction in Tamil Nadu?', a: 'Yes. Every residential project is reviewed against Vastu Shastra and Manaiyadi Sastram — auspicious orientations, door placements and room proportions planned alongside modern structural engineering.' },
-            { q: 'Which areas of Tamil Nadu do you serve?', a: 'We serve Karur, Chennai, Coimbatore, Madurai, Trichy, Erode and surrounding areas across Tamil Nadu.' },
-            { q: 'How long does a turnkey home construction take?', a: 'A standard independent house typically takes 10–16 months from groundbreaking to handover. We provide a detailed milestone timeline at the start of every project.' },
+            { q: 'What is the difference between Build, Manage and Complete My Home?', a: 'Build My Home is for those who have a plot and want full construction execution from start to handover. Manage My Home is for those already building who need a professional to plan, coordinate and supervise the project. Complete My Home is for incomplete homes that need remaining work finished, repairs, or sustainable improvements.' },
+            { q: 'What does the Build My Home rate include?', a: 'The indicative rate covers civil and structural works, masonry, plastering, flooring, doors, windows, electrical, plumbing, painting and basic sanitary fixtures. Final cost is prepared based on your approved design, specifications, built-up area and site conditions.' },
+            { q: 'Is the PMC fee separate from construction cost?', a: 'Yes. Construction cost and PMC fee are two separate things. The construction cost covers all material and labour. The PMC fee covers professional planning, coordination, site supervision, quality monitoring, progress tracking and reporting.' },
+            { q: 'What does ₹1,000 / ₹2,000 consultation cover?', a: 'Consultation and site-visit fees cover professional consultation and preliminary assessment only. Detailed drawings, structural design, BOQ preparation, quantity surveying, detailed estimation, testing, approvals and project execution or PMC services are charged separately.' },
+            { q: 'Are CHOLAI solutions included in all services?', a: 'CHOLAI solutions (landscape, rainwater harvesting, solar, traditional materials) are planned and coordinated as part of every service — at the right stage of your project, not retrofitted later. The specific solutions selected depend on your priorities and budget.' },
+            { q: 'Which areas do you serve?', a: 'We serve Karur, Chennai, Coimbatore, Madurai, Trichy, Erode and surrounding areas across Tamil Nadu. Travel charges at actual cost apply for locations outside our standard service area.' },
+            { q: 'How is the Complete My Home scope determined?', a: 'We first conduct a site assessment to evaluate the existing construction, identify remaining scope and understand what sustainable features can be added. A detailed scope-based estimate is then prepared — not a generic rate, because every incomplete home is different.' },
           ]}
         />
       </div>
 
       <UnifiedFooter />
-    </div>
-  )
-}
-
-// ─── Parallax hero bg (needs its own scope for hooks) ────────────────────────
-function HeroBg() {
-  const ref = useRef(null)
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
-  const y = useTransform(scrollYProgress, [0, 1], ['0%', '28%'])
-  return (
-    <div ref={ref} className="absolute inset-0 overflow-hidden">
-      <motion.div style={{ y }} className="absolute inset-0 scale-110">
-        <img src={imgHero} alt="" className="w-full h-full object-cover object-center" />
-      </motion.div>
-      <div className="absolute inset-0 bg-gradient-to-r from-dark/80 via-dark/40 to-dark/10" />
-      <div className="absolute inset-0 bg-gradient-to-b from-dark/30 via-transparent to-dark" />
     </div>
   )
 }
