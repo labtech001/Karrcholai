@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef, useContext } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FiMenu, FiX, FiChevronDown } from 'react-icons/fi'
+import { FiMenu, FiX, FiChevronDown, FiClipboard, FiArrowRight } from 'react-icons/fi'
 import { useLocation, Link } from 'react-router-dom'
 import logoImg from '../../assets/KARRCHOLAI LOGO.png'
 import { LogoVideoContext } from '../App'
+import ClientRequirementsForm from './ClientRequirementsForm'
 
 const manaiyadiDropdown = [
   { name: 'Introduction',          path: '/manaiyadi/introduction',    desc: 'Full overview of Manaiyadi Sastram' },
@@ -30,6 +31,7 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen]     = useState(false)
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const [manaiyaOpen, setManaiyaOpen]   = useState(false)
+  const [formOpen, setFormOpen]         = useState(false)
   const dropdownRef = useRef(null)
   const location    = useLocation()
   const { openLogoVideo } = useContext(LogoVideoContext)
@@ -200,13 +202,41 @@ const Navbar = () => {
               )
             })}
             <Link to="/contact" className="nav-cta-btn"
-              style={{ marginLeft: '0.75rem', padding: '0.5rem 1.4rem', borderRadius: '4px',
-                border: '2px solid #B85C38', background: '#B85C38', color: '#fff',
+              style={{ marginLeft: '0.75rem', padding: '0.5rem 1.25rem', borderRadius: '4px',
+                border: '1.5px solid rgba(26,26,26,0.22)', background: 'transparent', color: '#1A1A1A',
                 fontSize: '0.7rem', fontWeight: '700', letterSpacing: '0.14em',
                 textTransform: 'uppercase', textDecoration: 'none', whiteSpace: 'nowrap',
-                display: 'inline-flex', alignItems: 'center' }}>
+                display: 'inline-flex', alignItems: 'center', transition: 'all 0.2s' }}>
               Contact Us
             </Link>
+            <motion.button
+              onClick={() => setFormOpen(true)}
+              className="nav-start-btn"
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+              style={{
+                marginLeft: '0.75rem', padding: '0.55rem 1.3rem',
+                borderRadius: '6px', border: 'none',
+                background: 'linear-gradient(135deg, #C9754A 0%, #B85C38 60%, #9A4828 100%)',
+                color: '#fff', fontSize: '0.68rem', fontWeight: '800',
+                letterSpacing: '0.13em', textTransform: 'uppercase',
+                whiteSpace: 'nowrap', cursor: 'pointer',
+                display: 'inline-flex', alignItems: 'center', gap: '0.45rem',
+                boxShadow: '0 4px 18px rgba(184,92,56,0.45), 0 1px 4px rgba(184,92,56,0.25)',
+                position: 'relative', overflow: 'hidden',
+              }}
+            >
+              {/* Shimmer sweep */}
+              <span className="btn-shimmer" />
+              {/* Pulse ring */}
+              <span className="btn-pulse" />
+              <span style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
+                <span style={{ fontSize: '0.8rem' }}>🏠</span>
+                Plan My Home
+                <FiArrowRight size={13} />
+              </span>
+            </motion.button>
           </div>
 
           {/* Hamburger */}
@@ -349,6 +379,24 @@ const Navbar = () => {
 
         {/* Footer */}
         <div style={{ padding: '1.25rem 1.5rem', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+          <button
+            onClick={() => { setMobileOpen(false); setFormOpen(true) }}
+            style={{
+              width: '100%', padding: '0.9rem 1.25rem', borderRadius: '8px',
+              border: 'none',
+              background: 'linear-gradient(135deg, #C9754A 0%, #B85C38 60%, #9A4828 100%)',
+              color: '#fff', cursor: 'pointer',
+              fontSize: '0.72rem', fontWeight: '800', letterSpacing: '0.14em',
+              textTransform: 'uppercase', display: 'flex', alignItems: 'center',
+              justifyContent: 'center', gap: '0.5rem', marginBottom: '1rem',
+              WebkitTapHighlightColor: 'transparent',
+              boxShadow: '0 4px 20px rgba(184,92,56,0.4)',
+            }}
+          >
+            <span style={{ fontSize: '0.9rem' }}>🏠</span>
+            Plan My Home
+            <FiArrowRight size={14} />
+          </button>
           <p style={{ fontSize: '0.6rem', color: 'rgba(255,255,255,0.55)',
             letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: '600' }}>
             Karrcholai Construction — Premium Residential Builds
@@ -388,11 +436,44 @@ const Navbar = () => {
         }
         .nav-link-text:hover { opacity: 0.7; }
         .nav-cta-btn:hover {
-          background: #fff !important; color: #1A1A1A !important;
+          background: rgba(26,26,26,0.06) !important;
+          border-color: rgba(26,26,26,0.4) !important;
+        }
+        .nav-start-btn:hover {
+          background: #B85C38 !important; border-color: #B85C38 !important;
           transform: translateY(-1px);
         }
         .dropdown-item:hover { background: rgba(184,92,56,0.06) !important; }
+
+        /* Shimmer sweep on the CTA */
+        .btn-shimmer {
+          position: absolute; inset: 0;
+          background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,0.22) 50%, transparent 65%);
+          background-size: 200% 100%;
+          animation: shimmer 2.4s ease-in-out infinite;
+          pointer-events: none; border-radius: inherit;
+        }
+        @keyframes shimmer {
+          0%   { background-position: 200% center; }
+          100% { background-position: -200% center; }
+        }
+
+        /* Pulse ring behind button */
+        .btn-pulse {
+          position: absolute; inset: -3px; border-radius: 9px;
+          border: 2px solid rgba(184,92,56,0.5);
+          animation: pulseRing 2s ease-out infinite;
+          pointer-events: none;
+        }
+        @keyframes pulseRing {
+          0%   { transform: scale(1);    opacity: 0.7; }
+          70%  { transform: scale(1.1); opacity: 0; }
+          100% { transform: scale(1.1); opacity: 0; }
+        }
       `}</style>
+
+      {/* ── Client Requirements Form ── */}
+      <ClientRequirementsForm open={formOpen} onClose={() => setFormOpen(false)} />
     </>
   )
 }
