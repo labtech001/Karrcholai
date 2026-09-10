@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { FaLeaf, FaCloudRain, FaSun, FaRecycle, FaArrowRight, FaLightbulb, FaTh } from 'react-icons/fa'
@@ -95,6 +95,7 @@ const SERVICES = [
 const CholaiHomeSection = () => {
   const [active, setActive] = useState(0)
   const [imgIdx, setImgIdx] = useState(0)
+  const [mobilePopup, setMobilePopup] = useState(false)
   const current = SERVICES[active]
 
   useEffect(() => {
@@ -104,6 +105,23 @@ const CholaiHomeSection = () => {
     }, 4000)
     return () => clearInterval(timer)
   }, [active, current.images.length])
+
+  // Lock body scroll when popup open
+  useEffect(() => {
+    if (mobilePopup) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => { document.body.style.overflow = '' }
+  }, [mobilePopup])
+
+  const handleTabClick = (i) => {
+    setActive(i)
+    if (window.innerWidth < 768) {
+      setMobilePopup(true)
+    }
+  }
 
   return (
     <section className="py-24 md:py-36 bg-[#1C1C1A] text-white overflow-hidden relative">
@@ -181,7 +199,7 @@ const CholaiHomeSection = () => {
           {SERVICES.map((srv, i) => (
             <button
               key={srv.id}
-              onClick={() => setActive(i)}
+              onClick={() => handleTabClick(i)}
               className={`px-5 py-3 rounded-xl text-[10px] font-black tracking-[0.25em] uppercase transition-all duration-300 flex items-center gap-2 ${
                 active === i
                   ? 'bg-white text-[#1C1C1A] shadow-lg'
@@ -333,6 +351,140 @@ const CholaiHomeSection = () => {
 
 
       </div>
+
+      {/* ── Mobile Popup (bottom sheet) ── */}
+      <AnimatePresence>
+        {mobilePopup && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              key="backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 md:hidden"
+              onClick={() => setMobilePopup(false)}
+            />
+
+            {/* Bottom sheet */}
+            <motion.div
+              key="sheet"
+              initial={{ y: '100%' }}
+              animate={{ y: 0 }}
+              exit={{ y: '100%' }}
+              transition={{ type: 'spring', stiffness: 300, damping: 32 }}
+              className="fixed bottom-0 left-0 right-0 z-[60] md:hidden rounded-t-[2rem] overflow-hidden"
+              style={{ background: '#1C1C1A', maxHeight: '88vh' }}
+            >
+              {/* Drag handle */}
+              <div className="flex justify-center pt-3 pb-1">
+                <div className="w-10 h-1 rounded-full bg-white/20" />
+              </div>
+
+              {/* Scrollable content */}
+              <div className="overflow-y-auto" style={{ maxHeight: 'calc(88vh - 28px)' }}>
+
+                {/* Header strip */}
+                <div
+                  className="px-6 py-4 flex items-center justify-between"
+                  style={{ borderBottom: `1px solid ${current.accent}30` }}
+                >
+                  <div className="flex items-center gap-3">
+                    <div
+                      className="w-10 h-10 rounded-full flex items-center justify-center text-base"
+                      style={{ background: `${current.accent}25`, color: current.accent }}
+                    >
+                      {current.icon}
+                    </div>
+                    <div>
+                      <p className="text-[9px] font-black tracking-[0.4em] uppercase" style={{ color: current.accent }}>
+                        {current.subtitle}
+                      </p>
+                      <p className="text-white text-lg font-black leading-tight">{current.title}</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setMobilePopup(false)}
+                    className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white/70 text-xl leading-none"
+                    aria-label="Close"
+                  >
+                    ×
+                  </button>
+                </div>
+
+                {/* Image */}
+                <div className="px-6 pt-5">
+                  <div className="relative rounded-2xl overflow-hidden">
+                    <AnimatePresence mode="wait">
+                      <motion.img
+                        key={`mob-${active}-${imgIdx}`}
+                        src={current.images[imgIdx]}
+                        alt={current.title}
+                        loading="lazy"
+                        initial={{ opacity: 0, scale: 1.05 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.7 }}
+                        className="w-full h-52 object-cover"
+                      />
+                    </AnimatePresence>
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#1C1C1A]/80 via-transparent to-transparent pointer-events-none" />
+                    <div className="absolute bottom-4 left-4">
+                      <p className="text-white/50 text-[9px] font-black tracking-widest uppercase mb-0.5">Impact</p>
+                      <p className="text-2xl font-black leading-none" style={{ color: current.accent }}>{current.impact}</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Description */}
+                <div className="px-6 pt-5">
+                  <p className="text-white/65 text-sm font-light leading-relaxed">
+                    {current.desc}
+                  </p>
+                </div>
+
+                {/* What we offer */}
+                <div className="px-6 pt-5">
+                  <p className="text-[10px] font-black tracking-widest uppercase text-white/50 mb-3">What We Offer</p>
+                  <div className="space-y-2.5">
+                    {current.items.map((item, i) => (
+                      <div key={i} className="flex items-center gap-3">
+                        <div className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: current.accent }} />
+                        <span className="text-white/70 text-sm font-light">{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Mission + CTA */}
+                <div className="px-6 pt-5 pb-8">
+                  <div className="p-4 rounded-2xl border bg-white/[0.03]" style={{ borderColor: `${current.accent}25` }}>
+                    <p className="text-[9px] font-black tracking-widest uppercase mb-2" style={{ color: current.accent }}>
+                      Our Mission
+                    </p>
+                    <p className="text-white/65 text-xs font-light leading-relaxed italic">
+                      "The Cholai division focuses on environmentally responsible solutions that help reduce dependency on conventional resources and support sustainable management of our planet for future generations."
+                    </p>
+                  </div>
+
+                  <Link to="/cholai" onClick={() => setMobilePopup(false)}>
+                    <motion.button
+                      whileTap={{ scale: 0.97 }}
+                      className="mt-5 w-full py-4 rounded-2xl font-black text-[11px] tracking-[0.3em] uppercase flex items-center justify-center gap-3 text-[#1C1C1A]"
+                      style={{ background: current.accent }}
+                    >
+                      Discover All Solutions
+                      <FaArrowRight />
+                    </motion.button>
+                  </Link>
+                </div>
+
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
     </section>
   )
 }
