@@ -1,4 +1,4 @@
-import React from 'react'
+﻿import React from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import {
@@ -13,7 +13,7 @@ const PRINCIPLES = [
  { icon: FiLayers, title: 'Room Planning', desc: 'Design each room\'s internal dimensions using favorable measurements for targeted prosperity.' },
  { icon: FiMaximize, title: 'Wall Heights', desc: 'Standard 8-foot or 10-foot ceilings bring elevated status and mental well-being.' },
  { icon: FiShield, title: 'Optimization', desc: 'If a measurement is inauspicious, adjust by inches to reach a favorable dimension.' },
- { icon: FiAlertTriangle, title: 'Avoid Conflicts', desc: 'Never pair a favorable length with an unfavorable width � energies will conflict.' },
+ { icon: FiAlertTriangle, title: 'Avoid Conflicts', desc: 'Never pair a favorable length with an unfavorable width — energies will conflict.' },
 ]
 
 const HomeManaiadiSection = () => {
@@ -26,7 +26,7 @@ const HomeManaiadiSection = () => {
 
  <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
 
- {/* ── Header ── */}
+ {/* â”€â”€ Header â”€â”€ */}
  <div className="flex flex-col md:flex-row md:items-end justify-between gap-10 mb-20">
  <div>
  <motion.div
@@ -58,7 +58,7 @@ const HomeManaiadiSection = () => {
  className="max-w-xs"
  >
  <p className="text-dark/65 text-sm font-light leading-relaxed mb-6">
- The ancient Tamil science of vibrational measurement � governing how building dimensions influence human life, prosperity, and harmony.
+ The ancient Tamil science of vibrational measurement — governing how building dimensions influence human life, prosperity, and harmony.
  </p>
  <Link to="/manaiyadi">
  <button className="group bg-[#B85C38] text-white text-[10px] sm:text-xs font-bold tracking-[0.15em] uppercase px-6 sm:px-8 py-3.5 sm:py-4 rounded-sm transition-all duration-500 hover:bg-[#1a1a1a] hover:-translate-y-1 w-fit flex items-center justify-center gap-3 shadow-lg">
@@ -68,7 +68,7 @@ const HomeManaiadiSection = () => {
  </motion.div>
  </div>
 
- {/* ── Split Layout: Image + Philosophy ── */}
+ {/* â”€â”€ Split Layout: Image + Philosophy â”€â”€ */}
  <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 mb-24">
 
  {/* Left: Stacked Images */}
@@ -90,7 +90,7 @@ const HomeManaiadiSection = () => {
  </div>
  </div>
 
- {/* Floating card � contained inside padded parent */}
+ {/* Floating card — contained inside padded parent */}
  <motion.div
  initial={{ opacity: 0, y: 20 }}
  whileInView={{ opacity: 1, y: 0 }}
