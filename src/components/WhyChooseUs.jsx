@@ -6,7 +6,7 @@ const reasons = [
   { icon: FiHome,     title: 'Vastu-Aligned Design',         desc: 'Every residence planned with traditional Vastu principles for harmony and well-being.' },
   { icon: FiBarChart2,title: 'Professional PMC',             desc: 'Structured management for precision builds.' },
   { icon: FiShield,   title: 'Transparent Pricing',          desc: 'Complete financial clarity at every stage.' },
-  { icon: FiUsers,    title: 'Skilled Workmanship',          desc: 'Specified materials and craftsmen with verifiable site experience.' },
+  { icon: FiUsers,    title: 'Skilled Workmanship',          desc: 'Specified materials and craftsmen with dimonstable site experience.' },
 ]
 
 const WhyChooseUs = () => {

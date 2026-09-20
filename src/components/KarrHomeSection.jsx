@@ -19,7 +19,7 @@ const tabs = [
     id: 'residential',
     label: 'Residential',
     headline: 'Crafting Exceptional Residences.',
-    desc: 'Karrcholai Construction provides complete residential building services for independent houses and villas. We ensure every project is delivered with specified materials, durable structures, and professional workmanship — checked at every stage.',
+    desc: 'Karrcholai Construction provides complete residential building services for independent houses and villas. We ensure every project is delivered with specified materials, durable structures, and professional workmanship — checked and justified quality at every stage.',
     image: residential,
     services: [
       { title: 'Turnkey house construction', icon: FiHome },

@@ -783,7 +783,7 @@ function PMCPricingCard() {
       <div className="grid grid-cols-1 gap-3 mb-5">
         {[
           { opt: 'Option A', val: '10%',    sub: 'of total project cost' },
-          { opt: 'Option B', val: '₹100',   sub: 'per sq.ft.' },
+          { opt: 'Option B', val: 'Min ₹25K',   sub: 'per month' },
         ].map((o) => (
           <div key={o.opt} className="p-4 rounded-xl bg-white/[0.06] border border-white/[0.1]">
             <p className="text-[9px] font-black uppercase tracking-widest text-[#B85C38] mb-1">{o.opt}</p>

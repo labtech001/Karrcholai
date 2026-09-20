@@ -35,7 +35,7 @@ const WelcomeSection = () => {
   const y2 = useTransform(scrollYProgress, [0, 1], [0, 100])
 
   return (
-    <section ref={sectionRef} className="relative py-16 md:py-32 bg-[#faf6f0] overflow-hidden">
+    <section ref={sectionRef} className="relative py-16 md:py-24 bg-[#faf6f0] overflow-hidden">
       {/* Dynamic Background Elements */}
       <div className="absolute top-20 left-10 w-96 h-96 bg-primary/5 rounded-full blur-[100px] animate-pulse" />
       <div className="absolute bottom-20 right-10 w-[500px] h-[500px] bg-secondary/5 rounded-full blur-[120px]" />
@@ -44,10 +44,10 @@ const WelcomeSection = () => {
       <div className="absolute top-0 right-0 w-1/3 h-full bg-white/40 skew-x-[-15deg] translate-x-20 pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-20 items-center">
           
           {/* ── Left Content (Text) ── */}
-          <div className="lg:col-span-6 space-y-10">
+          <div className="md:col-span-6 space-y-10">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               animate={inView ? { opacity: 1, x: 0 } : {}}
@@ -94,7 +94,7 @@ const WelcomeSection = () => {
               </h2>
 
               <p className="text-dark/70 text-base md:text-lg font-light leading-relaxed max-w-xl">
-                Karrcholai Construction is a residential construction and Project Management Consultancy founded by a Civil Engineer with 12+ years of professional experience in residential construction. Since establishing Karrcholai, we have focused on delivering well-built residences through systematic project planning, transparent site execution and responsible building practices.
+                Karrcholai Construction is a residential construction and Project Management Consultancy founded by a Civil Engineer with 12+ years of professional experience in residential construction. Since establishing Karrcholai, we have focused on delivering well-built residences through systematic project planning, transparent site execution and sustainable building practices.
               </p>
             </motion.div>
 
@@ -116,7 +116,7 @@ const WelcomeSection = () => {
           </div>
 
           {/* ── Right Content (Interactive Visuals) ── */}
-          <div className="lg:col-span-6 relative pb-16 md:pb-20">
+          <div className="md:col-span-6 relative pb-16 md:pb-20">
             {/* Main Image Container - sets the height */}
             <div className="relative w-full rounded-3xl overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.3)] z-10">
               <img 

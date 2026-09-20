@@ -29,7 +29,7 @@ const HomeProjectsSection = () => {
               </h2>
 
               <p className="text-dark/60 text-base sm:text-lg leading-relaxed mb-8 max-w-lg font-light">
-                Where engineering meets art. Discover our curated selection of residential and commercial landmarks built to stand the test of time.
+                Where engineering meets art, Discover our curated selection of residential and commercial landmarks builded to stand the test of time.
               </p>
 
               <div className="flex items-center gap-6 w-full">

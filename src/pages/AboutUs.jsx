@@ -9,7 +9,7 @@ import {
   FaChartLine, FaHourglass, FaBalanceScale,
 } from 'react-icons/fa'
 import logoImg from '../assets/KARRCHOLAI LOGO.png'
-import IdentityWheel from '../components/IdentityWheel'
+import IdentityPencil from '../components/IdentityPencil'
 
 import founderImg from '../../assets/Founder.jpeg'
 import aboutBg from '../../assets/pic7.png'
@@ -725,42 +725,31 @@ const AboutUs = () => {
         {/* ══════════════════════════════════════════
             3.5 KARRCHOLAI VALUES
         ══════════════════════════════════════════ */}
-        <section className="relative overflow-hidden pt-8 pb-20 md:pt-10 md:pb-28" style={{ background: '#f5f0e8' }}>
-
-          {/* Corner diamonds */}
-          {[['top-0 left-0'],['bottom-0 right-0']].map(([pos],ci) => (
-            <div key={ci} className={`absolute ${pos} w-24 h-24 md:w-32 md:h-32 opacity-20 pointer-events-none overflow-hidden`}>
-              <svg viewBox="0 0 128 128" className="w-full h-full">
-                {[0,1,2,3].flatMap(r=>[0,1,2,3].map(c=>(
-                  <rect key={`${r}-${c}`} x={c*32+8} y={r*32+8} width={16} height={16} rx="2"
-                    transform={`rotate(45 ${c*32+16} ${r*32+16})`} fill="#7B1F3A" />
-                )))}
-              </svg>
-            </div>
-          ))}
-
-          <div className="relative z-10 max-w-6xl mx-auto px-6 md:px-12">
-
-            {/* Header */}
+        {/* ══════════════════════════════════════════
+            3.5 KARRCHOLAI VALUES
+        ══════════════════════════════════════════ */}
+        <section style={{ background: '#faf6ef' }}>
+          <div className="max-w-7xl mx-auto px-6 md:px-12 pt-16 md:pt-24 pb-4">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.65 }}
-              className="text-center mb-8 md:mb-12"
+              initial={{ opacity:0, y:20 }}
+              whileInView={{ opacity:1, y:0 }}
+              viewport={{ once:true }}
+              transition={{ duration:0.6 }}
+              className="text-center mb-4"
             >
-              <p className="text-secondary text-[10px] font-black uppercase tracking-[0.55em] mb-3">Our Identity</p>
-              <h2 className="text-3xl md:text-5xl font-black text-dark tracking-tight leading-tight">
-                The meaning behind <span className="text-secondary">KARRCHOLAI</span>
+              <p className="text-[10px] font-black uppercase tracking-[0.55em] mb-3"
+                style={{ color:'#7B1F3A' }}>Our Identity</p>
+              <h2 className="text-3xl md:text-5xl font-black tracking-tight"
+                style={{ color:'#1a1a1a' }}>
+                The meaning behind{' '}
+                <span style={{ color:'#C9754A' }}>KARRCHOLAI</span>
               </h2>
-              <p className="text-dark/45 text-sm mt-3 max-w-lg mx-auto leading-relaxed">
+              <p className="text-sm mt-2 max-w-lg mx-auto" style={{ color:'#1a1a1a', opacity:0.45 }}>
                 Every letter stands for a value we carry into every project, every home we build.
               </p>
             </motion.div>
-
-            <IdentityWheel logoImg={logoImg} />
-
           </div>
+          <IdentityPencil />
         </section>
 
 

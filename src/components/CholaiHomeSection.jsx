@@ -18,7 +18,7 @@ const SERVICES = [
     label: 'Landscape',
     title: 'Landscape Development',
     subtitle: 'Designing with Nature',
-    desc: 'We design and develop attractive outdoor spaces that enhance both the beauty and environmental value of residential properties. Our approach integrates native flora with modern aesthetics.',
+    desc: 'We design and develop attractive outdoor spaces that enhances both the beauty and environmental value of residential properties. Our approach integrates native flora with modern aesthetics.',
     items: ['Garden planning and development', 'Landscape design', 'Green space planning'],
     impact: '100% Eco-Design',
     images: [newLandscape],
@@ -184,7 +184,7 @@ const CholaiHomeSection = () => {
             className="max-w-xs"
           >
             <p className="text-white/60 text-sm font-light leading-relaxed mb-6">
-              The Cholai division focuses on environmentally responsible solutions — creating sustainable, self-sufficient homes for a greener tomorrow.
+              The Cholai division focuses on environmental friendly responsible solution — creating sustainable, self-sufficient homes for a greener tomorrow.
             </p>
             <Link to="/cholai">
               <button className="group flex items-center gap-3 text-white/65 font-black text-[10px] tracking-[0.3em] uppercase hover:text-white transition-colors">
@@ -274,7 +274,7 @@ const CholaiHomeSection = () => {
                   Our Mission
                 </p>
                 <p className="text-white/70 text-sm font-light leading-relaxed italic">
-                  "The Cholai division focuses on environmentally responsible solutions that help reduce dependency on conventional resources and support sustainable management of our planet for future generations."
+                  "The Cholai division focuses on environmental friendly responsible solution that help reduce dependency on conventional resources and support sustainable management at our planet for future generations."
                 </p>
               </div>
 
@@ -463,7 +463,7 @@ const CholaiHomeSection = () => {
                       Our Mission
                     </p>
                     <p className="text-white/65 text-xs font-light leading-relaxed italic">
-                      "The Cholai division focuses on environmentally responsible solutions that help reduce dependency on conventional resources and support sustainable management of our planet for future generations."
+                      "The Cholai division focuses on environmental friendly responsible solution that help reduce dependency on conventional resources and support sustainable management at our planet for future generations."
                     </p>
                   </div>
 

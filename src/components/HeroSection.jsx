@@ -75,7 +75,7 @@ const HeroSection = () => {
  transition={{ duration: 0.8, delay: 0.65 }}
  className="text-white/65 text-sm font-light leading-relaxed mt-4"
  >
- Tamil Nadu-based construction & PMC — transparent site execution, disciplined planning, responsible building.
+ Tamil Nadu-based construction & PMC — transparent site execution, disciplined planning,  sustainable construction.
  </motion.p>
 
  {/* CTA Buttons */}

@@ -48,7 +48,7 @@ export default function FootprintMapSection() {
             </h2>
             
             <p className="text-sm font-light leading-relaxed mb-8" style={{ color: `${STONE}80` }}>
-              From the coastal luxury of Chennai to the serene landscapes of Coimbatore and the vibrant energy of Bengaluru, Karrcholai's legacy of strength spans across South India. We bring the same unyielding discipline and premium quality to every site, no matter the city.
+              From the coastal luxury of Chennai to the serene landscapes of Coimbatore and the vibrant energy of Bengaluru, Karrcholai's legacy of strength spans across South India. We bring the same unyielding discipline and premium quality to every site, no matter with development and nature of the city.
             </p>
 
             <div className="grid grid-cols-2 gap-6">

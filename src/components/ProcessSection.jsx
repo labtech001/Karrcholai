@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 const STEPS = [
   {
     num: 1,
-    label: 'INITIAL',
+    label: 'INITIATION',
     sub: 'With Client',
     color: '#7A5C3A',
     highlight: '#C9A96E',
@@ -57,7 +57,7 @@ const STEPS = [
     highlight: '#4A8C5A',
     link: '/cholai',
     cta: 'Explore Cholai',
-    desc: 'Landscape design, rainwater harvesting, solar energy & waste management.',
+    desc: 'Landscape Design, Rainwater Harvesting, Solar Energy & Waste Management.',
     keyPoints: [],
     icon: (c) => (
       <svg viewBox="0 0 48 48" fill="none" stroke={c} strokeWidth="1.5"
@@ -77,7 +77,7 @@ const STEPS = [
     highlight: '#C9920A',
     link: '/projects',
     cta: 'See Our Work',
-    desc: 'A well-built residence delivered with trust, care & long-term support.',
+    desc: 'Well built structures, care and long term service and support.',
     keyPoints: [],
     icon: (c) => (
       <svg viewBox="0 0 48 48" fill="none" stroke={c} strokeWidth="1.5"
