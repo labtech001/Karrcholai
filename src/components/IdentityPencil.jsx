@@ -74,6 +74,94 @@ function arrow(i) {
   return `M ${sx} ${sy} Q ${mx} ${my} ${ex} ${ey}`
 }
 
+/* ── Popup card component ────────────────────────────────── */
+function PopupCard({ node, idx }) {
+  const { x: nx, y: ny } = pos(idx, TOTAL)
+  const pctX   = (nx / W) * 100
+  const pctY   = (ny / H) * 100
+  const isLeft = nx < CX
+  const isAbove = ny < CY
+  const { Icon } = node
+
+  const arrowStyle = isLeft
+    ? { left: -7, borderRight: '7px solid white', borderLeft: 'none' }
+    : { right: -7, borderLeft: '7px solid white', borderRight: 'none' }
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.85, y: isAbove ? 8 : -8 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.88 }}
+      transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+      style={{
+        position: 'absolute',
+        left:   isLeft ? `calc(${pctX}% + 52px)` : 'auto',
+        right:  isLeft ? 'auto' : `calc(${100 - pctX}% + 52px)`,
+        top:    isAbove ? `calc(${pctY}% - 20px)` : 'auto',
+        bottom: isAbove ? 'auto' : `calc(${100 - pctY}% - 20px)`,
+        width: 230,
+        zIndex: 50,
+        pointerEvents: 'none',
+      }}
+    >
+      {/* Arrow caret */}
+      <div style={{
+        position: 'absolute',
+        ...arrowStyle,
+        top: '50%', transform: 'translateY(-50%)',
+        width: 0, height: 0,
+        borderTop: '7px solid transparent',
+        borderBottom: '7px solid transparent',
+      }}/>
+
+      {/* Card */}
+      <div style={{
+        background: '#ffffff',
+        borderRadius: 14,
+        boxShadow: `0 12px 40px rgba(0,0,0,0.14), 0 2px 8px rgba(0,0,0,0.08), 0 0 0 1px ${node.color}25`,
+        overflow: 'hidden',
+      }}>
+        <div style={{ height: 4, background: `linear-gradient(90deg, ${node.color}, ${node.color}88)` }}/>
+        <div style={{ padding: '14px 16px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
+            <div style={{
+              width: 40, height: 40, borderRadius: '50%', flexShrink: 0,
+              background: node.color,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              boxShadow: `0 3px 12px ${node.color}55`,
+            }}>
+              <Icon />
+            </div>
+            <div>
+              <p style={{ margin: 0, fontSize: 8.5, fontWeight: 700,
+                letterSpacing: '0.35em', textTransform: 'uppercase',
+                color: node.color, opacity: 0.7, lineHeight: 1 }}>
+                {node.num} · {node.group}
+              </p>
+              <p style={{ margin: '3px 0 0', fontSize: 14, fontWeight: 800,
+                color: DARK, letterSpacing: '-0.01em', lineHeight: 1 }}>
+                {node.label}
+              </p>
+            </div>
+          </div>
+          <div style={{ position: 'relative' }}>
+            <span style={{
+              position: 'absolute', right: -4, top: -8,
+              fontSize: 64, fontWeight: 900, lineHeight: 1,
+              color: node.color, opacity: 0.07,
+              letterSpacing: '-0.04em', userSelect: 'none',
+            }}>{node.ch}</span>
+            <p style={{
+              margin: 0, fontSize: 11.5, lineHeight: 1.65,
+              color: DARK, opacity: 0.55, position: 'relative', zIndex: 1,
+            }}>{node.desc}</p>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  )
+}
+
 export default function IdentityPencil() {
   const [active, setActive]   = useState(null)   // clicked node
   const [hovered, setHovered] = useState(null)   // hovered node
@@ -196,103 +284,13 @@ export default function IdentityPencil() {
 
             {/* ── Floating popup (HTML, positioned over SVG) ── */}
             <AnimatePresence>
-              {popupNode && (() => {
-                const { x: nx, y: ny } = pos(popupIdx, TOTAL)
-                // Convert SVG coords → % of container
-                const pctX = (nx / W) * 100
-                const pctY = (ny / H) * 100
-                const isAbove = ny < CY
-                const isLeft  = nx < CX
-                const { Icon } = popupNode
-
-                return (
-                  <motion.div
-                    key={popupNode.num}
-                    initial={{ opacity: 0, scale: 0.85, y: isAbove ? 8 : -8 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.88 }}
-                    transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-                    style={{
-                      position: 'absolute',
-                      left:  isLeft ? `calc(${pctX}% + 52px)` : `auto`,
-                      right: isLeft ? `auto` : `calc(${100 - pctX}% + 52px)`,
-                      top:   isAbove ? `calc(${pctY}% - 20px)` : `auto`,
-                      bottom: isAbove ? `auto` : `calc(${100 - pctY}% - 20px)`,
-                      width: 230,
-                      zIndex: 50,
-                      pointerEvents: 'none',
-                    }}
-                  >
-                    {/* Arrow tip pointing toward the circle */}
-                    <div style={{
-                      position: 'absolute',
-                      [isLeft ? 'left' : 'right']: -7,
-                      top: '50%', transform: 'translateY(-50%)',
-                      width: 0, height: 0,
-                      borderTop: '7px solid transparent',
-                      borderBottom: '7px solid transparent',
-                      [isLeft ? 'borderRight' : 'borderLeft']: `7px solid white`,
-                    }}/>
-
-                    {/* Popup card */}
-                    <div style={{
-                      background: '#ffffff',
-                      borderRadius: 14,
-                      boxShadow: `0 12px 40px rgba(0,0,0,0.14), 0 2px 8px rgba(0,0,0,0.08), 0 0 0 1px ${popupNode.color}25`,
-                      overflow: 'hidden',
-                    }}>
-                      {/* Coloured top strip */}
-                      <div style={{
-                        height: 4,
-                        background: `linear-gradient(90deg, ${popupNode.color}, ${popupNode.color}88)`,
-                      }}/>
-
-                      <div style={{ padding: '14px 16px' }}>
-                        {/* Header row */}
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
-                          {/* Circle badge */}
-                          <div style={{
-                            width: 40, height: 40, borderRadius: '50%', flexShrink: 0,
-                            background: popupNode.color,
-                            display: 'flex', alignItems: 'center', justifyContent: 'center',
-                            boxShadow: `0 3px 12px ${popupNode.color}55`,
-                          }}>
-                            <Icon />
-                          </div>
-                          <div>
-                            {/* Number */}
-                            <p style={{ margin: 0, fontSize: 8.5, fontWeight: 700,
-                              letterSpacing: '0.35em', textTransform: 'uppercase',
-                              color: popupNode.color, opacity: 0.7, lineHeight: 1 }}>
-                              {popupNode.num} · {popupNode.group}
-                            </p>
-                            {/* Name */}
-                            <p style={{ margin: '3px 0 0', fontSize: 14, fontWeight: 800,
-                              color: DARK, letterSpacing: '-0.01em', lineHeight: 1 }}>
-                              {popupNode.label}
-                            </p>
-                          </div>
-                        </div>
-
-                        {/* Big letter watermark + desc */}
-                        <div style={{ position: 'relative' }}>
-                          <span style={{
-                            position: 'absolute', right: -4, top: -8,
-                            fontSize: 64, fontWeight: 900, lineHeight: 1,
-                            color: popupNode.color, opacity: 0.07,
-                            letterSpacing: '-0.04em', userSelect: 'none',
-                          }}>{popupNode.ch}</span>
-                          <p style={{
-                            margin: 0, fontSize: 11.5, lineHeight: 1.65,
-                            color: DARK, opacity: 0.55,
-                            position: 'relative', zIndex: 1,
-                          }}>{popupNode.desc}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                )
-              })()}
+              {popupNode && (
+                <PopupCard
+                  key={popupNode.num}
+                  node={popupNode}
+                  idx={popupIdx}
+                />
+              )}
             </AnimatePresence>
           </div>
 
