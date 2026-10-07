@@ -84,9 +84,13 @@ const Navbar = () => {
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         style={{
           position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 1000,
-          background: '#FAF9F6',
-          boxShadow: scrolled ? '0 4px 32px rgba(0,0,0,0.08)' : '0 2px 16px rgba(0,0,0,0.04)',
-          transition: 'box-shadow 0.4s ease',
+          background: scrolled
+            ? 'rgba(15, 12, 10, 0.72)'
+            : 'linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.0) 100%)',
+          backdropFilter: scrolled ? 'blur(18px) saturate(160%)' : 'none',
+          WebkitBackdropFilter: scrolled ? 'blur(18px) saturate(160%)' : 'none',
+          boxShadow: scrolled ? '0 1px 0 rgba(255,255,255,0.06)' : 'none',
+          transition: 'background 0.45s ease, backdrop-filter 0.45s ease, box-shadow 0.45s ease',
         }}
       >
         <div style={{
@@ -137,7 +141,7 @@ const Navbar = () => {
                       <span className="nav-link-text" style={{ display: 'flex', alignItems: 'center', gap: '4px',
                         fontSize: '0.72rem', fontWeight: '700', letterSpacing: '0.12em',
                         textTransform: 'uppercase', whiteSpace: 'nowrap',
-                        color: isActive ? '#1A1A1A' : 'rgba(26,26,26,0.65)', transition: 'color 0.3s ease' }}>
+                        color: isActive ? '#fff' : 'rgba(255,255,255,0.78)', transition: 'color 0.3s ease' }}>
                         {link.name}
                         <motion.span animate={{ rotate: dropdownOpen ? 180 : 0 }} transition={{ duration: 0.25 }}
                           style={{ display: 'flex', alignItems: 'center' }}>
@@ -192,7 +196,7 @@ const Navbar = () => {
                 >
                   <span className="nav-link-text" style={{ fontSize: '0.72rem', fontWeight: '700',
                     letterSpacing: '0.12em', textTransform: 'uppercase', whiteSpace: 'nowrap',
-                    color: isActive ? '#1A1A1A' : 'rgba(26,26,26,0.65)', transition: 'color 0.3s ease' }}>
+                    color: isActive ? '#fff' : 'rgba(255,255,255,0.78)', transition: 'color 0.3s ease' }}>
                     {link.name}
                   </span>
                   <span style={{ position: 'absolute', bottom: '2px', left: '50%',
@@ -203,7 +207,7 @@ const Navbar = () => {
             })}
             <Link to="/contact" className="nav-cta-btn"
               style={{ marginLeft: '0.75rem', padding: '0.5rem 1.25rem', borderRadius: '4px',
-                border: '1.5px solid rgba(26,26,26,0.22)', background: 'transparent', color: '#1A1A1A',
+                border: '1.5px solid rgba(255,255,255,0.40)', background: 'rgba(255,255,255,0.08)', color: '#fff',
                 fontSize: '0.7rem', fontWeight: '700', letterSpacing: '0.14em',
                 textTransform: 'uppercase', textDecoration: 'none', whiteSpace: 'nowrap',
                 display: 'inline-flex', alignItems: 'center', transition: 'all 0.2s' }}>
@@ -243,8 +247,8 @@ const Navbar = () => {
           <button onClick={() => setMobileOpen(v => !v)} className="mobile-hamburger"
             aria-label="Toggle menu"
             style={{ width: '44px', height: '44px', display: 'none', alignItems: 'center',
-              justifyContent: 'center', borderRadius: '50%', border: '1px solid rgba(0,0,0,0.06)',
-              background: 'rgba(0,0,0,0.03)', color: '#1A1A1A', cursor: 'pointer',
+              justifyContent: 'center', borderRadius: '50%', border: '1px solid rgba(255,255,255,0.22)',
+              background: 'rgba(255,255,255,0.10)', color: '#fff', cursor: 'pointer',
               flexShrink: 0, WebkitTapHighlightColor: 'transparent' }}
           >
             {mobileOpen ? <FiX size={20} /> : <FiMenu size={20} />}
@@ -436,8 +440,8 @@ const Navbar = () => {
         }
         .nav-link-text:hover { opacity: 0.7; }
         .nav-cta-btn:hover {
-          background: rgba(26,26,26,0.06) !important;
-          border-color: rgba(26,26,26,0.4) !important;
+          background: rgba(255,255,255,0.16) !important;
+          border-color: rgba(255,255,255,0.7) !important;
         }
         .nav-start-btn:hover {
           background: #B85C38 !important; border-color: #B85C38 !important;

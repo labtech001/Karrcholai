@@ -728,27 +728,7 @@ const AboutUs = () => {
         {/* ══════════════════════════════════════════
             3.5 KARRCHOLAI VALUES
         ══════════════════════════════════════════ */}
-        <section style={{ background: '#faf6ef' }}>
-          <div className="max-w-7xl mx-auto px-6 md:px-12 pt-16 md:pt-24 pb-4">
-            <motion.div
-              initial={{ opacity:0, y:20 }}
-              whileInView={{ opacity:1, y:0 }}
-              viewport={{ once:true }}
-              transition={{ duration:0.6 }}
-              className="text-center mb-4"
-            >
-              <p className="text-[10px] font-black uppercase tracking-[0.55em] mb-3"
-                style={{ color:'#7B1F3A' }}>Our Identity</p>
-              <h2 className="text-3xl md:text-5xl font-black tracking-tight"
-                style={{ color:'#1a1a1a' }}>
-                The meaning behind{' '}
-                <span style={{ color:'#C9754A' }}>KARRCHOLAI</span>
-              </h2>
-              <p className="text-sm mt-2 max-w-lg mx-auto" style={{ color:'#1a1a1a', opacity:0.45 }}>
-                Every letter stands for a value we carry into every project, every home we build.
-              </p>
-            </motion.div>
-          </div>
+        <section style={{ background: 'transparent' }}>
           <IdentityPencil />
         </section>
 

@@ -18,8 +18,8 @@ const HeroSection = () => {
  ref={ref}
  className="relative w-full overflow-hidden bg-[#1a1a1a]"
  style={{
- height: 'calc(100vh - var(--nav-height, 100px))',
- marginTop: 'var(--nav-height, 100px)',
+ height: '100vh',
+ marginTop: 0,
  }}
  >
 
