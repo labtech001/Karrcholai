@@ -47,7 +47,15 @@ p, li, td, th, figcaption {
   font-family: var(--font-ui);
   font-weight: 400;
   line-height: 1.7;
+  text-align: justify;
+  hyphens: none;
+  -webkit-hyphens: none;
 }
+
+/* Allow Tailwind text-align utilities to override justify */
+.text-center { text-align: center !important; }
+.text-left   { text-align: left !important; }
+.text-right  { text-align: right !important; }
 
 blockquote {
   font-family: var(--font-brand);

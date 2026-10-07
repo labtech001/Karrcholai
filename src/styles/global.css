@@ -47,12 +47,20 @@
   h5 { font-weight: 500; }
   h6 { font-weight: 500; }
 
-  /* Comfortable body reading */
+  /* Comfortable body reading — justified for even right edges */
   p, li, td, th, figcaption {
     font-family: 'Manrope', ui-sans-serif, system-ui, sans-serif;
     font-weight: 400;
     line-height: 1.7;
+    text-align: justify;
+    hyphens: none;
+    -webkit-hyphens: none;
   }
+
+  /* Ensure Tailwind text-align utilities override the global justify */
+  .text-center { text-align: center !important; }
+  .text-left   { text-align: left !important; }
+  .text-right  { text-align: right !important; }
 
   /* Lora italic for pull quotes / philosophy statements */
   blockquote {

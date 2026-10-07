@@ -1,13 +1,6 @@
 /**
  * IdentityPencil — KARRCHOLAI Our Identity
- *
- * Layout matches sketch exactly:
- * - KARRCHOLAI heading at top center
- * - Left column: K(1), A(2), R(3), R(4) — small boxes stacked vertically
- * - Right column: I(10), A(9), L(8), O(7) — small boxes stacked vertically
- * - Center bottom: C(5) and H(6) as tall vertical pillars
- * - Logo centered in the middle
- * - Lines from each heading letter → its card, crossing through center
+ * Smooth cinematic line-draw on hover, full responsive layout
  */
 
 import React, { useRef, useEffect, useState, useCallback } from 'react'
@@ -34,24 +27,16 @@ const PRINCIPLES = [
   { i:9, ch:'I', word:'Integrity',     color: STEEL, desc:'Transparent, honest and accountable from first conversation to handover.' },
 ]
 
-/*
-  MESSY DEFAULT + CORRECT ON HOVER
-  
-  Each line has two endpoints:
-  - messy: connects to a shuffled/wrong card (creates crossing web)
-  - correct: connects to its actual matching card
-  
-  Default state → all messy endpoints shown (chaos web)
-  Hover → that line morphs to correct endpoint + highlights
-*/
-
-// Shuffled mapping for the "messy" default look
-// Designed to maximally cross through the center
-const MESSY_MAP = [6, 9, 4, 7, 1, 8, 2, 5, 3, 0]
-
+/* ═══════════════════════════════════════════════════════
+   AllLines — all 10 lines live in DOM always.
+   On hover: CSS class toggles strokeDashoffset 100%→0
+   No mounting/unmounting = zero layout-thrash lag
+═══════════════════════════════════════════════════════ */
 function AllLines({ letterRefs, cardRefs, containerRef, activeIdx }) {
   const [lines, setLines] = useState([])
+  const svgRef = useRef(null)
 
+  /* Compute line coordinates once, recompute on resize */
   useEffect(() => {
     const compute = () => {
       if (!containerRef.current) return
@@ -60,92 +45,173 @@ function AllLines({ letterRefs, cardRefs, containerRef, activeIdx }) {
 
       PRINCIPLES.forEach(({ i, color }) => {
         const lr = letterRefs[i]?.current
-        const crCorrect = cardRefs[i]?.current           // correct card
-        const crMessy   = cardRefs[MESSY_MAP[i]]?.current // messy card
+        const cr = cardRefs[i]?.current
+        if (!lr || !cr) return
 
-        if (!lr || !crCorrect || !crMessy) return
+        const lR = lr.getBoundingClientRect()
+        const cR = cr.getBoundingClientRect()
 
-        const lR  = lr.getBoundingClientRect()
-        const cRc = crCorrect.getBoundingClientRect()
-        const cRm = crMessy.getBoundingClientRect()
+        const x1 = lR.left + lR.width / 2 - cRect.left
+        const y1 = lR.bottom - cRect.top
 
-        result.push({
-          i, color,
-          // origin — bottom center of letter
-          x1: lR.left + lR.width / 2 - cRect.left,
-          y1: lR.bottom - cRect.top,
-          // correct target
-          cx2: cRc.left + cRc.width / 2 - cRect.left,
-          cy2: cRc.top  - cRect.top + 8,
-          // messy target
-          mx2: cRm.left + cRm.width / 2 - cRect.left,
-          my2: cRm.top  - cRect.top + 8,
-        })
+        let x2, y2
+        if (i <= 3) {
+          // left column → attach to right edge, vertically centred
+          x2 = cR.right - cRect.left
+          y2 = cR.top + cR.height / 2 - cRect.top
+        } else if (i >= 6) {
+          // right column → attach to left edge, vertically centred
+          x2 = cR.left - cRect.left
+          y2 = cR.top + cR.height / 2 - cRect.top
+        } else {
+          // pillar cards C(4) H(5) → top centre
+          x2 = cR.left + cR.width / 2 - cRect.left
+          y2 = cR.top - cRect.top
+        }
+
+        const dx = x2 - x1
+        const dy = y2 - y1
+        const len = Math.ceil(Math.sqrt(dx * dx + dy * dy))
+
+        result.push({ i, color, x1, y1, x2, y2, len })
       })
 
       setLines(result)
     }
 
-    const t = setTimeout(compute, 250)
+    const t = setTimeout(compute, 300)
     window.addEventListener('resize', compute)
     return () => { clearTimeout(t); window.removeEventListener('resize', compute) }
   }, [letterRefs, cardRefs, containerRef])
 
+  /* Imperatively toggle animation class on the active line group */
+  useEffect(() => {
+    if (!svgRef.current) return
+    const groups = svgRef.current.querySelectorAll('[data-line]')
+    groups.forEach(g => {
+      const idx = parseInt(g.dataset.line, 10)
+      if (idx === activeIdx) {
+        g.classList.add('line-active')
+      } else {
+        g.classList.remove('line-active')
+      }
+    })
+  }, [activeIdx])
+
   if (!lines.length) return null
 
   return (
-    <svg style={{ position:'absolute', inset:0, width:'100%', height:'100%', pointerEvents:'none', zIndex:3, overflow:'visible' }}>
+    <svg
+      ref={svgRef}
+      style={{ position:'absolute', inset:0, width:'100%', height:'100%', pointerEvents:'none', zIndex:3, overflow:'visible' }}
+    >
       <defs>
-        {lines.map(l => {
-          const isActive = activeIdx === l.i
-          const x2 = isActive ? l.cx2 : l.mx2
-          const y2 = isActive ? l.cy2 : l.my2
-          return (
-            <linearGradient key={`lg${l.i}`} id={`lg${l.i}`}
-              x1={l.x1} y1={l.y1} x2={x2} y2={y2}
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop offset="0%"   stopColor={l.color} stopOpacity={isActive ? '1'   : activeIdx === null ? '0.5'  : '0.06'} />
-              <stop offset="100%" stopColor={l.color} stopOpacity={isActive ? '0.7' : activeIdx === null ? '0.18' : '0.03'} />
-            </linearGradient>
-          )
-        })}
+        <style>{`
+          /* line draw — GPU composited via stroke-dashoffset */
+          [data-line] .kc-line {
+            stroke-dashoffset: var(--kc-len);
+            opacity: 0;
+            transition: none;
+          }
+          [data-line].line-active .kc-line {
+            stroke-dashoffset: 0;
+            opacity: 1;
+            transition:
+              stroke-dashoffset 2.2s cubic-bezier(0.4, 0, 0.15, 1),
+              opacity 0.2s ease;
+          }
+
+          /* origin dot */
+          [data-line] .kc-dot-start {
+            opacity: 0;
+            transform: scale(0);
+            transform-box: fill-box;
+            transform-origin: center;
+            transition: none;
+          }
+          [data-line].line-active .kc-dot-start {
+            opacity: 1;
+            transform: scale(1);
+            transition: opacity 0.15s ease, transform 0.2s cubic-bezier(0.34,1.56,0.64,1);
+          }
+
+          /* end dot */
+          [data-line] .kc-dot-end {
+            opacity: 0;
+            transform: scale(0);
+            transform-box: fill-box;
+            transform-origin: center;
+            transition: none;
+          }
+          [data-line].line-active .kc-dot-end {
+            opacity: 1;
+            transform: scale(1);
+            transition:
+              opacity 0.25s ease 2s,
+              transform 0.3s cubic-bezier(0.34,1.56,0.64,1) 2s;
+          }
+
+          /* pulse ring */
+          [data-line] .kc-ring {
+            opacity: 0;
+            transform: scale(0.4);
+            transform-box: fill-box;
+            transform-origin: center;
+            transition: none;
+          }
+          [data-line].line-active .kc-ring {
+            opacity: 0;
+            transform: scale(2.2);
+            transition:
+              opacity 0.45s ease 2.1s,
+              transform 0.6s ease 2.1s;
+            animation: kcRingPulse 0.65s ease 2.1s forwards;
+          }
+
+          @keyframes kcRingPulse {
+            0%   { opacity: 0;    transform: scale(0.5); }
+            35%  { opacity: 0.55; transform: scale(1.2); }
+            100% { opacity: 0;    transform: scale(2);   }
+          }
+        `}</style>
+
+        {lines.map(l => (
+          <linearGradient key={`lg${l.i}`} id={`kc-lg-${l.i}`}
+            x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2}
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop offset="0%"   stopColor={l.color} stopOpacity="1" />
+            <stop offset="100%" stopColor={l.color} stopOpacity="0.6" />
+          </linearGradient>
+        ))}
       </defs>
 
-      {lines.map(l => {
-        const isActive = activeIdx === l.i
-        // use correct endpoint when active, messy when not
-        const x2 = isActive ? l.cx2 : l.mx2
-        const y2 = isActive ? l.cy2 : l.my2
-
-        return (
-          <motion.line
-            key={l.i}
-            x1={l.x1} y1={l.y1}
-            x2={x2} y2={y2}
-            stroke={`url(#lg${l.i})`}
-            strokeWidth={isActive ? 2.5 : 1.1}
-            strokeDasharray={isActive ? 'none' : '5 4'}
-            animate={{ x2, y2 }}
-            transition={{ duration: 0.35, ease: 'easeOut' }}
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
+      {lines.map(l => (
+        <g
+          key={l.i}
+          data-line={l.i}
+          style={{ '--kc-len': l.len }}
+        >
+          {/* The line */}
+          <line
+            className="kc-line"
+            x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2}
+            stroke={`url(#kc-lg-${l.i})`}
+            strokeWidth={2}
+            strokeLinecap="round"
+            strokeDasharray={l.len}
           />
-        )
-      })}
 
-      {/* dot at correct card end when hovering */}
-      {activeIdx !== null && lines[activeIdx] && (
-        <motion.circle
-          cx={lines[activeIdx].cx2}
-          cy={lines[activeIdx].cy2}
-          r="5"
-          fill={lines[activeIdx].color}
-          initial={{ scale: 0 }} animate={{ scale: 1 }}
-          transition={{ duration: 0.2 }}
-        />
-      )}
+          {/* Origin dot (letter end) */}
+          <circle className="kc-dot-start" cx={l.x1} cy={l.y1} r={4} fill={l.color} />
+
+          {/* End dot (card end) */}
+          <circle className="kc-dot-end" cx={l.x2} cy={l.y2} r={5} fill={l.color} />
+
+          {/* Pulse ring at end */}
+          <circle className="kc-ring" cx={l.x2} cy={l.y2} r={10} fill="none" stroke={l.color} strokeWidth={1.5} />
+        </g>
+      ))}
     </svg>
   )
 }
@@ -167,7 +233,7 @@ function SmallCard({ p, cardRef, active, onHover, onLeave }) {
         borderRadius: 10,
         padding: '14px 14px 12px',
         cursor: 'default',
-        transition: 'all 0.25s',
+        transition: 'background 0.25s, border-color 0.25s, box-shadow 0.25s',
         boxShadow: active ? `0 10px 28px ${p.color}45` : `0 2px 12px rgba(0,0,0,0.07)`,
         minWidth: 110,
       }}
@@ -207,7 +273,7 @@ function PillarCard({ p, cardRef, active, onHover, onLeave }) {
         borderRadius: 14,
         padding: '20px 16px 20px',
         cursor: 'default',
-        transition: 'all 0.3s',
+        transition: 'background 0.3s, border-color 0.3s, box-shadow 0.3s',
         boxShadow: active ? `0 16px 48px ${p.color}50` : `0 4px 20px rgba(0,0,0,0.08)`,
         flex: 1,
         display: 'flex',
@@ -219,7 +285,6 @@ function PillarCard({ p, cardRef, active, onHover, onLeave }) {
         minHeight: 220,
       }}
     >
-      {/* ghost letter bg */}
       <div style={{
         position: 'absolute', top: 10, left: '50%', transform: 'translateX(-50%)',
         fontSize: 72, fontWeight: 700, fontStyle: 'italic',
@@ -245,20 +310,18 @@ function PillarCard({ p, cardRef, active, onHover, onLeave }) {
 }
 
 /* ══════════════════════════════════════
-   DESKTOP LAYOUT
+   DESKTOP LAYOUT  (lg and above)
 ══════════════════════════════════════ */
 function DesktopLayout() {
   const containerRef = useRef(null)
   const [activeIdx, setActiveIdx] = useState(null)
 
-  /* letter refs — one per heading letter */
   const l0=useRef(null);const l1=useRef(null);const l2=useRef(null)
   const l3=useRef(null);const l4=useRef(null);const l5=useRef(null)
   const l6=useRef(null);const l7=useRef(null);const l8=useRef(null)
   const l9=useRef(null)
   const letterRefs = [l0,l1,l2,l3,l4,l5,l6,l7,l8,l9]
 
-  /* card refs */
   const c0=useRef(null);const c1=useRef(null);const c2=useRef(null)
   const c3=useRef(null);const c4=useRef(null);const c5=useRef(null)
   const c6=useRef(null);const c7=useRef(null);const c8=useRef(null)
@@ -281,12 +344,11 @@ function DesktopLayout() {
       {/* dot grid */}
       <div style={{ position:'absolute', inset:0, pointerEvents:'none', zIndex:0, backgroundImage:'radial-gradient(circle, rgba(26,26,26,0.04) 1px, transparent 1px)', backgroundSize:'32px 32px' }} />
 
-      {/* all lines */}
       <AllLines letterRefs={letterRefs} cardRefs={cardRefs} containerRef={containerRef} activeIdx={activeIdx} />
 
       <div style={{ maxWidth: 1300, margin: '0 auto', padding: '0 48px', position: 'relative', zIndex: 2 }}>
 
-        {/* OUR IDENTITY */}
+        {/* label */}
         <motion.div
           initial={{ opacity: 0, y: -12 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -298,7 +360,7 @@ function DesktopLayout() {
           <div style={{ height:1, width:40, background:`linear-gradient(90deg, ${TERRA}, transparent)` }} />
         </motion.div>
 
-        {/* ── HEADING — each letter individually ref'd ── */}
+        {/* HEADING */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -334,7 +396,7 @@ function DesktopLayout() {
           ))}
         </motion.div>
 
-        {/* ── MAIN LAYOUT: left column | center | right column ── */}
+        {/* MAIN GRID */}
         <div style={{
           display: 'grid',
           gridTemplateColumns: '160px 1fr 160px',
@@ -342,19 +404,16 @@ function DesktopLayout() {
           marginTop: 8,
           alignItems: 'stretch',
         }}>
-
-          {/* LEFT — K(0) A(1) R(2) R(3) stacked */}
+          {/* LEFT */}
           <div style={{ display:'flex', flexDirection:'column', gap:16, justifyContent:'center' }}>
             {[0,1,2,3].map(i => (
               <SmallCard key={i} p={PRINCIPLES[i]} cardRef={cardRefs[i]} active={activeIdx===i} onHover={onHover} onLeave={onLeave} />
             ))}
           </div>
 
-          {/* CENTER — logo centered + two tall pillars C(4) H(5) pushed down */}
+          {/* CENTER */}
           <div style={{ display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:0, height:'100%' }}>
-            {/* Spacer to push logo to vertical center */}
             <div style={{ flex:1 }} />
-            {/* Logo — large watermark style, premium transparent */}
             <motion.div
               initial={{ opacity:0, scale:0.85 }}
               whileInView={{ opacity:1, scale:1 }}
@@ -362,50 +421,41 @@ function DesktopLayout() {
               transition={{ duration:0.7, delay:0.35 }}
               style={{ position:'relative', marginBottom:20 }}
             >
-              {/* soft glow ring behind logo */}
               <div style={{
-                position:'absolute', inset:'-18px',
-                borderRadius:'50%',
+                position:'absolute', inset:'-18px', borderRadius:'50%',
                 background:'radial-gradient(circle, rgba(184,92,56,0.10) 0%, rgba(201,168,76,0.06) 50%, transparent 75%)',
-                filter:'blur(12px)',
-                pointerEvents:'none',
+                filter:'blur(12px)', pointerEvents:'none',
               }} />
               <motion.img
                 src={logoImg}
                 alt="KARRCHOLAI"
                 style={{
-                  width: 380,
-                  height: 380,
-                  objectFit: 'contain',
-                  display: 'block',
+                  width: 380, height: 380, objectFit: 'contain', display: 'block',
                   opacity: 0.45,
                   filter: 'saturate(0.75) brightness(1.05) drop-shadow(0 6px 32px rgba(184,92,56,0.22))',
                   mixBlendMode: 'multiply',
-                  position: 'relative',
-                  zIndex: 1,
+                  position: 'relative', zIndex: 1,
                 }}
                 whileHover={{ opacity: 0.65, scale: 1.04 }}
                 transition={{ duration: 0.35 }}
               />
             </motion.div>
             <div style={{ flex:1 }} />
-            {/* Two pillars side by side */}
             <div style={{ display:'flex', gap:20, width:'100%' }}>
               <PillarCard p={PRINCIPLES[4]} cardRef={cardRefs[4]} active={activeIdx===4} onHover={onHover} onLeave={onLeave} />
               <PillarCard p={PRINCIPLES[5]} cardRef={cardRefs[5]} active={activeIdx===5} onHover={onHover} onLeave={onLeave} />
             </div>
           </div>
 
-          {/* RIGHT — I(9) A(8) L(7) O(6) stacked */}
+          {/* RIGHT */}
           <div style={{ display:'flex', flexDirection:'column', gap:16, justifyContent:'center' }}>
             {[9,8,7,6].map(i => (
               <SmallCard key={i} p={PRINCIPLES[i]} cardRef={cardRefs[i]} active={activeIdx===i} onHover={onHover} onLeave={onLeave} />
             ))}
           </div>
-
         </div>
 
-        {/* bottom tag */}
+        {/* footer tag */}
         <motion.div
           initial={{ opacity:0 }}
           whileInView={{ opacity:1 }}
@@ -417,59 +467,61 @@ function DesktopLayout() {
             Every Letter · Every Value · Every Home
           </span>
         </motion.div>
-
       </div>
     </section>
   )
 }
 
 /* ══════════════════════════════════════
-   MOBILE
+   TABLET LAYOUT  (md — 768px to 1023px)
 ══════════════════════════════════════ */
-function MobileLayout() {
+function TabletLayout() {
   return (
     <section
-      className="lg:hidden w-full overflow-hidden"
-      style={{ background:'linear-gradient(160deg, #fdfbf7 0%, #f2ece0 100%)', padding:'52px 0 56px' }}
+      className="hidden md:block lg:hidden w-full overflow-hidden"
+      style={{ background:'linear-gradient(160deg, #fdfbf7 0%, #f2ece0 100%)', padding:'56px 0 64px' }}
     >
-      <div style={{ padding:'0 20px' }}>
-        <div style={{ textAlign:'center', marginBottom:28 }}>
-          <div style={{ display:'inline-flex', alignItems:'center', gap:8, marginBottom:14 }}>
-            <div style={{ height:1, width:24, background:`linear-gradient(90deg, transparent, ${TERRA})` }} />
-            <span style={{ fontSize:8, fontWeight:800, letterSpacing:'0.65em', textTransform:'uppercase', color:TERRA }}>Our Identity</span>
-            <div style={{ height:1, width:24, background:`linear-gradient(90deg, ${TERRA}, transparent)` }} />
-          </div>
-          <div style={{ whiteSpace:'nowrap' }}>
-            <span style={{ fontSize:'10vw', fontWeight:400, fontStyle:'italic', color:WINE, fontFamily:'"Lora", Georgia, serif', letterSpacing:'0.15em' }}>KARR</span>
-            <span style={{ fontSize:'10vw', fontWeight:400, fontStyle:'italic', color:TERRA, fontFamily:'"Lora", Georgia, serif', letterSpacing:'0.15em' }}>CHOLAI</span>
-          </div>
+      <div style={{ padding:'0 32px', maxWidth:768, margin:'0 auto' }}>
+        {/* label */}
+        <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:10, marginBottom:20 }}>
+          <div style={{ height:1, width:28, background:`linear-gradient(90deg, transparent, ${TERRA})` }} />
+          <span style={{ fontSize:8, fontWeight:800, letterSpacing:'0.65em', textTransform:'uppercase', color:TERRA }}>Our Identity</span>
+          <div style={{ height:1, width:28, background:`linear-gradient(90deg, ${TERRA}, transparent)` }} />
         </div>
 
-        <div style={{ display:'flex', justifyContent:'center', marginBottom:24 }}>
-          <img src={logoImg} alt="KARRCHOLAI" style={{ width:52, height:52, objectFit:'contain' }} />
+        {/* heading */}
+        <div style={{ textAlign:'center', marginBottom:32 }}>
+          <span style={{ fontSize:'10vw', fontWeight:400, fontStyle:'italic', color:WINE, fontFamily:'"Lora", Georgia, serif', letterSpacing:'0.12em' }}>KARR</span>
+          <span style={{ fontSize:'10vw', fontWeight:400, fontStyle:'italic', color:TERRA, fontFamily:'"Lora", Georgia, serif', letterSpacing:'0.12em' }}>CHOLAI</span>
         </div>
 
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12 }}>
+        {/* logo */}
+        <div style={{ display:'flex', justifyContent:'center', marginBottom:32 }}>
+          <img src={logoImg} alt="KARRCHOLAI" style={{ width:120, height:120, objectFit:'contain', opacity:0.5, mixBlendMode:'multiply' }} />
+        </div>
+
+        {/* 2-col grid */}
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:14 }}>
           {PRINCIPLES.map((p) => (
             <motion.div
               key={p.i}
               initial={{ opacity:0, y:14 }}
               whileInView={{ opacity:1, y:0 }}
               viewport={{ once:true }}
-              transition={{ duration:0.4, delay:p.i * 0.05 }}
+              transition={{ duration:0.4, delay:p.i * 0.04 }}
               style={{
                 background:'#fff',
                 border:`1.5px solid ${p.color}28`,
                 borderLeft:`4px solid ${p.color}`,
                 borderRadius:10,
-                padding:'12px 14px',
+                padding:'14px 16px',
                 boxShadow:`0 2px 10px ${p.color}10`,
               }}
             >
               <div style={{ fontSize:7, fontWeight:800, letterSpacing:'0.4em', color:`${p.color}75`, marginBottom:4 }}>{String(p.i+1).padStart(2,'0')}</div>
-              <div style={{ fontSize:26, fontWeight:400, fontStyle:'italic', color:p.color, fontFamily:'"Lora", Georgia, serif', lineHeight:1, marginBottom:4 }}>{p.ch}</div>
+              <div style={{ fontSize:28, fontWeight:400, fontStyle:'italic', color:p.color, fontFamily:'"Lora", Georgia, serif', lineHeight:1, marginBottom:4 }}>{p.ch}</div>
               <div style={{ fontSize:9, fontWeight:700, letterSpacing:'0.1em', textTransform:'uppercase', color:INK, marginBottom:4 }}>{p.word}</div>
-              <div style={{ fontSize:10, color:'rgba(26,26,26,0.45)', lineHeight:1.55 }}>{p.desc}</div>
+              <div style={{ fontSize:11, color:'rgba(26,26,26,0.45)', lineHeight:1.55 }}>{p.desc}</div>
             </motion.div>
           ))}
         </div>
@@ -482,10 +534,75 @@ function MobileLayout() {
   )
 }
 
+/* ══════════════════════════════════════
+   MOBILE LAYOUT  (below md — up to 767px)
+══════════════════════════════════════ */
+function MobileLayout() {
+  return (
+    <section
+      className="md:hidden w-full overflow-hidden"
+      style={{ background:'linear-gradient(160deg, #fdfbf7 0%, #f2ece0 100%)', padding:'44px 0 52px' }}
+    >
+      <div style={{ padding:'0 16px' }}>
+        {/* label */}
+        <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:8, marginBottom:16 }}>
+          <div style={{ height:1, width:20, background:`linear-gradient(90deg, transparent, ${TERRA})` }} />
+          <span style={{ fontSize:7, fontWeight:800, letterSpacing:'0.6em', textTransform:'uppercase', color:TERRA }}>Our Identity</span>
+          <div style={{ height:1, width:20, background:`linear-gradient(90deg, ${TERRA}, transparent)` }} />
+        </div>
+
+        {/* heading */}
+        <div style={{ textAlign:'center', marginBottom:24 }}>
+          <div>
+            <span style={{ fontSize:'12vw', fontWeight:400, fontStyle:'italic', color:WINE, fontFamily:'"Lora", Georgia, serif', letterSpacing:'0.08em' }}>KARR</span>
+            <span style={{ fontSize:'12vw', fontWeight:400, fontStyle:'italic', color:TERRA, fontFamily:'"Lora", Georgia, serif', letterSpacing:'0.08em' }}>CHOLAI</span>
+          </div>
+        </div>
+
+        {/* logo */}
+        <div style={{ display:'flex', justifyContent:'center', marginBottom:24 }}>
+          <img src={logoImg} alt="KARRCHOLAI" style={{ width:80, height:80, objectFit:'contain', opacity:0.45, mixBlendMode:'multiply' }} />
+        </div>
+
+        {/* cards grid */}
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10 }}>
+          {PRINCIPLES.map((p) => (
+            <motion.div
+              key={p.i}
+              initial={{ opacity:0, y:14 }}
+              whileInView={{ opacity:1, y:0 }}
+              viewport={{ once:true }}
+              transition={{ duration:0.4, delay:p.i * 0.04 }}
+              style={{
+                background:'#fff',
+                border:`1.5px solid ${p.color}28`,
+                borderLeft:`3px solid ${p.color}`,
+                borderRadius:10,
+                padding:'10px 12px',
+                boxShadow:`0 2px 8px ${p.color}10`,
+              }}
+            >
+              <div style={{ fontSize:7, fontWeight:800, letterSpacing:'0.35em', color:`${p.color}75`, marginBottom:3 }}>{String(p.i+1).padStart(2,'0')}</div>
+              <div style={{ fontSize:22, fontWeight:400, fontStyle:'italic', color:p.color, fontFamily:'"Lora", Georgia, serif', lineHeight:1, marginBottom:3 }}>{p.ch}</div>
+              <div style={{ fontSize:8, fontWeight:700, letterSpacing:'0.08em', textTransform:'uppercase', color:INK, marginBottom:3 }}>{p.word}</div>
+              <div style={{ fontSize:9, color:'rgba(26,26,26,0.45)', lineHeight:1.5 }}>{p.desc}</div>
+            </motion.div>
+          ))}
+        </div>
+
+        <p style={{ textAlign:'center', marginTop:24, fontSize:8, fontWeight:700, letterSpacing:'0.45em', textTransform:'uppercase', color:'rgba(26,26,26,0.22)' }}>
+          Every Letter · Every Value · Every Home
+        </p>
+      </div>
+    </section>
+  )
+}
+
 export default function IdentityPencil() {
   return (
     <>
       <DesktopLayout />
+      <TabletLayout />
       <MobileLayout />
     </>
   )
