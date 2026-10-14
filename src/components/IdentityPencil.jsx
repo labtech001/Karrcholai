@@ -1,821 +1,567 @@
 /**
- * IdentityPencil — KARRCHOLAI Our Identity
- * Periodic-table inspired premium glassy UI
+ * IdentityPencil — KARRCHOLAI Brand Identity
+ * Single alternating timeline · Perfect balance · Premium editorial
  */
 
-import React, { useRef, useEffect, useState, useCallback } from 'react'
-import { motion } from 'framer-motion'
-import logoImg from '../assets/KARRCHOLAI LOGO.png'
+import React, { useState, useEffect, useCallback } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 
-const TERRA = '#B85C38'
-const WINE  = '#7a1d35'
-const INK   = '#0f0f0f'
-const GOLD  = '#C9A84C'
-const GREEN = '#2D6A4F'
-const STEEL = '#3a6ea8'
+import imgKalium     from '../assets/identy/kalium.jpg'
+import imgAluminium  from '../assets/identy/Aluminium.jpg'
+import imgIron       from '../assets/identy/iron.jpg'
+import imgChromium   from '../assets/identy/Chromium.jpg'
+import imgArgon      from '../assets/identy/argon.jpg'
+import imgHydrogen   from '../assets/identy/Hydrogen.jpg'
+import imgO2         from '../assets/identy/O2.jpg'
+import imgLithium    from '../assets/identy/Lithium.jpg'
+import imgRhodium    from '../assets/identy/rhodium.webp'
+import imgRuthenium  from '../assets/identy/Ruthenium.jpg'
 
-/* Element data — each brand letter maps to a real chemical element */
-const PRINCIPLES = [
-  { i:0, ch:'K',  word:'Keystone',      element:'K',  elName:'Potassium',  atomicNo:19, color: WINE,  colorRgb:'122,29,53',   group:'KARR',   desc:'The irreplaceable anchor every great structure begins from.' },
-  { i:1, ch:'A',  word:'Architecture',  element:'Al', elName:'Aluminium',  atomicNo:13, color: TERRA, colorRgb:'184,92,56',   group:'KARR',   desc:'Thoughtful design balancing form, function and family life.' },
-  { i:2, ch:'R',  word:'Resilience',    element:'Fe', elName:'Iron',       atomicNo:26, color: WINE,  colorRgb:'122,29,53',   group:'KARR',   desc:'Structures engineered to endure decades of real life.' },
-  { i:3, ch:'R',  word:'Reliability',   element:'Zn', elName:'Zinc',       atomicNo:30, color: GOLD,  colorRgb:'201,168,76',  group:'KARR',   desc:'Consistent delivery on every promise at every stage.' },
-  { i:4, ch:'C',  word:'Craftsmanship', element:'C',  elName:'Carbon',     atomicNo:6,  color: TERRA, colorRgb:'184,92,56',   group:'CHOLAI', desc:'Precision in every finish — quality that lives in the details.' },
-  { i:5, ch:'H',  word:'Harmony',       element:'H',  elName:'Hydrogen',   atomicNo:1,  color: GREEN, colorRgb:'45,106,79',   group:'CHOLAI', desc:'Balance between nature, space, Vastu and the families who call it home.' },
-  { i:6, ch:'O',  word:'Optimization',  element:'O',  elName:'Oxygen',     atomicNo:8,  color: GOLD,  colorRgb:'201,168,76',  group:'CHOLAI', desc:'Every square foot, every rupee maximised without compromise.' },
-  { i:7, ch:'L',  word:'Longevity',     element:'Ti', elName:'Titanium',   atomicNo:22, color: WINE,  colorRgb:'122,29,53',   group:'CHOLAI', desc:'We build for generations, not just occupancy certificates.' },
-  { i:8, ch:'A',  word:'Aesthetics',    element:'Si', elName:'Silicon',    atomicNo:14, color: TERRA, colorRgb:'184,92,56',   group:'CHOLAI', desc:'Timeless beauty rooted in Tamil culture.' },
-  { i:9, ch:'I',  word:'Integrity',     element:'Cu', elName:'Copper',     atomicNo:29, color: STEEL, colorRgb:'58,110,168',  group:'CHOLAI', desc:'Transparent, honest and accountable from first conversation to handover.' },
+const KARR_COLOR   = '#7a1d35'
+const CHOLAI_COLOR = '#2D6A4F'
+const GOLD         = '#B8924A'
+
+/* All 10 in order — KARR left (even idx), CHOLAI right (odd idx) */
+const ITEMS = [
+  { id:0, ch:'K', zone:'KARR',   principle:'Keystone',      symbol:'K',  element:'Kalium',    num:19, mass:'39.098', img:imgKalium,    accent:'#C9714A', tag:'Foundation · Structure',  desc:'Strong foundations and the right beginning.' },
+  { id:1, ch:'C', zone:'CHOLAI', principle:'Craftsmanship', symbol:'Ar', element:'Argon',     num:18, mass:'39.948', img:imgArgon,     accent:'#9b88c8', tag:'Precision · Quality',     desc:'Careful workmanship in every detail.' },
+  { id:2, ch:'A', zone:'KARR',   principle:'Architecture',  symbol:'Al', element:'Aluminium', num:13, mass:'26.982', img:imgAluminium, accent:'#6a9ebe', tag:'Design · Form',            desc:'Thoughtful design shaped around how people live.' },
+  { id:3, ch:'H', zone:'CHOLAI', principle:'Harmony',       symbol:'H',  element:'Hydrogen',  num:1,  mass:'1.008',  img:imgHydrogen,  accent:'#5aa0c8', tag:'Balance · Vastu',         desc:'Balance between the home, people and surroundings.' },
+  { id:4, ch:'R', zone:'KARR',   principle:'Resilience',    symbol:'Fe', element:'Iron',      num:26, mass:'55.845', img:imgIron,      accent:'#c8a882', tag:'Strength · Durability',   desc:'Construction designed to endure changing conditions and time.' },
+  { id:5, ch:'O', zone:'CHOLAI', principle:'Optimization',  symbol:'O',  element:'Oxygen',    num:8,  mass:'15.999', img:imgO2,        accent:'#5aaa80', tag:'Efficiency · Value',      desc:'Making thoughtful use of space, materials, energy and resources.' },
+  { id:6, ch:'R', zone:'KARR',   principle:'Reliability',   symbol:'Cr', element:'Chromium',  num:24, mass:'51.996', img:imgChromium,  accent:'#d4c090', tag:'Trust · Consistency',     desc:'Consistent quality, responsibility and dependable execution.' },
+  { id:7, ch:'L', zone:'CHOLAI', principle:'Longevity',     symbol:'Li', element:'Lithium',   num:3,  mass:'6.941',  img:imgLithium,   accent:'#d4aa55', tag:'Generations · Future',    desc:'Creating homes intended to serve generations.' },
+  { id:8, ch:'A', zone:'KARR',   principle:'Aesthetics',    symbol:'Rh', element:'Rhodium',   num:45, mass:'102.91', img:imgRhodium,   accent:'#c89880', tag:'Beauty · Culture',        desc:'Beauty that works together with function.' },
+  { id:9, ch:'I', zone:'CHOLAI', principle:'Integrity',     symbol:'Ru', element:'Ruthenium', num:44, mass:'101.07', img:imgRuthenium, accent:'#7aa0c0', tag:'Honesty · Trust',         desc:'Honest decisions, transparent practices and responsible construction.' },
 ]
 
-/* Shared glassy styles injected once */
-const GLASS_CSS = `
-  .kc-glass-card {
-    position: relative;
-    border-radius: 10px;
-    background: linear-gradient(145deg, rgba(255,255,255,0.72) 0%, rgba(255,255,255,0.42) 100%);
-    border: 1px solid rgba(255,255,255,0.85);
-    backdrop-filter: blur(20px) saturate(1.6);
-    -webkit-backdrop-filter: blur(20px) saturate(1.6);
-    box-shadow:
-      0 2px 16px rgba(0,0,0,0.08),
-      0 1px 4px rgba(0,0,0,0.05),
-      inset 0 1px 0 rgba(255,255,255,0.95),
-      inset 0 -1px 0 rgba(0,0,0,0.04);
-    transition: box-shadow 0.28s ease, border-color 0.28s ease, transform 0.22s ease, background 0.28s ease;
-    overflow: hidden;
-  }
-  .kc-glass-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 45%;
-    background: linear-gradient(180deg, rgba(255,255,255,0.65) 0%, transparent 100%);
-    pointer-events: none;
-    border-radius: 10px 10px 0 0;
-  }
-  .kc-glass-card.active {
-    box-shadow:
-      0 10px 36px rgba(var(--card-rgb), 0.32),
-      0 3px 10px rgba(0,0,0,0.12),
-      inset 0 1px 0 rgba(255,255,255,0.95),
-      inset 0 -1px 0 rgba(var(--card-rgb), 0.15);
-    border-color: rgba(var(--card-rgb), 0.45);
-    transform: translateY(-2px) scale(1.025);
-  }
-  .kc-el-symbol {
-    font-family: 'Manrope', sans-serif;
-    font-weight: 800;
-    line-height: 1;
-    letter-spacing: -0.02em;
-  }
-  .kc-el-number {
-    font-family: 'Manrope', sans-serif;
-    font-variant-numeric: tabular-nums;
-  }
-  .kc-pill {
-    display: inline-block;
-    font-size: 6px;
-    font-weight: 800;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    padding: 2px 6px;
-    border-radius: 20px;
-    border: 1px solid currentColor;
-    opacity: 0.7;
-  }
-  .kc-shimmer::after {
-    content: '';
-    position: absolute;
-    top: -60%;
-    left: -60%;
-    width: 50%;
-    height: 200%;
-    background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.55) 50%, transparent 60%);
-    transform: skewX(-15deg);
-    transition: left 0.6s ease;
-    pointer-events: none;
-  }
-  .kc-shimmer.active::after {
-    left: 140%;
-  }
-`
+/* ── Full-screen Popup ─────────────────────────────────────────────── */
+function Popup({ el, onClose }) {
+  const [dir, setDir]   = useState(0)
+  const [cur, setCur]   = useState(el)
 
-/* ═══════════════════════════════════════════════════════
-   AllLines — all 10 lines live in DOM always.
-   On hover: CSS class toggles strokeDashoffset 100%→0
-   No mounting/unmounting = zero layout-thrash lag
-═══════════════════════════════════════════════════════ */
-function AllLines({ letterRefs, cardRefs, containerRef, activeIdx }) {
-  const [lines, setLines] = useState([])
-  const svgRef = useRef(null)
+  useEffect(() => { if (el) setCur(el) }, [el])
 
-  /* Compute line coordinates once, recompute on resize */
   useEffect(() => {
-    const compute = () => {
-      if (!containerRef.current) return
-      const cRect = containerRef.current.getBoundingClientRect()
-      const result = []
-
-      PRINCIPLES.forEach(({ i, color }) => {
-        const lr = letterRefs[i]?.current
-        const cr = cardRefs[i]?.current
-        if (!lr || !cr) return
-
-        const lR = lr.getBoundingClientRect()
-        const cR = cr.getBoundingClientRect()
-
-        const x1 = lR.left + lR.width / 2 - cRect.left
-        const y1 = lR.bottom - cRect.top
-
-        let x2, y2
-        if (i <= 3) {
-          // left column → attach to right edge, vertically centred
-          x2 = cR.right - cRect.left
-          y2 = cR.top + cR.height / 2 - cRect.top
-        } else if (i >= 6) {
-          // right column → attach to left edge, vertically centred
-          x2 = cR.left - cRect.left
-          y2 = cR.top + cR.height / 2 - cRect.top
-        } else {
-          // pillar cards C(4) H(5) → top centre
-          x2 = cR.left + cR.width / 2 - cRect.left
-          y2 = cR.top - cRect.top
-        }
-
-        const dx = x2 - x1
-        const dy = y2 - y1
-        const len = Math.ceil(Math.sqrt(dx * dx + dy * dy))
-
-        result.push({ i, color, x1, y1, x2, y2, len })
-      })
-
-      setLines(result)
+    const h = e => {
+      if (e.key === 'Escape')     onClose()
+      if (e.key === 'ArrowRight') navigate(1)
+      if (e.key === 'ArrowLeft')  navigate(-1)
     }
+    window.addEventListener('keydown', h)
+    return () => window.removeEventListener('keydown', h)
+  })
 
-    const t = setTimeout(compute, 300)
-    window.addEventListener('resize', compute)
-    return () => { clearTimeout(t); window.removeEventListener('resize', compute) }
-  }, [letterRefs, cardRefs, containerRef])
-
-  /* Imperatively toggle animation class on the active line group */
   useEffect(() => {
-    if (!svgRef.current) return
-    const groups = svgRef.current.querySelectorAll('[data-line]')
-    groups.forEach(g => {
-      const idx = parseInt(g.dataset.line, 10)
-      if (idx === activeIdx) {
-        g.classList.add('line-active')
-      } else {
-        g.classList.remove('line-active')
-      }
-    })
-  }, [activeIdx])
+    if (el) document.body.style.overflow = 'hidden'
+    else    document.body.style.overflow = ''
+    return () => { document.body.style.overflow = '' }
+  }, [el])
 
-  if (!lines.length) return null
+  function navigate(d) {
+    if (!cur) return
+    const idx  = ITEMS.findIndex(i => i.id === cur.id)
+    const next = ITEMS[(idx + d + ITEMS.length) % ITEMS.length]
+    setDir(d)
+    setCur(next)
+  }
+
+  const idx       = cur ? ITEMS.findIndex(i => i.id === cur.id) : 0
+  const zoneColor = cur ? (cur.zone === 'KARR' ? KARR_COLOR : CHOLAI_COLOR) : KARR_COLOR
+  const slideIn   = { x: dir > 0 ? 40 : -40, opacity: 0 }
+  const slideOut  = { x: dir > 0 ? -40 : 40, opacity: 0 }
 
   return (
-    <svg
-      ref={svgRef}
-      style={{ position:'absolute', inset:0, width:'100%', height:'100%', pointerEvents:'none', zIndex:3, overflow:'visible' }}
-    >
-      <defs>
-        <style>{`
-          /* line draw — GPU composited via stroke-dashoffset */
-          [data-line] .kc-line {
-            stroke-dashoffset: var(--kc-len);
-            opacity: 0;
-            transition: none;
-          }
-          [data-line].line-active .kc-line {
-            stroke-dashoffset: 0;
-            opacity: 0.7;
-            transition:
-              stroke-dashoffset 2.2s cubic-bezier(0.4, 0, 0.15, 1),
-              opacity 0.2s ease;
-          }
-
-          /* origin dot */
-          [data-line] .kc-dot-start {
-            opacity: 0;
-            transform: scale(0);
-            transform-box: fill-box;
-            transform-origin: center;
-            transition: none;
-          }
-          [data-line].line-active .kc-dot-start {
-            opacity: 1;
-            transform: scale(1);
-            transition: opacity 0.15s ease, transform 0.2s cubic-bezier(0.34,1.56,0.64,1);
-          }
-
-          /* end dot */
-          [data-line] .kc-dot-end {
-            opacity: 0;
-            transform: scale(0);
-            transform-box: fill-box;
-            transform-origin: center;
-            transition: none;
-          }
-          [data-line].line-active .kc-dot-end {
-            opacity: 1;
-            transform: scale(1);
-            transition:
-              opacity 0.25s ease 2s,
-              transform 0.3s cubic-bezier(0.34,1.56,0.64,1) 2s;
-          }
-
-          /* pulse ring */
-          [data-line] .kc-ring {
-            opacity: 0;
-            transform: scale(0.4);
-            transform-box: fill-box;
-            transform-origin: center;
-            transition: none;
-          }
-          [data-line].line-active .kc-ring {
-            opacity: 0;
-            transform: scale(2.2);
-            transition:
-              opacity 0.45s ease 2.1s,
-              transform 0.6s ease 2.1s;
-            animation: kcRingPulse 0.65s ease 2.1s forwards;
-          }
-
-          @keyframes kcRingPulse {
-            0%   { opacity: 0;    transform: scale(0.5); }
-            35%  { opacity: 0.55; transform: scale(1.2); }
-            100% { opacity: 0;    transform: scale(2);   }
-          }
-        `}</style>
-
-        {lines.map(l => (
-          <linearGradient key={`lg${l.i}`} id={`kc-lg-${l.i}`}
-            x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2}
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop offset="0%"   stopColor={l.color} stopOpacity="1" />
-            <stop offset="100%" stopColor={l.color} stopOpacity="0.6" />
-          </linearGradient>
-        ))}
-      </defs>
-
-      {lines.map(l => (
-        <g
-          key={l.i}
-          data-line={l.i}
-          style={{ '--kc-len': l.len }}
-        >
-          {/* The line */}
-          <line
-            className="kc-line"
-            x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2}
-            stroke={`url(#kc-lg-${l.i})`}
-            strokeWidth={2}
-            strokeLinecap="round"
-            strokeDasharray={l.len}
+    <AnimatePresence>
+      {el && cur && (
+        <>
+          {/* Backdrop */}
+          <motion.div
+            key="backdrop"
+            initial={{ opacity:0 }} animate={{ opacity:1 }} exit={{ opacity:0 }}
+            transition={{ duration:0.28 }}
+            onClick={onClose}
+            style={{ position:'fixed', inset:0, zIndex:9998, background:'rgba(8,6,4,0.72)', backdropFilter:'blur(12px)', WebkitBackdropFilter:'blur(12px)' }}
           />
 
-          {/* Origin dot (letter end) */}
-          <circle className="kc-dot-start" cx={l.x1} cy={l.y1} r={4} fill={l.color} />
+          {/* Centering wrapper */}
+          <div style={{ position:'fixed', zIndex:9999, inset:0, display:'flex', alignItems:'center', justifyContent:'center', pointerEvents:'none' }}>
 
-          {/* End dot (card end) */}
-          <circle className="kc-dot-end" cx={l.x2} cy={l.y2} r={5} fill={l.color} />
+          {/* Modal */}
+          <motion.div
+            key="modal"
+            initial={{ opacity:0, y:32, scale:0.94 }}
+            animate={{ opacity:1, y:0, scale:1 }}
+            exit={{ opacity:0, y:24, scale:0.96 }}
+            transition={{ duration:0.38, ease:[0.22,1,0.36,1] }}
+            style={{
+              width:'min(880px, 90vw)',
+              height:'min(580px, 82vh)',
+              borderRadius:24,
+              overflow:'hidden',
+              display:'flex', flexDirection:'column',
+              boxShadow:'0 40px 100px rgba(0,0,0,0.60), 0 0 0 1px rgba(255,255,255,0.10)',
+              pointerEvents:'all',
+              flexShrink:0,
+            }}
+          >
+            {/* ── Top: image (55% height) ── */}
+            <div style={{ position:'relative', flex:'0 0 58%', overflow:'hidden' }}>
 
-          {/* Pulse ring at end */}
-          <circle className="kc-ring" cx={l.x2} cy={l.y2} r={10} fill="none" stroke={l.color} strokeWidth={1.5} />
-        </g>
-      ))}
-    </svg>
+              {/* Crossfade image */}
+              <AnimatePresence mode="sync">
+                <motion.img
+                  key={cur.id + '-img'}
+                  src={cur.img} alt={cur.element}
+                  initial={{ opacity:0, scale:1.06 }}
+                  animate={{ opacity:1, scale:1 }}
+                  exit={{ opacity:0 }}
+                  transition={{ duration:0.5, ease:[0.25,0.46,0.45,0.94] }}
+                  style={{ position:'absolute', inset:0, width:'100%', height:'100%', objectFit:'cover' }}
+                />
+              </AnimatePresence>
+
+              {/* Gradient overlays */}
+              <div style={{ position:'absolute', inset:0, background:'linear-gradient(180deg,rgba(0,0,0,0.28) 0%,rgba(0,0,0,0.05) 40%,rgba(0,0,0,0.55) 100%)', zIndex:1 }} />
+              <div style={{ position:'absolute', inset:0, background:`linear-gradient(135deg,${cur.accent}28 0%,transparent 50%)`, zIndex:1 }} />
+
+              {/* Top bar: zone badge + counter + close */}
+              <div style={{ position:'absolute', top:0, left:0, right:0, display:'flex', alignItems:'center', justifyContent:'space-between', padding:'16px 20px', zIndex:3 }}>
+                <div style={{ padding:'4px 12px', borderRadius:20, background: cur.zone==='KARR' ? 'rgba(122,29,53,0.88)' : 'rgba(45,106,79,0.88)', border:'1px solid rgba(255,255,255,0.18)', backdropFilter:'blur(6px)' }}>
+                  <span style={{ fontSize:7, fontWeight:900, letterSpacing:'.34em', textTransform:'uppercase', color:'#fff', fontFamily:'"Manrope",sans-serif' }}>{cur.zone}</span>
+                </div>
+                <span style={{ fontSize:10, fontWeight:700, color:'rgba(255,255,255,0.40)', fontFamily:'"Manrope",sans-serif', letterSpacing:'.08em' }}>
+                  {String(idx+1).padStart(2,'0')} / {String(ITEMS.length).padStart(2,'0')}
+                </span>
+                <button onClick={onClose}
+                  style={{ width:36, height:36, borderRadius:'50%', background:'rgba(255,255,255,0.12)', border:'1px solid rgba(255,255,255,0.20)', color:'rgba(255,255,255,0.88)', fontSize:16, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', backdropFilter:'blur(6px)', transition:'background 0.2s' }}
+                  onMouseEnter={e => e.currentTarget.style.background='rgba(255,255,255,0.24)'}
+                  onMouseLeave={e => e.currentTarget.style.background='rgba(255,255,255,0.12)'}
+                >✕</button>
+              </div>
+
+              {/* Big symbol watermark */}
+              <AnimatePresence mode="wait">
+                <motion.div key={cur.id+'-wm'}
+                  initial={{ opacity:0, scale:0.75 }} animate={{ opacity:0.09, scale:1 }} exit={{ opacity:0, scale:1.1 }}
+                  transition={{ duration:0.45 }}
+                  style={{ position:'absolute', bottom:'-10%', right:'5%', fontSize:'clamp(100px,18vw,180px)', fontWeight:900, fontFamily:'"Barlow Condensed",sans-serif', color:'#fff', lineHeight:1, letterSpacing:'-.04em', pointerEvents:'none', userSelect:'none', zIndex:2 }}
+                >{cur.symbol}</motion.div>
+              </AnimatePresence>
+
+              {/* Atomic badge bottom-left */}
+              <div style={{ position:'absolute', bottom:14, left:20, zIndex:3, display:'flex', alignItems:'flex-end', gap:10 }}>
+                <div>
+                  <div style={{ fontSize:8, fontFamily:'monospace', color:'rgba(255,255,255,0.45)', marginBottom:1 }}>{cur.num}</div>
+                  <div style={{ fontSize:42, fontWeight:700, fontFamily:'"Barlow Condensed",sans-serif', color:'#fff', lineHeight:1, textShadow:`0 0 30px ${cur.accent}50, 0 2px 12px rgba(0,0,0,0.6)` }}>{cur.symbol}</div>
+                </div>
+                <div style={{ paddingBottom:4 }}>
+                  <div style={{ fontSize:11, fontWeight:600, color:'rgba(255,255,255,0.55)', fontFamily:'"Manrope",sans-serif', lineHeight:1.3 }}>{cur.element}</div>
+                  <div style={{ fontSize:9, fontFamily:'monospace', color:'rgba(255,255,255,0.30)' }}>{cur.mass}</div>
+                </div>
+              </div>
+
+              {/* Progress bar */}
+              <div style={{ position:'absolute', bottom:0, left:0, right:0, height:2, background:'rgba(255,255,255,0.08)', zIndex:3 }}>
+                <motion.div
+                  key={cur.id+'-bar'}
+                  initial={{ width:0 }} animate={{ width:`${((idx+1)/ITEMS.length)*100}%` }}
+                  transition={{ duration:0.5, ease:[0.25,0.46,0.45,0.94] }}
+                  style={{ height:'100%', background:`linear-gradient(90deg,${zoneColor},${cur.accent})` }}
+                />
+              </div>
+            </div>
+
+            {/* ── Bottom: content (42% height) ── */}
+            <div style={{ flex:'1 1 auto', background:'#fdfbf7', display:'flex', flexDirection:'column', justifyContent:'space-between', overflow:'hidden' }}>
+
+              <AnimatePresence mode="wait">
+                <motion.div key={cur.id+'-content'}
+                  initial={slideIn} animate={{ x:0, opacity:1 }} exit={slideOut}
+                  transition={{ duration:0.36, ease:[0.25,0.46,0.45,0.94] }}
+                  style={{ padding:'22px 28px 14px', flex:1 }}
+                >
+                  {/* Tag */}
+                  <div style={{ fontSize:7, fontWeight:900, letterSpacing:'.40em', textTransform:'uppercase', color:'rgba(26,26,26,0.32)', fontFamily:'"Manrope",sans-serif', marginBottom:8 }}>{cur.tag}</div>
+
+                  {/* Principle */}
+                  <div style={{ display:'flex', alignItems:'flex-end', gap:2, marginBottom:10, lineHeight:1 }}>
+                    <span style={{ fontSize:54, fontWeight:900, color:cur.zone==='KARR' ? KARR_COLOR : CHOLAI_COLOR, fontFamily:'"Barlow Condensed",sans-serif', lineHeight:0.88, letterSpacing:'-.02em' }}>{cur.ch}</span>
+                    <span style={{ fontSize:26, fontWeight:900, textTransform:'uppercase', color:'#1a1a1a', fontFamily:'"Manrope",sans-serif', lineHeight:1, paddingBottom:'0.05em', letterSpacing:'-.01em' }}>{cur.principle.slice(1)}</span>
+                  </div>
+
+                  {/* Accent rule */}
+                  <div style={{ height:2, width:36, background:`linear-gradient(90deg,${cur.accent},transparent)`, borderRadius:2, marginBottom:10 }} />
+
+                  {/* Description */}
+                  <p style={{ fontSize:13, lineHeight:1.72, color:'rgba(26,26,26,0.55)', fontFamily:'"Manrope",sans-serif', margin:0 }}>{cur.desc}</p>
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Dot nav row */}
+              <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'10px 28px 18px', borderTop:'1px solid rgba(26,26,26,0.06)' }}>
+                {/* Prev */}
+                <button onClick={() => navigate(-1)}
+                  style={{ width:34, height:34, borderRadius:'50%', background:'rgba(26,26,26,0.06)', border:'1px solid rgba(26,26,26,0.10)', color:'rgba(26,26,26,0.60)', fontSize:18, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', transition:'background 0.2s' }}
+                  onMouseEnter={e => e.currentTarget.style.background='rgba(26,26,26,0.12)'}
+                  onMouseLeave={e => e.currentTarget.style.background='rgba(26,26,26,0.06)'}
+                >‹</button>
+
+                {/* Dots */}
+                <div style={{ display:'flex', gap:6, alignItems:'center' }}>
+                  {ITEMS.map((item, i) => (
+                    <button key={item.id}
+                      onClick={() => { setDir(i > idx ? 1 : -1); setCur(item) }}
+                      style={{ width: i===idx ? 22 : 6, height:6, borderRadius:3, border:'none', cursor:'pointer', padding:0, transition:'width 0.3s, background 0.3s', background: i===idx ? (cur.zone==='KARR' ? KARR_COLOR : CHOLAI_COLOR) : 'rgba(26,26,26,0.18)' }}
+                    />
+                  ))}
+                </div>
+
+                {/* Next */}
+                <button onClick={() => navigate(1)}
+                  style={{ width:34, height:34, borderRadius:'50%', background:'rgba(26,26,26,0.06)', border:'1px solid rgba(26,26,26,0.10)', color:'rgba(26,26,26,0.60)', fontSize:18, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', transition:'background 0.2s' }}
+                  onMouseEnter={e => e.currentTarget.style.background='rgba(26,26,26,0.12)'}
+                  onMouseLeave={e => e.currentTarget.style.background='rgba(26,26,26,0.06)'}
+                >›</button>
+              </div>
+
+            </div>
+          </motion.div>
+          </div>{/* end centering wrapper */}
+        </>
+      )}
+    </AnimatePresence>
   )
 }
 
-/* ─── Small periodic-table card (left & right columns) ─── */
-function SmallCard({ p, cardRef, active, onHover, onLeave }) {
+/* ── Photo tile ─────────────────────────────────────────────────────── */
+function Tile({ el, onOpen }) {
+  const [hov, setHov] = useState(false)
   return (
-    <motion.div
-      ref={cardRef}
-      onMouseEnter={() => onHover(p.i)}
-      onMouseLeave={onLeave}
-      initial={{ opacity: 0, x: p.i <= 3 ? -18 : 18 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.42, delay: 0.06 + (p.i <= 3 ? p.i : 9 - p.i) * 0.07 }}
-      className={`kc-glass-card kc-shimmer${active ? ' active' : ''}`}
+    <div
+      onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
+      onClick={() => onOpen(el)}
       style={{
-        '--card-rgb': p.colorRgb,
-        background: active
-          ? `linear-gradient(145deg, rgba(${p.colorRgb},0.92) 0%, rgba(${p.colorRgb},0.70) 100%)`
-          : `linear-gradient(145deg, rgba(255,255,255,0.78) 0%, rgba(255,255,255,0.52) 100%)`,
-        cursor: 'default',
-        padding: '10px 10px 9px',
-        minWidth: 108,
+        width:120, height:120, borderRadius:14, overflow:'hidden',
+        cursor:'pointer', position:'relative', flexShrink:0,
+        transform: hov ? 'scale(1.06) translateY(-3px)' : 'scale(1)',
+        boxShadow: hov
+          ? `0 20px 48px rgba(0,0,0,0.24), 0 0 0 2px ${el.accent}70`
+          : '0 6px 20px rgba(0,0,0,0.13), 0 0 0 1px rgba(26,26,26,0.07)',
+        transition:'transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease',
       }}
     >
-      {/* top row: atomic number + group pill */}
-      <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom: 4 }}>
-        <span className="kc-el-number" style={{
-          fontSize: 8, fontWeight: 700, letterSpacing: '0.05em',
-          color: active ? 'rgba(255,255,255,0.6)' : `rgba(${p.colorRgb},0.55)`,
-          transition: 'color 0.25s',
-        }}>{p.atomicNo}</span>
-        <span className="kc-pill" style={{
-          color: active ? 'rgba(255,255,255,0.7)' : `rgba(${p.colorRgb},0.6)`,
-          transition:'color 0.25s',
-        }}>{p.group}</span>
+      <img src={el.img} alt={el.element} style={{ position:'absolute', inset:0, width:'100%', height:'100%', objectFit:'cover', transform: hov ? 'scale(1.10)' : 'scale(1)', transition:'transform 0.5s ease' }} />
+      <div style={{ position:'absolute', inset:0, background:'linear-gradient(180deg,rgba(0,0,0,0.08) 0%,rgba(0,0,0,0.65) 100%)' }} />
+      {hov && <div style={{ position:'absolute', inset:0, background:`linear-gradient(145deg,${el.accent}28 0%,transparent 50%)` }} />}
+      <div style={{ position:'absolute', top:0, left:'12%', right:'12%', height:1, background:'linear-gradient(90deg,transparent,rgba(255,255,255,0.5),transparent)', opacity: hov ? 0.9 : 0.4, transition:'opacity 0.3s' }} />
+      {/* content */}
+      <div style={{ position:'relative', zIndex:2, width:'100%', height:'100%', display:'flex', flexDirection:'column', padding:'8px 10px 9px', boxSizing:'border-box' }}>
+        <div style={{ display:'flex', justifyContent:'space-between' }}>
+          <span style={{ fontSize:8, fontFamily:'monospace', color:'rgba(255,255,255,0.5)', lineHeight:1 }}>{el.num}</span>
+          <span style={{ fontSize:7.5, fontWeight:900, letterSpacing:'.12em', fontFamily:'"Manrope",sans-serif', color: hov ? el.accent : 'rgba(255,255,255,0.4)', transition:'color 0.25s', lineHeight:1 }}>{el.ch}</span>
+        </div>
+        <div style={{ flex:1, display:'flex', alignItems:'center', fontSize:38, fontWeight:700, fontFamily:'"Barlow Condensed",sans-serif', color: hov ? el.accent : '#fff', textShadow: hov ? `0 0 20px ${el.accent}70,0 2px 8px rgba(0,0,0,0.5)` : '0 2px 8px rgba(0,0,0,0.6)', transition:'color 0.25s,text-shadow 0.25s' }}>{el.symbol}</div>
+        <div>
+          <div style={{ height:1, background: hov ? `linear-gradient(90deg,${el.accent}70,transparent)` : 'rgba(255,255,255,0.18)', marginBottom:4, transition:'background 0.25s' }} />
+          <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-end' }}>
+            <span style={{ fontSize:7.5, fontWeight:600, fontFamily:'"Manrope",sans-serif', color:'rgba(255,255,255,0.6)' }}>{el.element}</span>
+            <span style={{ fontSize:6.5, fontFamily:'monospace', color:'rgba(255,255,255,0.32)' }}>{el.mass}</span>
+          </div>
+        </div>
       </div>
-
-      {/* element symbol */}
-      <div className="kc-el-symbol" style={{
-        fontSize: 30,
-        color: active ? '#fff' : p.color,
-        marginBottom: 1,
-        transition: 'color 0.25s',
-      }}>{p.element}</div>
-
-      {/* element name */}
-      <div style={{
-        fontSize: 7.5, fontWeight: 700, letterSpacing: '0.06em',
-        color: active ? 'rgba(255,255,255,0.6)' : `rgba(${p.colorRgb},0.5)`,
-        textTransform: 'uppercase', fontFamily: '"Manrope", sans-serif',
-        marginBottom: 6, transition: 'color 0.25s',
-      }}>{p.elName}</div>
-
-      {/* divider */}
-      <div style={{
-        height: 1,
-        background: active ? 'rgba(255,255,255,0.3)' : `rgba(${p.colorRgb},0.18)`,
-        marginBottom: 6, transition: 'background 0.25s',
-      }} />
-
-      {/* brand letter + principle */}
-      <div style={{ display:'flex', alignItems:'baseline', gap: 5, marginBottom: 3 }}>
-        <span style={{
-          fontSize: 16, fontWeight: 400, fontStyle: 'italic',
-          fontFamily: '"Lora", Georgia, serif',
-          color: active ? 'rgba(255,255,255,0.95)' : p.color,
-          lineHeight: 1, transition: 'color 0.25s',
-        }}>{p.ch}</span>
-        <span style={{
-          fontSize: 8, fontWeight: 800, letterSpacing: '0.1em', textTransform: 'uppercase',
-          fontFamily: '"Manrope", sans-serif',
-          color: active ? '#fff' : INK,
-          transition: 'color 0.25s',
-        }}>{p.word}</span>
+      <div style={{ position:'absolute', bottom:0, left:0, right:0, padding:'18px 10px 9px', background:`linear-gradient(0deg,${el.accent}ee 0%,transparent)`, transform: hov ? 'translateY(0)' : 'translateY(100%)', transition:'transform 0.3s ease', zIndex:3, textAlign:'center' }}>
+        <span style={{ fontSize:8, fontWeight:900, letterSpacing:'.14em', textTransform:'uppercase', color:'#fff', fontFamily:'"Manrope",sans-serif' }}>{el.principle}</span>
       </div>
+    </div>
+  )
+}
 
-      {/* description */}
-      <div style={{
-        fontSize: 9, lineHeight: 1.5,
-        color: active ? 'rgba(255,255,255,0.72)' : 'rgba(15,15,15,0.42)',
-        transition: 'color 0.25s',
-      }}>{p.desc}</div>
+/* ── Info card (text side) ─────────────────────────────────────────── */
+function InfoCard({ el, align }) {
+  const zoneColor = el.zone === 'KARR' ? KARR_COLOR : CHOLAI_COLOR
+  return (
+    <motion.div
+      initial={{ opacity:0, x: align === 'right' ? -28 : 28 }}
+      whileInView={{ opacity:1, x:0 }}
+      viewport={{ once:true, margin:'-50px' }}
+      transition={{ duration:0.5, ease:[0.25,0.46,0.45,0.94] }}
+      style={{ textAlign: align, maxWidth:220 }}
+    >
+      {/* Zone pill */}
+      <div style={{ display:'flex', alignItems:'center', gap:6, justifyContent: align === 'right' ? 'flex-end' : 'flex-start', marginBottom:6 }}>
+        <div style={{ width:5, height:5, borderRadius:'50%', background:zoneColor, flexShrink:0 }} />
+        <span style={{ fontSize:7, fontWeight:900, letterSpacing:'.38em', textTransform:'uppercase', color: zoneColor + '80', fontFamily:'"Manrope",sans-serif' }}>{el.zone}</span>
+        <span style={{ fontSize:7, color:'rgba(26,26,26,0.22)', fontFamily:'"Manrope",sans-serif' }}>·</span>
+        <span style={{ fontSize:7, fontWeight:700, letterSpacing:'.22em', textTransform:'uppercase', color:'rgba(26,26,26,0.30)', fontFamily:'"Manrope",sans-serif' }}>{el.tag}</span>
+      </div>
+      {/* Principle with big first letter */}
+      <div style={{ display:'flex', alignItems:'baseline', gap:1, justifyContent: align === 'right' ? 'flex-end' : 'flex-start', marginBottom:7, lineHeight:1 }}>
+        <span style={{ fontSize:44, fontWeight:900, color:zoneColor, fontFamily:'"Barlow Condensed",sans-serif', lineHeight:0.9, letterSpacing:'-.01em' }}>{el.ch}</span>
+        <span style={{ fontSize:20, fontWeight:900, letterSpacing:'.03em', textTransform:'uppercase', color:'#1a1a1a', fontFamily:'"Manrope",sans-serif', lineHeight:1 }}>{el.principle.slice(1)}</span>
+      </div>
+      {/* Accent line */}
+      <div style={{ height:1.5, width:32, background:zoneColor + '50', marginBottom:8, marginLeft: align === 'right' ? 'auto' : 0 }} />
+      {/* Description */}
+      <p style={{ fontSize:11.5, lineHeight:1.7, color:'rgba(26,26,26,0.48)', fontFamily:'"Manrope",sans-serif', margin:0 }}>{el.desc}</p>
     </motion.div>
   )
 }
 
-/* ─── Tall pillar card (center bottom) ─── */
-function PillarCard({ p, cardRef, active, onHover, onLeave }) {
+/* ── Desktop ───────────────────────────────────────────────────────── */
+function DesktopLayout({ onOpen }) {
   return (
-    <motion.div
-      ref={cardRef}
-      onMouseEnter={() => onHover(p.i)}
-      onMouseLeave={onLeave}
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: 0.28 }}
-      className={`kc-glass-card kc-shimmer${active ? ' active' : ''}`}
-      style={{
-        '--card-rgb': p.colorRgb,
-        background: active
-          ? `linear-gradient(160deg, rgba(${p.colorRgb},0.90) 0%, rgba(${p.colorRgb},0.65) 100%)`
-          : `linear-gradient(160deg, rgba(255,255,255,0.82) 0%, rgba(${p.colorRgb},0.08) 100%)`,
-        cursor: 'default',
-        flex: 1,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        textAlign: 'center',
-        padding: '10px 12px 10px',
-        position: 'relative',
-        minHeight: 0,
-      }}
-    >
-      {/* watermark symbol */}
-      <div style={{
-        position: 'absolute', top: 4, left: '50%', transform: 'translateX(-50%)',
-        fontSize: 42, fontWeight: 800,
-        fontFamily: '"Manrope", sans-serif',
-        color: active ? 'rgba(255,255,255,0.08)' : `rgba(${p.colorRgb},0.06)`,
-        lineHeight: 1, userSelect: 'none', pointerEvents: 'none',
-        transition: 'color 0.3s',
-        letterSpacing: '-0.02em',
-      }}>{p.element}</div>
+    <section className="hidden lg:block w-full" style={{ background:'linear-gradient(170deg,#fdfbf7 0%,#f8f3ec 45%,#f3ede4 100%)', padding:'80px 0 88px', position:'relative', overflow:'hidden' }}>
+      {/* subtle dot grid */}
+      <div style={{ position:'absolute', inset:0, pointerEvents:'none', opacity:.035, backgroundImage:'radial-gradient(rgba(26,26,26,0.6) 1px,transparent 1px)', backgroundSize:'40px 40px' }} />
+      {/* left glow */}
+      <div style={{ position:'absolute', top:0, left:0, width:'30%', height:'100%', background:'radial-gradient(ellipse 80% 60% at 0% 40%,rgba(122,29,53,0.04) 0%,transparent 70%)', pointerEvents:'none' }} />
+      {/* right glow */}
+      <div style={{ position:'absolute', top:0, right:0, width:'30%', height:'100%', background:'radial-gradient(ellipse 80% 60% at 100% 60%,rgba(45,106,79,0.04) 0%,transparent 70%)', pointerEvents:'none' }} />
 
-      {/* atomic number + group pill */}
-      <div style={{ display:'flex', justifyContent:'space-between', width:'100%', marginBottom: 5, position:'relative', zIndex:1 }}>
-        <span className="kc-el-number" style={{
-          fontSize: 7.5, fontWeight: 700,
-          color: active ? 'rgba(255,255,255,0.6)' : `rgba(${p.colorRgb},0.55)`,
-          transition: 'color 0.25s',
-        }}>{p.atomicNo}</span>
-        <span className="kc-pill" style={{
-          color: active ? 'rgba(255,255,255,0.7)' : `rgba(${p.colorRgb},0.6)`,
-          transition:'color 0.25s',
-        }}>{p.group}</span>
-      </div>
+      <div style={{ maxWidth:960, margin:'0 auto', padding:'0 40px', position:'relative', zIndex:2 }}>
 
-      {/* element symbol + element name inline */}
-      <div style={{ display:'flex', alignItems:'baseline', gap:5, position:'relative', zIndex:1, marginBottom:5 }}>
-        <div className="kc-el-symbol" style={{
-          fontSize: 26,
-          color: active ? '#fff' : p.color,
-          transition: 'color 0.25s',
-        }}>{p.element}</div>
-        <div style={{
-          fontSize: 7, fontWeight: 700, letterSpacing: '0.08em',
-          textTransform: 'uppercase', fontFamily: '"Manrope", sans-serif',
-          color: active ? 'rgba(255,255,255,0.55)' : `rgba(${p.colorRgb},0.45)`,
-          transition: 'color 0.25s',
-        }}>{p.elName}</div>
-      </div>
-
-      {/* divider */}
-      <div style={{
-        height: 1, width: '75%',
-        background: active ? 'rgba(255,255,255,0.3)' : `rgba(${p.colorRgb},0.18)`,
-        marginBottom: 7, transition: 'background 0.25s',
-      }} />
-
-      {/* brand letter + principle name inline */}
-      <div style={{ display:'flex', alignItems:'baseline', gap:6, position:'relative', zIndex:1, marginBottom:4 }}>
-        <span style={{
-          fontSize: 18, fontWeight: 400, fontStyle: 'italic',
-          fontFamily: '"Lora", Georgia, serif',
-          color: active ? 'rgba(255,255,255,0.95)' : p.color,
-          lineHeight: 1, transition: 'color 0.25s',
-        }}>{p.ch}</span>
-        <span style={{
-          fontSize: 8, fontWeight: 800, letterSpacing: '0.12em', textTransform: 'uppercase',
-          fontFamily: '"Manrope", sans-serif',
-          color: active ? '#fff' : INK,
-          transition: 'color 0.25s',
-        }}>{p.word}</span>
-      </div>
-
-      {/* description */}
-      <div style={{
-        fontSize: 9, lineHeight: 1.5,
-        color: active ? 'rgba(255,255,255,0.72)' : 'rgba(15,15,15,0.4)',
-        maxWidth: 160, margin: '0 auto',
-        position: 'relative', zIndex: 1, transition: 'color 0.25s',
-      }}>{p.desc}</div>
-    </motion.div>
-  )
-}
-
-/* ══════════════════════════════════════
-   DESKTOP LAYOUT  (lg and above)
-══════════════════════════════════════ */
-function DesktopLayout() {
-  const containerRef = useRef(null)
-  const [activeIdx, setActiveIdx] = useState(null)
-
-  const l0=useRef(null);const l1=useRef(null);const l2=useRef(null)
-  const l3=useRef(null);const l4=useRef(null);const l5=useRef(null)
-  const l6=useRef(null);const l7=useRef(null);const l8=useRef(null)
-  const l9=useRef(null)
-  const letterRefs = [l0,l1,l2,l3,l4,l5,l6,l7,l8,l9]
-
-  const c0=useRef(null);const c1=useRef(null);const c2=useRef(null)
-  const c3=useRef(null);const c4=useRef(null);const c5=useRef(null)
-  const c6=useRef(null);const c7=useRef(null);const c8=useRef(null)
-  const c9=useRef(null)
-  const cardRefs = [c0,c1,c2,c3,c4,c5,c6,c7,c8,c9]
-
-  const onHover = useCallback(i => setActiveIdx(i), [])
-  const onLeave = useCallback(() => setActiveIdx(null), [])
-
-  return (
-    <section
-      ref={containerRef}
-      className="hidden lg:block w-full overflow-hidden"
-      style={{
-        background: 'linear-gradient(170deg, #fdfbf7 0%, #f7f2ea 55%, #f0ece2 100%)',
-        padding: '52px 0 64px',
-        position: 'relative',
-      }}
-    >
-      <style>{GLASS_CSS}</style>
-
-      {/* Subtle warm radial glows */}
-      <div style={{
-        position:'absolute', inset:0, pointerEvents:'none', zIndex:0,
-        backgroundImage: `
-          radial-gradient(ellipse 70% 45% at 50% 0%, rgba(184,92,56,0.05) 0%, transparent 60%),
-          radial-gradient(ellipse 50% 35% at 15% 100%, rgba(122,29,53,0.04) 0%, transparent 55%),
-          radial-gradient(ellipse 50% 35% at 85% 100%, rgba(201,168,76,0.04) 0%, transparent 55%)
-        `,
-      }} />
-      {/* grid dots */}
-      <div style={{ position:'absolute', inset:0, pointerEvents:'none', zIndex:0, backgroundImage:'radial-gradient(circle, rgba(26,26,26,0.05) 1px, transparent 1px)', backgroundSize:'28px 28px' }} />
-
-      <AllLines letterRefs={letterRefs} cardRefs={cardRefs} containerRef={containerRef} activeIdx={activeIdx} />
-
-      <div style={{ maxWidth: 1300, margin: '0 auto', padding: '0 48px', position: 'relative', zIndex: 2 }}>
-
-        {/* label */}
-        <motion.div
-          initial={{ opacity: 0, y: -12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:12, marginBottom:20 }}
+        {/* ── Header ── */}
+        <motion.div initial={{ opacity:0, y:-16 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }}
+          style={{ textAlign:'center', marginBottom:64 }}
         >
-          <div style={{ height:1, width:40, background:`linear-gradient(90deg, transparent, ${TERRA})` }} />
-          <span style={{ fontSize:9, fontWeight:800, letterSpacing:'0.7em', textTransform:'uppercase', color:TERRA }}>Our Identity</span>
-          <div style={{ height:1, width:40, background:`linear-gradient(90deg, ${TERRA}, transparent)` }} />
-        </motion.div>
-
-        {/* HEADING */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          style={{ textAlign:'center', whiteSpace:'nowrap', lineHeight:1, marginBottom:0, userSelect:'none' }}
-        >
-          {PRINCIPLES.map((p) => (
-            <span
-              key={p.i}
-              ref={letterRefs[p.i]}
-              onMouseEnter={() => onHover(p.i)}
-              onMouseLeave={onLeave}
-              style={{
-                fontSize: '4.8vw',
-                fontWeight: 400,
-                fontFamily: '"Lora", Georgia, serif',
-                fontStyle: 'italic',
-                color: activeIdx === p.i
-                  ? p.color
-                  : activeIdx !== null
-                    ? (p.i < 4 ? WINE + '25' : TERRA + '25')
-                    : (p.i < 4 ? WINE : TERRA),
-                letterSpacing: '0.18em',
-                display: 'inline-block',
-                cursor: 'default',
-                transition: 'color 0.2s, transform 0.2s',
-                transform: activeIdx === p.i ? 'translateY(-3px) scale(1.06)' : 'none',
-              }}
-            >
-              {p.ch}
+          <p style={{ fontSize:7.5, fontWeight:900, letterSpacing:'.72em', textTransform:'uppercase', color:'rgba(184,92,56,0.45)', fontFamily:'"Manrope",sans-serif', marginBottom:14 }}>
+            Our Identity
+          </p>
+          <h2 style={{ margin:0, lineHeight:1.1 }}>
+            <span style={{ display:'block', fontSize:'clamp(28px,3vw,40px)', fontWeight:900, fontFamily:'"Manrope",sans-serif', color:'#1a1a1a', letterSpacing:'-.02em', marginBottom:4 }}>
+              The Elements Behind Every Home
             </span>
-          ))}
+            <span style={{ display:'block', fontSize:'clamp(14px,1.5vw,18px)', fontWeight:400, fontFamily:'"Manrope",sans-serif', color:'rgba(26,26,26,0.35)', letterSpacing:'.04em' }}>
+              <span style={{ fontStyle:'italic', fontFamily:'"Lora",Georgia,serif', color:KARR_COLOR }}>KARR</span>
+              <span style={{ margin:'0 12px', color:'rgba(26,26,26,0.15)' }}>—</span>
+              The Strength Behind Every Home
+              <span style={{ margin:'0 12px', color:'rgba(26,26,26,0.15)' }}>·</span>
+              <span style={{ fontStyle:'italic', fontFamily:'"Lora",Georgia,serif', color:CHOLAI_COLOR }}>CHOLAI</span>
+              <span style={{ margin:'0 12px', color:'rgba(26,26,26,0.15)' }}>—</span>
+              The Character of Better Living
+            </span>
+          </h2>
         </motion.div>
 
-        {/* MAIN GRID */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: '148px 1fr 148px',
-          gap: '0 28px',
-          marginTop: 8,
-          alignItems: 'stretch',
-        }}>
-          {/* LEFT */}
-          <div style={{ display:'flex', flexDirection:'column', gap:10, justifyContent:'center' }}>
-            {[0,1,2,3].map(i => (
-              <SmallCard key={i} p={PRINCIPLES[i]} cardRef={cardRefs[i]} active={activeIdx===i} onHover={onHover} onLeave={onLeave} />
-            ))}
-          </div>
+        {/* ── Timeline ── */}
+        <div style={{ position:'relative' }}>
 
-          {/* CENTER */}
-          <div style={{ display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:0, height:'100%' }}>
-            <div style={{ flex:1 }} />
-            <motion.div
-              initial={{ opacity:0, scale:0.85 }}
-              whileInView={{ opacity:1, scale:1 }}
-              viewport={{ once:true }}
-              transition={{ duration:0.7, delay:0.35 }}
-              style={{ position:'relative', marginBottom:20 }}
-            >
-              <div style={{
-                position:'absolute', inset:'-18px', borderRadius:'50%',
-                background:'radial-gradient(circle, rgba(184,92,56,0.12) 0%, rgba(201,168,76,0.06) 50%, transparent 75%)',
-                filter:'blur(16px)', pointerEvents:'none',
-              }} />
-              <motion.img
-                src={logoImg}
-                alt="KARRCHOLAI"
-                style={{
-                  width: 360, height: 360, objectFit: 'contain', display: 'block',
-                  opacity: 0.45,
-                  filter: 'saturate(0.8) brightness(1.05) drop-shadow(0 6px 32px rgba(184,92,56,0.22))',
-                  mixBlendMode: 'multiply',
-                  position: 'relative', zIndex: 1,
-                }}
-                whileHover={{ opacity: 0.65, scale: 1.04 }}
-                transition={{ duration: 0.35 }}
-              />
-            </motion.div>
-            <div style={{ flex:1 }} />
-            <div style={{ display:'flex', gap:12, width:'100%' }}>
-              <PillarCard p={PRINCIPLES[4]} cardRef={cardRefs[4]} active={activeIdx===4} onHover={onHover} onLeave={onLeave} />
-              <PillarCard p={PRINCIPLES[5]} cardRef={cardRefs[5]} active={activeIdx===5} onHover={onHover} onLeave={onLeave} />
-            </div>
-          </div>
+          {/* Spine line */}
+          <motion.div
+            initial={{ scaleY:0 }} whileInView={{ scaleY:1 }} viewport={{ once:true }}
+            transition={{ duration:1.4, ease:'easeInOut' }}
+            style={{ position:'absolute', left:'50%', top:0, bottom:0, width:2, transform:'translateX(-50%)', transformOrigin:'top', zIndex:0,
+              background:`linear-gradient(180deg,${KARR_COLOR}22 0%,${KARR_COLOR}55 20%,${KARR_COLOR}55 45%,${CHOLAI_COLOR}55 55%,${CHOLAI_COLOR}55 80%,${CHOLAI_COLOR}22 100%)` }}
+          />
 
-          {/* RIGHT */}
-          <div style={{ display:'flex', flexDirection:'column', gap:10, justifyContent:'center' }}>
-            {[9,8,7,6].map(i => (
-              <SmallCard key={i} p={PRINCIPLES[i]} cardRef={cardRefs[i]} active={activeIdx===i} onHover={onHover} onLeave={onLeave} />
-            ))}
-          </div>
-        </div>
+          {ITEMS.map((el, i) => {
+            const isLeft = el.zone === 'KARR'
+            const zoneColor = isLeft ? KARR_COLOR : CHOLAI_COLOR
 
-        {/* KARR / CHOLAI legend */}
-        <motion.div
-          initial={{ opacity:0 }}
-          whileInView={{ opacity:1 }}
-          viewport={{ once:true }}
-          transition={{ duration:0.5, delay:0.4 }}
-          style={{ display:'flex', justifyContent:'center', gap:24, marginTop:32 }}
-        >
-          {[
-            { label:'KARR', sub:'Built Environment', color: WINE, els:'K · Al · Fe · Zn' },
-            { label:'CHOLAI', sub:'Living Environment', color: GREEN, els:'C · H · O · Ti · Si · Cu' },
-          ].map(item => (
-            <div key={item.label} style={{
-              display:'flex', alignItems:'center', gap:10,
-              padding:'8px 18px',
-              borderRadius:40,
-              background:'rgba(255,255,255,0.55)',
-              border:`1px solid rgba(${item.color === WINE ? '122,29,53' : '45,106,79'},0.18)`,
-              backdropFilter:'blur(12px)',
-              boxShadow:'0 2px 12px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.8)',
-            }}>
-              <div style={{ width:6, height:6, borderRadius:'50%', background:item.color, flexShrink:0 }} />
-              <span style={{ fontSize:9, fontWeight:800, letterSpacing:'0.14em', color:item.color }}>{item.label}</span>
-              <span style={{ fontSize:8, color:'rgba(26,26,26,0.45)', letterSpacing:'0.05em' }}>{item.sub}</span>
-              <span style={{ fontSize:8, color:'rgba(26,26,26,0.3)', fontFamily:'"Manrope",sans-serif', fontWeight:600, letterSpacing:'0.08em' }}>{item.els}</span>
-            </div>
-          ))}
-        </motion.div>
+            return (
+              <div key={el.id} style={{ display:'grid', gridTemplateColumns:'1fr 80px 1fr', alignItems:'center', marginBottom: i < ITEMS.length - 1 ? 36 : 0, position:'relative', zIndex:1, minHeight:128 }}>
 
-        {/* footer tag */}
-        <motion.div
-          initial={{ opacity:0 }}
-          whileInView={{ opacity:1 }}
-          viewport={{ once:true }}
-          transition={{ duration:0.5, delay:0.5 }}
-          style={{ textAlign:'center', marginTop:28, paddingTop:20, borderTop:'1px solid rgba(26,26,26,0.08)' }}
-        >
-          <span style={{ fontSize:9, fontWeight:700, letterSpacing:'0.6em', textTransform:'uppercase', color:'rgba(26,26,26,0.22)' }}>
-            Every Letter · Every Value · Every Home
-          </span>
-        </motion.div>
-      </div>
-    </section>
-  )
-}
+                {/* Left slot */}
+                <div style={{ display:'flex', alignItems:'center', justifyContent:'flex-end', gap:20, paddingRight:40 }}>
+                  {isLeft ? (
+                    <>
+                      <motion.div
+                        initial={{ opacity:0, x:-24 }} whileInView={{ opacity:1, x:0 }}
+                        viewport={{ once:true, margin:'-40px' }} transition={{ delay: i*0.06, duration:0.5 }}
+                      >
+                        <InfoCard el={el} align="right" />
+                      </motion.div>
+                      <motion.div
+                        initial={{ opacity:0, scale:0.88 }} whileInView={{ opacity:1, scale:1 }}
+                        viewport={{ once:true, margin:'-40px' }} transition={{ delay: i*0.06+0.08, duration:0.5 }}
+                      >
+                        <Tile el={el} onOpen={onOpen} />
+                      </motion.div>
+                    </>
+                  ) : null}
+                </div>
 
-/* ══════════════════════════════════════
-   TABLET LAYOUT  (md — 768px to 1023px)
-══════════════════════════════════════ */
-function TabletLayout() {
-  return (
-    <section
-      className="hidden md:block lg:hidden w-full overflow-hidden"
-      style={{ background:'linear-gradient(160deg, #fdfbf7 0%, #f2ece0 100%)', padding:'56px 0 64px', position:'relative' }}
-    >
-      <style>{GLASS_CSS}</style>
-      <div style={{ position:'absolute', inset:0, pointerEvents:'none', backgroundImage:'radial-gradient(circle, rgba(26,26,26,0.04) 1px, transparent 1px)', backgroundSize:'24px 24px' }} />
-      <div style={{ padding:'0 32px', maxWidth:768, margin:'0 auto', position:'relative', zIndex:1 }}>
-        {/* label */}
-        <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:10, marginBottom:20 }}>
-          <div style={{ height:1, width:28, background:`linear-gradient(90deg, transparent, ${TERRA})` }} />
-          <span style={{ fontSize:8, fontWeight:800, letterSpacing:'0.65em', textTransform:'uppercase', color:TERRA }}>Our Identity</span>
-          <div style={{ height:1, width:28, background:`linear-gradient(90deg, ${TERRA}, transparent)` }} />
-        </div>
+                {/* Center node */}
+                <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:0 }}>
+                  <motion.div
+                    initial={{ scale:0, opacity:0 }} whileInView={{ scale:1, opacity:1 }}
+                    viewport={{ once:true }} transition={{ delay: i*0.06+0.1, type:'spring', stiffness:280, damping:20 }}
+                    style={{ width:18, height:18, borderRadius:'50%', background:zoneColor, boxShadow:`0 0 0 5px ${zoneColor}18, 0 0 0 10px ${zoneColor}07`, zIndex:2 }}
+                  />
+                  {/* connector tick */}
+                  <div style={{ width:32, height:1.5, background:`linear-gradient(${isLeft ? '90deg' : '270deg'},${zoneColor}60,transparent)`, position:'absolute', left: isLeft ? 'calc(50% + 9px)' : 'auto', right: isLeft ? 'auto' : 'calc(50% + 9px)' }} />
+                </div>
 
-        {/* heading */}
-        <div style={{ textAlign:'center', marginBottom:28 }}>
-          <span style={{ fontSize:'10vw', fontWeight:400, fontStyle:'italic', color:WINE, fontFamily:'"Lora", Georgia, serif', letterSpacing:'0.12em' }}>KARR</span>
-          <span style={{ fontSize:'10vw', fontWeight:400, fontStyle:'italic', color:TERRA, fontFamily:'"Lora", Georgia, serif', letterSpacing:'0.12em' }}>CHOLAI</span>
-        </div>
+                {/* Right slot */}
+                <div style={{ display:'flex', alignItems:'center', justifyContent:'flex-start', gap:20, paddingLeft:40 }}>
+                  {!isLeft ? (
+                    <>
+                      <motion.div
+                        initial={{ opacity:0, scale:0.88 }} whileInView={{ opacity:1, scale:1 }}
+                        viewport={{ once:true, margin:'-40px' }} transition={{ delay: i*0.06+0.08, duration:0.5 }}
+                      >
+                        <Tile el={el} onOpen={onOpen} />
+                      </motion.div>
+                      <motion.div
+                        initial={{ opacity:0, x:24 }} whileInView={{ opacity:1, x:0 }}
+                        viewport={{ once:true, margin:'-40px' }} transition={{ delay: i*0.06, duration:0.5 }}
+                      >
+                        <InfoCard el={el} align="left" />
+                      </motion.div>
+                    </>
+                  ) : null}
+                </div>
 
-        {/* logo */}
-        <div style={{ display:'flex', justifyContent:'center', marginBottom:28 }}>
-          <img src={logoImg} alt="KARRCHOLAI" style={{ width:100, height:100, objectFit:'contain', opacity:0.5, mixBlendMode:'multiply' }} />
-        </div>
-
-        {/* 2-col grid */}
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10 }}>
-          {PRINCIPLES.map((p) => (
-            <motion.div
-              key={p.i}
-              initial={{ opacity:0, y:12 }}
-              whileInView={{ opacity:1, y:0 }}
-              viewport={{ once:true }}
-              transition={{ duration:0.38, delay:p.i * 0.04 }}
-              className="kc-glass-card"
-              style={{
-                '--card-rgb': p.colorRgb,
-                padding:'11px 12px',
-                borderLeft:`2px solid ${p.color}`,
-              }}
-            >
-              <div style={{ fontSize:7, fontWeight:800, letterSpacing:'0.04em', color:`rgba(${p.colorRgb},0.5)`, marginBottom:2, fontFamily:'"Manrope",sans-serif' }}>{p.atomicNo} · {p.elName}</div>
-              <div style={{ display:'flex', alignItems:'baseline', gap:6, marginBottom:3 }}>
-                <span style={{ fontSize:22, fontWeight:800, color:p.color, fontFamily:'"Manrope",sans-serif', lineHeight:1 }}>{p.element}</span>
-                <span style={{ fontSize:14, fontWeight:400, fontStyle:'italic', color:p.color, fontFamily:'"Lora",serif', lineHeight:1 }}>{p.ch}</span>
               </div>
-              <div style={{ fontSize:8, fontWeight:700, letterSpacing:'0.1em', textTransform:'uppercase', color:INK, marginBottom:3, fontFamily:'"Manrope",sans-serif' }}>{p.word}</div>
-              <div style={{ fontSize:10, color:'rgba(15,15,15,0.42)', lineHeight:1.5 }}>{p.desc}</div>
-            </motion.div>
-          ))}
+            )
+          })}
+
+          {/* End node */}
+          <motion.div initial={{ scale:0 }} whileInView={{ scale:1 }} viewport={{ once:true }} transition={{ delay:0.7, type:'spring' }}
+            style={{ position:'absolute', left:'50%', bottom:-10, transform:'translateX(-50%)', width:10, height:10, borderRadius:'50%', background:`linear-gradient(135deg,${KARR_COLOR},${CHOLAI_COLOR})`, boxShadow:`0 0 0 4px rgba(184,92,56,0.10)` }}
+          />
         </div>
 
-        <p style={{ textAlign:'center', marginTop:28, fontSize:9, fontWeight:700, letterSpacing:'0.5em', textTransform:'uppercase', color:'rgba(26,26,26,0.22)' }}>
-          Every Letter · Every Value · Every Home
-        </p>
-      </div>
-    </section>
-  )
-}
-
-/* ══════════════════════════════════════
-   MOBILE LAYOUT  (below md — up to 767px)
-══════════════════════════════════════ */
-function MobileLayout() {
-  return (
-    <section
-      className="md:hidden w-full overflow-hidden"
-      style={{ background:'linear-gradient(160deg, #fdfbf7 0%, #f2ece0 100%)', padding:'44px 0 52px', position:'relative' }}
-    >
-      <style>{GLASS_CSS}</style>
-      <div style={{ position:'absolute', inset:0, pointerEvents:'none', backgroundImage:'radial-gradient(circle, rgba(26,26,26,0.04) 1px, transparent 1px)', backgroundSize:'20px 20px' }} />
-      <div style={{ padding:'0 16px', position:'relative', zIndex:1 }}>
-        {/* label */}
-        <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:8, marginBottom:16 }}>
-          <div style={{ height:1, width:20, background:`linear-gradient(90deg, transparent, ${TERRA})` }} />
-          <span style={{ fontSize:7, fontWeight:800, letterSpacing:'0.6em', textTransform:'uppercase', color:TERRA }}>Our Identity</span>
-          <div style={{ height:1, width:20, background:`linear-gradient(90deg, ${TERRA}, transparent)` }} />
-        </div>
-
-        {/* heading */}
-        <div style={{ textAlign:'center', marginBottom:20 }}>
-          <div>
-            <span style={{ fontSize:'12vw', fontWeight:400, fontStyle:'italic', color:WINE, fontFamily:'"Lora", Georgia, serif', letterSpacing:'0.08em' }}>KARR</span>
-            <span style={{ fontSize:'12vw', fontWeight:400, fontStyle:'italic', color:TERRA, fontFamily:'"Lora", Georgia, serif', letterSpacing:'0.08em' }}>CHOLAI</span>
+        {/* Footer */}
+        <motion.div initial={{ opacity:0 }} whileInView={{ opacity:1 }} viewport={{ once:true }} transition={{ delay:0.4 }}
+          style={{ textAlign:'center', marginTop:56, paddingTop:24, borderTop:'1px solid rgba(26,26,26,0.06)' }}
+        >
+          <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:14 }}>
+            <div style={{ height:1, width:56, background:'linear-gradient(90deg,transparent,rgba(26,26,26,0.10))' }} />
+            <span style={{ fontSize:7.5, fontWeight:700, letterSpacing:'.6em', textTransform:'uppercase', color:'rgba(26,26,26,0.22)', fontFamily:'"Manrope",sans-serif' }}>
+              Every Element · Every Value · Every Home
+            </span>
+            <div style={{ height:1, width:56, background:'linear-gradient(90deg,rgba(26,26,26,0.10),transparent)' }} />
           </div>
-        </div>
+        </motion.div>
 
-        {/* logo */}
-        <div style={{ display:'flex', justifyContent:'center', marginBottom:20 }}>
-          <img src={logoImg} alt="KARRCHOLAI" style={{ width:70, height:70, objectFit:'contain', opacity:0.45, mixBlendMode:'multiply' }} />
-        </div>
-
-        {/* cards grid */}
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:8 }}>
-          {PRINCIPLES.map((p) => (
-            <motion.div
-              key={p.i}
-              initial={{ opacity:0, y:12 }}
-              whileInView={{ opacity:1, y:0 }}
-              viewport={{ once:true }}
-              transition={{ duration:0.38, delay:p.i * 0.04 }}
-              className="kc-glass-card"
-              style={{
-                '--card-rgb': p.colorRgb,
-                padding:'9px 10px',
-                borderLeft:`2px solid ${p.color}`,
-              }}
-            >
-              <div style={{ fontSize:7, fontWeight:700, color:`rgba(${p.colorRgb},0.5)`, marginBottom:2, fontFamily:'"Manrope",sans-serif' }}>{p.atomicNo} · {p.elName}</div>
-              <div style={{ display:'flex', alignItems:'baseline', gap:5, marginBottom:2 }}>
-                <span style={{ fontSize:18, fontWeight:800, color:p.color, fontFamily:'"Manrope",sans-serif', lineHeight:1 }}>{p.element}</span>
-                <span style={{ fontSize:12, fontWeight:400, fontStyle:'italic', color:p.color, fontFamily:'"Lora",serif', lineHeight:1 }}>{p.ch}</span>
-              </div>
-              <div style={{ fontSize:7.5, fontWeight:700, letterSpacing:'0.08em', textTransform:'uppercase', color:INK, marginBottom:3, fontFamily:'"Manrope",sans-serif' }}>{p.word}</div>
-              <div style={{ fontSize:9, color:'rgba(15,15,15,0.4)', lineHeight:1.5 }}>{p.desc}</div>
-            </motion.div>
-          ))}
-        </div>
-
-        <p style={{ textAlign:'center', marginTop:24, fontSize:8, fontWeight:700, letterSpacing:'0.45em', textTransform:'uppercase', color:'rgba(26,26,26,0.22)' }}>
-          Every Letter · Every Value · Every Home
-        </p>
       </div>
     </section>
   )
 }
 
+/* ── Tablet ─────────────────────────────────────────────────────────── */
+function TabletLayout({ onOpen }) {
+  return (
+    <section className="hidden md:block lg:hidden w-full" style={{ background:'linear-gradient(165deg,#fdfbf7 0%,#f7f2ea 50%,#f3ede4 100%)', padding:'56px 0 64px', position:'relative', overflow:'hidden' }}>
+      <div style={{ padding:'0 28px', maxWidth:720, margin:'0 auto' }}>
+        <div style={{ textAlign:'center', marginBottom:44 }}>
+          <p style={{ fontSize:7, fontWeight:900, letterSpacing:'.68em', textTransform:'uppercase', color:'rgba(184,92,56,0.42)', fontFamily:'"Manrope",sans-serif', marginBottom:10 }}>Our Identity</p>
+          <h2 style={{ fontSize:26, fontWeight:900, fontFamily:'"Manrope",sans-serif', color:'#1a1a1a', lineHeight:1.2, margin:0 }}>The Elements Behind Every Home</h2>
+        </div>
+        <div style={{ position:'relative' }}>
+          <div style={{ position:'absolute', top:0, bottom:0, left:'50%', width:2, transform:'translateX(-50%)', background:'linear-gradient(180deg,rgba(26,26,26,0.06),rgba(26,26,26,0.14),rgba(26,26,26,0.06))', pointerEvents:'none' }} />
+          {ITEMS.map((el, i) => {
+            const isLeft = el.zone === 'KARR'
+            const zoneColor = isLeft ? KARR_COLOR : CHOLAI_COLOR
+            return (
+              <motion.div key={el.id} initial={{ opacity:0, y:14 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }} transition={{ delay:i*0.05 }}
+                style={{ display:'grid', gridTemplateColumns:'1fr 48px 1fr', alignItems:'center', marginBottom:28, position:'relative', zIndex:1, minHeight:100 }}
+              >
+                <div style={{ display:'flex', alignItems:'center', justifyContent:'flex-end', gap:12, paddingRight:24 }}>
+                  {isLeft && (
+                    <>
+                      <div style={{ textAlign:'right' }}>
+                        <div style={{ fontSize:6.5, fontWeight:900, letterSpacing:'.3em', textTransform:'uppercase', color:zoneColor+'70', fontFamily:'"Manrope",sans-serif', marginBottom:2 }}>{el.tag}</div>
+                        <div style={{ display:'flex', alignItems:'baseline', gap:1, justifyContent:'flex-end' }}>
+                          <span style={{ fontSize:32, fontWeight:900, color:zoneColor, fontFamily:'"Barlow Condensed",sans-serif', lineHeight:0.9 }}>{el.ch}</span>
+                          <span style={{ fontSize:15, fontWeight:900, textTransform:'uppercase', color:'#1a1a1a', fontFamily:'"Manrope",sans-serif' }}>{el.principle.slice(1)}</span>
+                        </div>
+                        <p style={{ fontSize:10.5, lineHeight:1.6, color:'rgba(26,26,26,0.46)', fontFamily:'"Manrope",sans-serif', margin:'4px 0 0' }}>{el.desc}</p>
+                      </div>
+                      <div onClick={() => onOpen(el)} style={{ width:88, height:88, borderRadius:12, overflow:'hidden', cursor:'pointer', position:'relative', flexShrink:0, boxShadow:'0 4px 16px rgba(0,0,0,0.13)' }}>
+                        <img src={el.img} alt={el.element} style={{ width:'100%', height:'100%', objectFit:'cover' }} />
+                        <div style={{ position:'absolute', inset:0, background:'linear-gradient(180deg,rgba(0,0,0,0.04),rgba(0,0,0,0.55))' }} />
+                        <div style={{ position:'absolute', bottom:6, left:8, fontSize:26, fontWeight:700, fontFamily:'"Barlow Condensed",sans-serif', color:'#fff', textShadow:'0 1px 6px rgba(0,0,0,0.5)' }}>{el.symbol}</div>
+                      </div>
+                    </>
+                  )}
+                </div>
+                <div style={{ display:'flex', justifyContent:'center' }}>
+                  <div style={{ width:14, height:14, borderRadius:'50%', background:zoneColor, boxShadow:`0 0 0 4px ${zoneColor}18`, zIndex:2 }} />
+                </div>
+                <div style={{ display:'flex', alignItems:'center', justifyContent:'flex-start', gap:12, paddingLeft:24 }}>
+                  {!isLeft && (
+                    <>
+                      <div onClick={() => onOpen(el)} style={{ width:88, height:88, borderRadius:12, overflow:'hidden', cursor:'pointer', position:'relative', flexShrink:0, boxShadow:'0 4px 16px rgba(0,0,0,0.13)' }}>
+                        <img src={el.img} alt={el.element} style={{ width:'100%', height:'100%', objectFit:'cover' }} />
+                        <div style={{ position:'absolute', inset:0, background:'linear-gradient(180deg,rgba(0,0,0,0.04),rgba(0,0,0,0.55))' }} />
+                        <div style={{ position:'absolute', bottom:6, left:8, fontSize:26, fontWeight:700, fontFamily:'"Barlow Condensed",sans-serif', color:'#fff', textShadow:'0 1px 6px rgba(0,0,0,0.5)' }}>{el.symbol}</div>
+                      </div>
+                      <div>
+                        <div style={{ fontSize:6.5, fontWeight:900, letterSpacing:'.3em', textTransform:'uppercase', color:zoneColor+'70', fontFamily:'"Manrope",sans-serif', marginBottom:2 }}>{el.tag}</div>
+                        <div style={{ display:'flex', alignItems:'baseline', gap:1 }}>
+                          <span style={{ fontSize:32, fontWeight:900, color:zoneColor, fontFamily:'"Barlow Condensed",sans-serif', lineHeight:0.9 }}>{el.ch}</span>
+                          <span style={{ fontSize:15, fontWeight:900, textTransform:'uppercase', color:'#1a1a1a', fontFamily:'"Manrope",sans-serif' }}>{el.principle.slice(1)}</span>
+                        </div>
+                        <p style={{ fontSize:10.5, lineHeight:1.6, color:'rgba(26,26,26,0.46)', fontFamily:'"Manrope",sans-serif', margin:'4px 0 0' }}>{el.desc}</p>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </motion.div>
+            )
+          })}
+        </div>
+        <p style={{ textAlign:'center', marginTop:28, fontSize:7, fontWeight:700, letterSpacing:'.5em', textTransform:'uppercase', color:'rgba(26,26,26,0.20)', fontFamily:'"Manrope",sans-serif' }}>Every Element · Every Value · Every Home</p>
+      </div>
+    </section>
+  )
+}
+
+/* ── Mobile ─────────────────────────────────────────────────────────── */
+function MobileLayout({ onOpen }) {
+  return (
+    <section className="md:hidden w-full" style={{ background:'linear-gradient(165deg,#fdfbf7 0%,#f7f2ea 50%,#f3ede4 100%)', padding:'44px 0 52px', position:'relative', overflow:'hidden' }}>
+      <div style={{ padding:'0 16px' }}>
+        <div style={{ textAlign:'center', marginBottom:32 }}>
+          <p style={{ fontSize:6.5, fontWeight:900, letterSpacing:'.65em', textTransform:'uppercase', color:'rgba(184,92,56,0.42)', fontFamily:'"Manrope",sans-serif', marginBottom:8 }}>Our Identity</p>
+          <h2 style={{ fontSize:21, fontWeight:900, fontFamily:'"Manrope",sans-serif', color:'#1a1a1a', lineHeight:1.25, margin:0 }}>The Elements Behind Every Home</h2>
+        </div>
+        <div style={{ position:'relative', paddingLeft:32 }}>
+          <div style={{ position:'absolute', top:0, bottom:0, left:14, width:2, background:'linear-gradient(180deg,rgba(26,26,26,0.05),rgba(26,26,26,0.12),rgba(26,26,26,0.05))', borderRadius:2 }} />
+          {ITEMS.map((el, i) => {
+            const zoneColor = el.zone === 'KARR' ? KARR_COLOR : CHOLAI_COLOR
+            return (
+              <motion.div key={el.id} initial={{ opacity:0, x:-14 }} whileInView={{ opacity:1, x:0 }} viewport={{ once:true }} transition={{ delay:i*0.05 }}
+                style={{ display:'flex', gap:14, alignItems:'flex-start', marginBottom:24, position:'relative' }}
+              >
+                <div style={{ position:'absolute', left:-25, top:34, width:12, height:12, borderRadius:'50%', background:zoneColor, boxShadow:`0 0 0 3px ${zoneColor}20`, zIndex:2, flexShrink:0 }} />
+                <div onClick={() => onOpen(el)} style={{ width:84, height:84, borderRadius:10, overflow:'hidden', flexShrink:0, cursor:'pointer', position:'relative', boxShadow:'0 4px 14px rgba(0,0,0,0.13)' }}>
+                  <img src={el.img} alt={el.element} style={{ width:'100%', height:'100%', objectFit:'cover' }} />
+                  <div style={{ position:'absolute', inset:0, background:'linear-gradient(180deg,rgba(0,0,0,0.04),rgba(0,0,0,0.56))' }} />
+                  <div style={{ position:'absolute', bottom:5, left:7, fontSize:24, fontWeight:700, fontFamily:'"Barlow Condensed",sans-serif', color:'#fff', textShadow:'0 1px 6px rgba(0,0,0,0.5)' }}>{el.symbol}</div>
+                </div>
+                <div style={{ flex:1, paddingTop:2 }}>
+                  <div style={{ fontSize:6, fontWeight:900, letterSpacing:'.28em', textTransform:'uppercase', color:zoneColor+'65', fontFamily:'"Manrope",sans-serif', marginBottom:2 }}>{el.tag}</div>
+                  <div style={{ display:'flex', alignItems:'baseline', gap:1, marginBottom:4 }}>
+                    <span style={{ fontSize:28, fontWeight:900, color:zoneColor, fontFamily:'"Barlow Condensed",sans-serif', lineHeight:0.9 }}>{el.ch}</span>
+                    <span style={{ fontSize:14, fontWeight:900, textTransform:'uppercase', color:'#1a1a1a', fontFamily:'"Manrope",sans-serif' }}>{el.principle.slice(1)}</span>
+                  </div>
+                  <p style={{ fontSize:11, lineHeight:1.65, color:'rgba(26,26,26,0.48)', fontFamily:'"Manrope",sans-serif', margin:0 }}>{el.desc}</p>
+                </div>
+              </motion.div>
+            )
+          })}
+        </div>
+        <p style={{ textAlign:'center', marginTop:14, fontSize:6.5, fontWeight:700, letterSpacing:'.42em', textTransform:'uppercase', color:'rgba(26,26,26,0.18)', fontFamily:'"Manrope",sans-serif' }}>Every Element · Every Value · Every Home</p>
+      </div>
+    </section>
+  )
+}
+
+/* ── Export ─────────────────────────────────────────────────────────── */
 export default function IdentityPencil() {
+  const [active, setActive] = useState(null)
+  const open  = useCallback(el => setActive(el), [])
+  const close = useCallback(() => setActive(null), [])
   return (
     <>
-      <DesktopLayout />
-      <TabletLayout />
-      <MobileLayout />
+      <DesktopLayout onOpen={open} />
+      <TabletLayout  onOpen={open} />
+      <MobileLayout  onOpen={open} />
+      <Popup el={active} onClose={close} />
     </>
   )
 }
