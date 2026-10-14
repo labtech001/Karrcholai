@@ -21,15 +21,15 @@ const KARR_COLOR   = '#7a1d35'
 const CHOLAI_COLOR = '#2D6A4F'
 const GOLD         = '#B8924A'
 
-/* All 10 in order — KARR left (even idx), CHOLAI right (odd idx) */
+/* All 10 in order — K left, A right, R left, R right, C left, H right, O left, L right, A left, I right */
 const ITEMS = [
   { id:0, ch:'K', zone:'KARR',   principle:'Keystone',      symbol:'K',  element:'Kalium',    num:19, mass:'39.098', img:imgKalium,    accent:'#C9714A', tag:'Foundation · Structure',  desc:'Strong foundations and the right beginning.' },
-  { id:1, ch:'C', zone:'CHOLAI', principle:'Craftsmanship', symbol:'Ar', element:'Argon',     num:18, mass:'39.948', img:imgArgon,     accent:'#9b88c8', tag:'Precision · Quality',     desc:'Careful workmanship in every detail.' },
-  { id:2, ch:'A', zone:'KARR',   principle:'Architecture',  symbol:'Al', element:'Aluminium', num:13, mass:'26.982', img:imgAluminium, accent:'#6a9ebe', tag:'Design · Form',            desc:'Thoughtful design shaped around how people live.' },
-  { id:3, ch:'H', zone:'CHOLAI', principle:'Harmony',       symbol:'H',  element:'Hydrogen',  num:1,  mass:'1.008',  img:imgHydrogen,  accent:'#5aa0c8', tag:'Balance · Vastu',         desc:'Balance between the home, people and surroundings.' },
-  { id:4, ch:'R', zone:'KARR',   principle:'Resilience',    symbol:'Fe', element:'Iron',      num:26, mass:'55.845', img:imgIron,      accent:'#c8a882', tag:'Strength · Durability',   desc:'Construction designed to endure changing conditions and time.' },
-  { id:5, ch:'O', zone:'CHOLAI', principle:'Optimization',  symbol:'O',  element:'Oxygen',    num:8,  mass:'15.999', img:imgO2,        accent:'#5aaa80', tag:'Efficiency · Value',      desc:'Making thoughtful use of space, materials, energy and resources.' },
-  { id:6, ch:'R', zone:'KARR',   principle:'Reliability',   symbol:'Cr', element:'Chromium',  num:24, mass:'51.996', img:imgChromium,  accent:'#d4c090', tag:'Trust · Consistency',     desc:'Consistent quality, responsibility and dependable execution.' },
+  { id:1, ch:'A', zone:'CHOLAI', principle:'Architecture',  symbol:'Al', element:'Aluminium', num:13, mass:'26.982', img:imgAluminium, accent:'#6a9ebe', tag:'Design · Form',            desc:'Thoughtful design shaped around how people live.' },
+  { id:2, ch:'R', zone:'KARR',   principle:'Resilience',    symbol:'Fe', element:'Iron',      num:26, mass:'55.845', img:imgIron,      accent:'#c8a882', tag:'Strength · Durability',   desc:'Construction designed to endure changing conditions and time.' },
+  { id:3, ch:'R', zone:'CHOLAI', principle:'Reliability',   symbol:'Cr', element:'Chromium',  num:24, mass:'51.996', img:imgChromium,  accent:'#d4c090', tag:'Trust · Consistency',     desc:'Consistent quality, responsibility and dependable execution.' },
+  { id:4, ch:'C', zone:'KARR',   principle:'Craftsmanship', symbol:'Ar', element:'Argon',     num:18, mass:'39.948', img:imgArgon,     accent:'#9b88c8', tag:'Precision · Quality',     desc:'Careful workmanship in every detail.' },
+  { id:5, ch:'H', zone:'CHOLAI', principle:'Harmony',       symbol:'H',  element:'Hydrogen',  num:1,  mass:'1.008',  img:imgHydrogen,  accent:'#5aa0c8', tag:'Balance · Vastu',         desc:'Balance between the home, people and surroundings.' },
+  { id:6, ch:'O', zone:'KARR',   principle:'Optimization',  symbol:'O',  element:'Oxygen',    num:8,  mass:'15.999', img:imgO2,        accent:'#5aaa80', tag:'Efficiency · Value',      desc:'Making thoughtful use of space, materials, energy and resources.' },
   { id:7, ch:'L', zone:'CHOLAI', principle:'Longevity',     symbol:'Li', element:'Lithium',   num:3,  mass:'6.941',  img:imgLithium,   accent:'#d4aa55', tag:'Generations · Future',    desc:'Creating homes intended to serve generations.' },
   { id:8, ch:'A', zone:'KARR',   principle:'Aesthetics',    symbol:'Rh', element:'Rhodium',   num:45, mass:'102.91', img:imgRhodium,   accent:'#c89880', tag:'Beauty · Culture',        desc:'Beauty that works together with function.' },
   { id:9, ch:'I', zone:'CHOLAI', principle:'Integrity',     symbol:'Ru', element:'Ruthenium', num:44, mass:'101.07', img:imgRuthenium, accent:'#7aa0c0', tag:'Honesty · Trust',         desc:'Honest decisions, transparent practices and responsible construction.' },
@@ -242,36 +242,38 @@ function Tile({ el, onOpen }) {
       onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
       onClick={() => onOpen(el)}
       style={{
-        width:120, height:120, borderRadius:14, overflow:'hidden',
+        width:190, height:190, borderRadius:18, overflow:'hidden',
         cursor:'pointer', position:'relative', flexShrink:0,
-        transform: hov ? 'scale(1.06) translateY(-3px)' : 'scale(1)',
+        transform: hov ? 'scale(1.05) translateY(-4px)' : 'scale(1)',
         boxShadow: hov
-          ? `0 20px 48px rgba(0,0,0,0.24), 0 0 0 2px ${el.accent}70`
-          : '0 6px 20px rgba(0,0,0,0.13), 0 0 0 1px rgba(26,26,26,0.07)',
+          ? `0 24px 56px rgba(0,0,0,0.26), 0 0 0 2px ${el.accent}70`
+          : '0 8px 28px rgba(0,0,0,0.16), 0 0 0 1px rgba(26,26,26,0.07)',
         transition:'transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease',
       }}
     >
       <img src={el.img} alt={el.element} style={{ position:'absolute', inset:0, width:'100%', height:'100%', objectFit:'cover', transform: hov ? 'scale(1.10)' : 'scale(1)', transition:'transform 0.5s ease' }} />
-      <div style={{ position:'absolute', inset:0, background:'linear-gradient(180deg,rgba(0,0,0,0.08) 0%,rgba(0,0,0,0.65) 100%)' }} />
+      <div style={{ position:'absolute', inset:0, background:'linear-gradient(180deg,rgba(0,0,0,0.08) 0%,rgba(0,0,0,0.68) 100%)' }} />
       {hov && <div style={{ position:'absolute', inset:0, background:`linear-gradient(145deg,${el.accent}28 0%,transparent 50%)` }} />}
-      <div style={{ position:'absolute', top:0, left:'12%', right:'12%', height:1, background:'linear-gradient(90deg,transparent,rgba(255,255,255,0.5),transparent)', opacity: hov ? 0.9 : 0.4, transition:'opacity 0.3s' }} />
+      <div style={{ position:'absolute', top:0, left:'10%', right:'10%', height:1, background:'linear-gradient(90deg,transparent,rgba(255,255,255,0.5),transparent)', opacity: hov ? 0.9 : 0.4, transition:'opacity 0.3s' }} />
+      {/* Zone bar top */}
+      <div style={{ position:'absolute', top:0, left:0, right:0, height:3, background: el.zone==='KARR' ? KARR_COLOR : CHOLAI_COLOR, opacity: hov ? 1 : 0.7, transition:'opacity 0.3s' }} />
       {/* content */}
-      <div style={{ position:'relative', zIndex:2, width:'100%', height:'100%', display:'flex', flexDirection:'column', padding:'8px 10px 9px', boxSizing:'border-box' }}>
+      <div style={{ position:'relative', zIndex:2, width:'100%', height:'100%', display:'flex', flexDirection:'column', padding:'12px 14px 12px', boxSizing:'border-box' }}>
         <div style={{ display:'flex', justifyContent:'space-between' }}>
-          <span style={{ fontSize:8, fontFamily:'monospace', color:'rgba(255,255,255,0.5)', lineHeight:1 }}>{el.num}</span>
-          <span style={{ fontSize:7.5, fontWeight:900, letterSpacing:'.12em', fontFamily:'"Manrope",sans-serif', color: hov ? el.accent : 'rgba(255,255,255,0.4)', transition:'color 0.25s', lineHeight:1 }}>{el.ch}</span>
+          <span style={{ fontSize:10, fontFamily:'monospace', color:'rgba(255,255,255,0.50)', lineHeight:1 }}>{el.num}</span>
+          <span style={{ fontSize:9, fontWeight:900, letterSpacing:'.12em', fontFamily:'"Manrope",sans-serif', color: hov ? el.accent : 'rgba(255,255,255,0.40)', transition:'color 0.25s', lineHeight:1 }}>{el.ch}</span>
         </div>
-        <div style={{ flex:1, display:'flex', alignItems:'center', fontSize:38, fontWeight:700, fontFamily:'"Barlow Condensed",sans-serif', color: hov ? el.accent : '#fff', textShadow: hov ? `0 0 20px ${el.accent}70,0 2px 8px rgba(0,0,0,0.5)` : '0 2px 8px rgba(0,0,0,0.6)', transition:'color 0.25s,text-shadow 0.25s' }}>{el.symbol}</div>
+        <div style={{ flex:1, display:'flex', alignItems:'center', fontSize:58, fontWeight:700, fontFamily:'"Barlow Condensed",sans-serif', color: hov ? el.accent : '#fff', textShadow: hov ? `0 0 24px ${el.accent}70,0 2px 10px rgba(0,0,0,0.5)` : '0 2px 10px rgba(0,0,0,0.6)', transition:'color 0.25s,text-shadow 0.25s' }}>{el.symbol}</div>
         <div>
-          <div style={{ height:1, background: hov ? `linear-gradient(90deg,${el.accent}70,transparent)` : 'rgba(255,255,255,0.18)', marginBottom:4, transition:'background 0.25s' }} />
+          <div style={{ height:1, background: hov ? `linear-gradient(90deg,${el.accent}70,transparent)` : 'rgba(255,255,255,0.18)', marginBottom:5, transition:'background 0.25s' }} />
           <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-end' }}>
-            <span style={{ fontSize:7.5, fontWeight:600, fontFamily:'"Manrope",sans-serif', color:'rgba(255,255,255,0.6)' }}>{el.element}</span>
-            <span style={{ fontSize:6.5, fontFamily:'monospace', color:'rgba(255,255,255,0.32)' }}>{el.mass}</span>
+            <span style={{ fontSize:9, fontWeight:600, fontFamily:'"Manrope",sans-serif', color:'rgba(255,255,255,0.60)' }}>{el.element}</span>
+            <span style={{ fontSize:8, fontFamily:'monospace', color:'rgba(255,255,255,0.32)' }}>{el.mass}</span>
           </div>
         </div>
       </div>
-      <div style={{ position:'absolute', bottom:0, left:0, right:0, padding:'18px 10px 9px', background:`linear-gradient(0deg,${el.accent}ee 0%,transparent)`, transform: hov ? 'translateY(0)' : 'translateY(100%)', transition:'transform 0.3s ease', zIndex:3, textAlign:'center' }}>
-        <span style={{ fontSize:8, fontWeight:900, letterSpacing:'.14em', textTransform:'uppercase', color:'#fff', fontFamily:'"Manrope",sans-serif' }}>{el.principle}</span>
+      <div style={{ position:'absolute', bottom:0, left:0, right:0, padding:'24px 14px 12px', background:`linear-gradient(0deg,${el.accent}ee 0%,transparent)`, transform: hov ? 'translateY(0)' : 'translateY(100%)', transition:'transform 0.3s ease', zIndex:3, textAlign:'center' }}>
+        <span style={{ fontSize:9.5, fontWeight:900, letterSpacing:'.14em', textTransform:'uppercase', color:'#fff', fontFamily:'"Manrope",sans-serif' }}>{el.principle}</span>
       </div>
     </div>
   )
@@ -319,7 +321,7 @@ function DesktopLayout({ onOpen }) {
       {/* right glow */}
       <div style={{ position:'absolute', top:0, right:0, width:'30%', height:'100%', background:'radial-gradient(ellipse 80% 60% at 100% 60%,rgba(45,106,79,0.04) 0%,transparent 70%)', pointerEvents:'none' }} />
 
-      <div style={{ maxWidth:960, margin:'0 auto', padding:'0 40px', position:'relative', zIndex:2 }}>
+      <div style={{ maxWidth:1100, margin:'0 auto', padding:'0 40px', position:'relative', zIndex:2 }}>
 
         {/* ── Header ── */}
         <motion.div initial={{ opacity:0, y:-16 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }}
@@ -328,19 +330,10 @@ function DesktopLayout({ onOpen }) {
           <p style={{ fontSize:7.5, fontWeight:900, letterSpacing:'.72em', textTransform:'uppercase', color:'rgba(184,92,56,0.45)', fontFamily:'"Manrope",sans-serif', marginBottom:14 }}>
             Our Identity
           </p>
-          <h2 style={{ margin:0, lineHeight:1.1 }}>
-            <span style={{ display:'block', fontSize:'clamp(28px,3vw,40px)', fontWeight:900, fontFamily:'"Manrope",sans-serif', color:'#1a1a1a', letterSpacing:'-.02em', marginBottom:4 }}>
-              The Elements Behind Every Home
-            </span>
-            <span style={{ display:'block', fontSize:'clamp(14px,1.5vw,18px)', fontWeight:400, fontFamily:'"Manrope",sans-serif', color:'rgba(26,26,26,0.35)', letterSpacing:'.04em' }}>
-              <span style={{ fontStyle:'italic', fontFamily:'"Lora",Georgia,serif', color:KARR_COLOR }}>KARR</span>
-              <span style={{ margin:'0 12px', color:'rgba(26,26,26,0.15)' }}>—</span>
-              The Strength Behind Every Home
-              <span style={{ margin:'0 12px', color:'rgba(26,26,26,0.15)' }}>·</span>
-              <span style={{ fontStyle:'italic', fontFamily:'"Lora",Georgia,serif', color:CHOLAI_COLOR }}>CHOLAI</span>
-              <span style={{ margin:'0 12px', color:'rgba(26,26,26,0.15)' }}>—</span>
-              The Character of Better Living
-            </span>
+          <h2 style={{ margin:0, lineHeight:1 }}>
+            <span style={{ fontSize:'clamp(48px,6vw,80px)', fontWeight:400, fontStyle:'italic', fontFamily:'"Lora",Georgia,serif', color:KARR_COLOR, letterSpacing:'0.12em' }}>KARR</span>
+            <span style={{ fontSize:'clamp(28px,3.5vw,48px)', color:'rgba(26,26,26,0.18)', margin:'0 8px', fontFamily:'"Manrope",sans-serif' }}>·</span>
+            <span style={{ fontSize:'clamp(48px,6vw,80px)', fontWeight:400, fontStyle:'italic', fontFamily:'"Lora",Georgia,serif', color:CHOLAI_COLOR, letterSpacing:'0.12em' }}>CHOLAI</span>
           </h2>
         </motion.div>
 
@@ -360,7 +353,7 @@ function DesktopLayout({ onOpen }) {
             const zoneColor = isLeft ? KARR_COLOR : CHOLAI_COLOR
 
             return (
-              <div key={el.id} style={{ display:'grid', gridTemplateColumns:'1fr 80px 1fr', alignItems:'center', marginBottom: i < ITEMS.length - 1 ? 36 : 0, position:'relative', zIndex:1, minHeight:128 }}>
+              <div key={el.id} style={{ display:'grid', gridTemplateColumns:'1fr 80px 1fr', alignItems:'center', marginBottom: i < ITEMS.length - 1 ? 44 : 0, position:'relative', zIndex:1, minHeight:200 }}>
 
                 {/* Left slot */}
                 <div style={{ display:'flex', alignItems:'center', justifyContent:'flex-end', gap:20, paddingRight:40 }}>
@@ -448,7 +441,10 @@ function TabletLayout({ onOpen }) {
       <div style={{ padding:'0 28px', maxWidth:720, margin:'0 auto' }}>
         <div style={{ textAlign:'center', marginBottom:44 }}>
           <p style={{ fontSize:7, fontWeight:900, letterSpacing:'.68em', textTransform:'uppercase', color:'rgba(184,92,56,0.42)', fontFamily:'"Manrope",sans-serif', marginBottom:10 }}>Our Identity</p>
-          <h2 style={{ fontSize:26, fontWeight:900, fontFamily:'"Manrope",sans-serif', color:'#1a1a1a', lineHeight:1.2, margin:0 }}>The Elements Behind Every Home</h2>
+          <div style={{ marginBottom:0 }}>
+            <span style={{ fontSize:'9vw', fontWeight:400, fontStyle:'italic', fontFamily:'"Lora",Georgia,serif', color:KARR_COLOR, letterSpacing:'.10em' }}>KARR</span>
+            <span style={{ fontSize:'9vw', fontWeight:400, fontStyle:'italic', fontFamily:'"Lora",Georgia,serif', color:CHOLAI_COLOR, letterSpacing:'.10em' }}>CHOLAI</span>
+          </div>
         </div>
         <div style={{ position:'relative' }}>
           <div style={{ position:'absolute', top:0, bottom:0, left:'50%', width:2, transform:'translateX(-50%)', background:'linear-gradient(180deg,rgba(26,26,26,0.06),rgba(26,26,26,0.14),rgba(26,26,26,0.06))', pointerEvents:'none' }} />
@@ -517,7 +513,10 @@ function MobileLayout({ onOpen }) {
       <div style={{ padding:'0 16px' }}>
         <div style={{ textAlign:'center', marginBottom:32 }}>
           <p style={{ fontSize:6.5, fontWeight:900, letterSpacing:'.65em', textTransform:'uppercase', color:'rgba(184,92,56,0.42)', fontFamily:'"Manrope",sans-serif', marginBottom:8 }}>Our Identity</p>
-          <h2 style={{ fontSize:21, fontWeight:900, fontFamily:'"Manrope",sans-serif', color:'#1a1a1a', lineHeight:1.25, margin:0 }}>The Elements Behind Every Home</h2>
+          <div>
+            <span style={{ fontSize:'12vw', fontWeight:400, fontStyle:'italic', fontFamily:'"Lora",Georgia,serif', color:KARR_COLOR, letterSpacing:'.07em' }}>KARR</span>
+            <span style={{ fontSize:'12vw', fontWeight:400, fontStyle:'italic', fontFamily:'"Lora",Georgia,serif', color:CHOLAI_COLOR, letterSpacing:'.07em' }}>CHOLAI</span>
+          </div>
         </div>
         <div style={{ position:'relative', paddingLeft:32 }}>
           <div style={{ position:'absolute', top:0, bottom:0, left:14, width:2, background:'linear-gradient(180deg,rgba(26,26,26,0.05),rgba(26,26,26,0.12),rgba(26,26,26,0.05))', borderRadius:2 }} />

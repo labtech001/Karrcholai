@@ -28,7 +28,7 @@ const HangingWorker = () => {
       {/* ── Rope from top edge ── */}
       <div style={{
         width: '2px',
-        height: 'clamp(24px, 3.5vw, 44px)',
+        height: 'clamp(72px, 9vw, 120px)',
         background: 'linear-gradient(to bottom, rgba(255,255,255,0.85), rgba(210,185,140,0.6))',
         borderRadius: '1px',
         flexShrink: 0,
