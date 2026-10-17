@@ -31,7 +31,7 @@ const ITEMS = [
   { id:6, ch:'O', zone:'KARR',   principle:'Optimization',  symbol:'O',  element:'Oxygen',    num:8,  mass:'15.999', img:imgO2,        accent:'#5aaa80', tag:'Efficiency · Value',      desc:'Making thoughtful use of space, materials, energy and resources.' },
   { id:7, ch:'L', zone:'CHOLAI', principle:'Longevity',     symbol:'Li', element:'Lithium',   num:3,  mass:'6.941',  img:imgLithium,   accent:'#d4aa55', tag:'Generations · Future',    desc:'Creating homes intended to serve generations.' },
   { id:8, ch:'A', zone:'KARR',   principle:'Aesthetics',    symbol:'Ar', element:'Argon',     num:18, mass:'39.948', img:imgArgon,     accent:'#9b88c8', tag:'Beauty · Culture',        desc:'Beauty that works together with function.' },
-  { id:9, ch:'I', zone:'CHOLAI', principle:'Integrity',     symbol:'Fe', element:'Iron',      num:26, mass:'55.845', img:imgIron,      accent:'#c8a882', tag:'Honesty · Trust',         desc:'Honest decisions, transparent practices and responsible construction.' },
+  { id:9, ch:'I', zone:'CHOLAI', principle:'Integrity',     symbol:'Iron', element:'Fe',      num:26, mass:'55.845', img:imgIron,      accent:'#c8a882', tag:'Honesty · Trust',         desc:'Honest decisions, transparent practices and responsible construction.' },
 ]
 
 /* ── Popup — side-by-side layout ───────────────────────────────── */
@@ -109,10 +109,10 @@ function Popup({ el, onClose }) {
                 <div style={{ position:'absolute', bottom:22, left:18, zIndex:3, display:'flex', alignItems:'flex-end', gap:9 }}>
                   <div>
                     <div style={{ fontSize:8, fontFamily:'monospace', color:'rgba(255,255,255,0.45)', marginBottom:1 }}>{cur.num}</div>
-                    <div style={{ fontSize:38, fontWeight:700, fontFamily:'"Barlow Condensed",sans-serif', color:'#fff', lineHeight:1, textShadow:`0 0 24px ${cur.accent}55` }}>{cur.element}</div>
+                    <div style={{ fontSize:38, fontWeight:700, fontFamily:'"Barlow Condensed",sans-serif', color:'#fff', lineHeight:1, textShadow:`0 0 24px ${cur.accent}55` }}>{cur.symbol}</div>
                   </div>
                   <div style={{ paddingBottom:3 }}>
-                    <div style={{ fontSize:10, fontWeight:600, color:'rgba(255,255,255,0.55)', fontFamily:'"Manrope",sans-serif' }}>{cur.symbol}</div>
+                    <div style={{ fontSize:10, fontWeight:600, color:'rgba(255,255,255,0.55)', fontFamily:'"Manrope",sans-serif' }}>{cur.element}</div>
                     <div style={{ fontSize:8, fontFamily:'monospace', color:'rgba(255,255,255,0.32)' }}>{cur.mass}</div>
                   </div>
                 </div>
@@ -161,12 +161,12 @@ function Popup({ el, onClose }) {
                     <div style={{ display:'flex', gap:18, alignItems:'center', padding:'14px 0', borderTop:'1px solid rgba(26,26,26,0.06)' }}>
                       <div>
                         <div style={{ fontSize:6.5, fontWeight:700, letterSpacing:'.28em', textTransform:'uppercase', color:'rgba(26,26,26,0.28)', fontFamily:'"Manrope",sans-serif', marginBottom:3 }}>Element</div>
-                        <div style={{ fontSize:13, fontWeight:700, color:'rgba(26,26,26,0.65)', fontFamily:'"Barlow Condensed",sans-serif', letterSpacing:'.04em' }}>{cur.symbol}</div>
+                        <div style={{ fontSize:13, fontWeight:700, color:'rgba(26,26,26,0.65)', fontFamily:'"Barlow Condensed",sans-serif', letterSpacing:'.04em' }}>{cur.element}</div>
                       </div>
                       <div style={{ width:1, height:28, background:'rgba(26,26,26,0.08)' }} />
                       <div>
                         <div style={{ fontSize:6.5, fontWeight:700, letterSpacing:'.28em', textTransform:'uppercase', color:'rgba(26,26,26,0.28)', fontFamily:'"Manrope",sans-serif', marginBottom:3 }}>Symbol</div>
-                        <div style={{ fontSize:22, fontWeight:900, color:cur.accent, fontFamily:'"Barlow Condensed",sans-serif', lineHeight:1 }}>{cur.element}</div>
+                        <div style={{ fontSize:22, fontWeight:900, color:cur.accent, fontFamily:'"Barlow Condensed",sans-serif', lineHeight:1 }}>{cur.symbol}</div>
                       </div>
                       <div style={{ width:1, height:28, background:'rgba(26,26,26,0.08)' }} />
                       <div>
@@ -235,11 +235,11 @@ function Tile({ el, onOpen }) {
           <span style={{ fontSize:10, fontFamily:'monospace', color:'rgba(255,255,255,0.50)', lineHeight:1 }}>{el.num}</span>
           <span style={{ fontSize:9, fontWeight:900, letterSpacing:'.12em', fontFamily:'"Manrope",sans-serif', color:hov?el.accent:'rgba(255,255,255,0.40)', transition:'color 0.25s', lineHeight:1 }}>{el.ch}</span>
         </div>
-        <div style={{ flex:1, display:'flex', alignItems:'center', fontSize:58, fontWeight:700, fontFamily:'"Barlow Condensed",sans-serif', color:hov?el.accent:'#fff', textShadow:hov?`0 0 24px ${el.accent}70,0 2px 10px rgba(0,0,0,0.5)`:'0 2px 10px rgba(0,0,0,0.6)', transition:'color 0.25s,text-shadow 0.25s' }}>{el.element}</div>
+        <div style={{ flex:1, display:'flex', alignItems:'center', fontSize:58, fontWeight:700, fontFamily:'"Barlow Condensed",sans-serif', color:hov?el.accent:'#fff', textShadow:hov?`0 0 24px ${el.accent}70,0 2px 10px rgba(0,0,0,0.5)`:'0 2px 10px rgba(0,0,0,0.6)', transition:'color 0.25s,text-shadow 0.25s' }}>{el.symbol}</div>
         <div>
           <div style={{ height:1, background:hov?`linear-gradient(90deg,${el.accent}70,transparent)`:'rgba(255,255,255,0.18)', marginBottom:5, transition:'background 0.25s' }} />
           <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-end' }}>
-            <span style={{ fontSize:9, fontWeight:600, fontFamily:'"Manrope",sans-serif', color:'rgba(255,255,255,0.60)' }}>{el.symbol}</span>
+            <span style={{ fontSize:9, fontWeight:600, fontFamily:'"Manrope",sans-serif', color:'rgba(255,255,255,0.60)' }}>{el.element}</span>
             <span style={{ fontSize:8, fontFamily:'monospace', color:'rgba(255,255,255,0.32)' }}>{el.mass}</span>
           </div>
         </div>
