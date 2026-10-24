@@ -290,14 +290,28 @@ function DesktopLayout({ onOpen }) {
 
         {/* Header */}
         <motion.div initial={{ opacity:0, y:-16 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }}
-          style={{ textAlign:'center', marginBottom:64 }}
+          style={{ textAlign:'center', marginBottom:64, position:'relative' }}
         >
-          <p style={{ fontSize:7.5, fontWeight:900, letterSpacing:'.72em', textTransform:'uppercase', color:'rgba(184,92,56,0.45)', fontFamily:'"Manrope",sans-serif', marginBottom:14 }}>Our Identity</p>
-          <h2 style={{ margin:0, lineHeight:1 }}>
+          {/* Eyebrow */}
+          <p style={{ fontSize:7.5, fontWeight:900, letterSpacing:'.72em', textTransform:'uppercase', color:'rgba(184,92,56,0.45)', fontFamily:'"Manrope",sans-serif', marginBottom:16 }}>Our Identity</p>
+
+          {/* Main heading */}
+          <h2 style={{ margin:'0 0 24px', lineHeight:1 }}>
             <span style={{ fontSize:'clamp(48px,6vw,80px)', fontWeight:400, fontStyle:'italic', fontFamily:'"Lora",Georgia,serif', color:KARR_COLOR, letterSpacing:'0.12em' }}>KARR</span>
             <span style={{ fontSize:'clamp(28px,3.5vw,48px)', color:'rgba(26,26,26,0.18)', margin:'0 8px', fontFamily:'"Manrope",sans-serif' }}>·</span>
             <span style={{ fontSize:'clamp(48px,6vw,80px)', fontWeight:400, fontStyle:'italic', fontFamily:'"Lora",Georgia,serif', color:CHOLAI_COLOR, letterSpacing:'0.12em' }}>CHOLAI</span>
           </h2>
+
+          {/* Periodic Plant badge */}
+          <div style={{ display:'flex', alignItems:'center', justifyContent:'center' }}>
+            <div style={{ display:'inline-flex', alignItems:'center', gap:8, padding:'9px 20px 9px 14px', borderRadius:40, border:`1.5px solid ${CHOLAI_COLOR}`, background:'rgba(45,106,79,0.08)' }}>
+              <svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 14C8 14 3.5 11 3.5 6.5C3.5 4 5.5 2 8 2C10.5 2 12.5 4 12.5 6.5C12.5 9 10 11 8 11" stroke={CHOLAI_COLOR} strokeWidth="1.6" strokeLinecap="round"/>
+                <path d="M8 11V14" stroke={CHOLAI_COLOR} strokeWidth="1.6" strokeLinecap="round"/>
+              </svg>
+              <span style={{ fontSize:12, fontWeight:900, letterSpacing:'.18em', textTransform:'uppercase', color:CHOLAI_COLOR, fontFamily:'"Manrope",sans-serif' }}>Periodic Plant</span>
+            </div>
+          </div>
         </motion.div>
 
         {/* Timeline */}
