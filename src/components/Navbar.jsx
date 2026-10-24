@@ -245,17 +245,19 @@ const Navbar = () => {
             </motion.button>
           </div>
 
-          {/* Hamburger */}
-          <button onClick={() => setMobileOpen(v => !v)} className="mobile-hamburger"
-            aria-label="Toggle menu"
-            style={{ width: '44px', height: '44px', display: 'none', alignItems: 'center',
+          {/* Hamburger — only shown when mobile menu is closed */}
+          <button onClick={() => setMobileOpen(true)} className="mobile-hamburger"
+            aria-label="Open menu"
+            style={{ width: '44px', height: '44px', alignItems: 'center',
               justifyContent: 'center', borderRadius: '50%',
               border: scrolled ? '1px solid rgba(26,26,26,0.22)' : '1px solid rgba(255,255,255,0.22)',
               background: scrolled ? 'rgba(26,26,26,0.08)' : 'rgba(255,255,255,0.10)',
               color: scrolled ? '#1a1a1a' : '#fff', cursor: 'pointer',
-              flexShrink: 0, WebkitTapHighlightColor: 'transparent' }}
+              flexShrink: 0, WebkitTapHighlightColor: 'transparent',
+              display: mobileOpen ? 'none' : undefined,
+            }}
           >
-            {mobileOpen ? <FiX size={20} /> : <FiMenu size={20} />}
+            <FiMenu size={20} />
           </button>
         </div>
       </motion.nav>
