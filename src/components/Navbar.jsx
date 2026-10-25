@@ -254,7 +254,8 @@ const Navbar = () => {
               background: scrolled ? 'rgba(26,26,26,0.08)' : 'rgba(255,255,255,0.10)',
               color: scrolled ? '#1a1a1a' : '#fff', cursor: 'pointer',
               flexShrink: 0, WebkitTapHighlightColor: 'transparent',
-              display: mobileOpen ? 'none' : undefined,
+              visibility: mobileOpen ? 'hidden' : 'visible',
+              pointerEvents: mobileOpen ? 'none' : 'auto',
             }}
           >
             <FiMenu size={20} />
@@ -267,7 +268,7 @@ const Navbar = () => {
       <div
         aria-hidden={!mobileOpen}
         style={{
-          position: 'fixed', inset: 0, zIndex: 999,
+          position: 'fixed', inset: 0, zIndex: 1001,
           background: '#0f0f0f',
           display: 'flex', flexDirection: 'column',
           transform: mobileOpen ? 'translateX(0)' : 'translateX(100%)',

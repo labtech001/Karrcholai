@@ -381,9 +381,19 @@ function TabletLayout({ onOpen }) {
       <div style={{ padding:'0 28px', maxWidth:720, margin:'0 auto' }}>
         <div style={{ textAlign:'center', marginBottom:44 }}>
           <p style={{ fontSize:7, fontWeight:900, letterSpacing:'.68em', textTransform:'uppercase', color:'rgba(184,92,56,0.42)', fontFamily:'"Manrope",sans-serif', marginBottom:10 }}>Our Identity</p>
-          <div>
+          <div style={{ marginBottom:14 }}>
             <span style={{ fontSize:'9vw', fontWeight:400, fontStyle:'italic', fontFamily:'"Lora",Georgia,serif', color:KARR_COLOR, letterSpacing:'.10em' }}>KARR</span>
             <span style={{ fontSize:'9vw', fontWeight:400, fontStyle:'italic', fontFamily:'"Lora",Georgia,serif', color:CHOLAI_COLOR, letterSpacing:'.10em' }}>CHOLAI</span>
+          </div>
+          {/* Periodic Plant badge */}
+          <div style={{ display:'flex', alignItems:'center', justifyContent:'center' }}>
+            <div style={{ display:'inline-flex', alignItems:'center', gap:8, padding:'9px 18px 9px 14px', borderRadius:40, border:`1.5px solid ${CHOLAI_COLOR}`, background:'rgba(45,106,79,0.08)' }}>
+              <svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 14C8 14 3.5 11 3.5 6.5C3.5 4 5.5 2 8 2C10.5 2 12.5 4 12.5 6.5C12.5 9 10 11 8 11" stroke={CHOLAI_COLOR} strokeWidth="1.6" strokeLinecap="round"/>
+                <path d="M8 11V14" stroke={CHOLAI_COLOR} strokeWidth="1.6" strokeLinecap="round"/>
+              </svg>
+              <span style={{ fontSize:12, fontWeight:900, letterSpacing:'.18em', textTransform:'uppercase', color:CHOLAI_COLOR, fontFamily:'"Manrope",sans-serif' }}>Periodic Plant</span>
+            </div>
           </div>
         </div>
         <div style={{ position:'relative' }}>
@@ -449,9 +459,19 @@ function MobileLayout({ onOpen }) {
       <div style={{ padding:'0 16px' }}>
         <div style={{ textAlign:'center', marginBottom:32 }}>
           <p style={{ fontSize:6.5, fontWeight:900, letterSpacing:'.65em', textTransform:'uppercase', color:'rgba(184,92,56,0.42)', fontFamily:'"Manrope",sans-serif', marginBottom:8 }}>Our Identity</p>
-          <div>
+          <div style={{ marginBottom:12 }}>
             <span style={{ fontSize:'12vw', fontWeight:400, fontStyle:'italic', fontFamily:'"Lora",Georgia,serif', color:KARR_COLOR, letterSpacing:'.07em' }}>KARR</span>
             <span style={{ fontSize:'12vw', fontWeight:400, fontStyle:'italic', fontFamily:'"Lora",Georgia,serif', color:CHOLAI_COLOR, letterSpacing:'.07em' }}>CHOLAI</span>
+          </div>
+          {/* Periodic Plant badge */}
+          <div style={{ display:'flex', alignItems:'center', justifyContent:'center' }}>
+            <div style={{ display:'inline-flex', alignItems:'center', gap:8, padding:'9px 18px 9px 14px', borderRadius:40, border:`1.5px solid ${CHOLAI_COLOR}`, background:'rgba(45,106,79,0.08)' }}>
+              <svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 14C8 14 3.5 11 3.5 6.5C3.5 4 5.5 2 8 2C10.5 2 12.5 4 12.5 6.5C12.5 9 10 11 8 11" stroke={CHOLAI_COLOR} strokeWidth="1.6" strokeLinecap="round"/>
+                <path d="M8 11V14" stroke={CHOLAI_COLOR} strokeWidth="1.6" strokeLinecap="round"/>
+              </svg>
+              <span style={{ fontSize:12, fontWeight:900, letterSpacing:'.18em', textTransform:'uppercase', color:CHOLAI_COLOR, fontFamily:'"Manrope",sans-serif' }}>Periodic Plant</span>
+            </div>
           </div>
         </div>
         <div style={{ position:'relative', paddingLeft:32 }}>
