@@ -1,18 +1,36 @@
 import React, { useState, useEffect, useRef, useContext } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FiMenu, FiX, FiChevronDown, FiClipboard, FiArrowRight } from 'react-icons/fi'
+import { FiMenu, FiX, FiChevronDown, FiClipboard, FiArrowRight, FiBook, FiTool, FiGrid, FiCalendar, FiSun, FiCompass } from 'react-icons/fi'
 import { useLocation, Link } from 'react-router-dom'
 import logoImg from '../../assets/KARRCHOLAI LOGO.png'
 import { LogoVideoContext } from '../App'
 import ClientRequirementsForm from './ClientRequirementsForm'
 
 const manaiyadiDropdown = [
-  { name: 'Introduction',          path: '/manaiyadi/introduction',    desc: 'Full overview of Manaiyadi Sastram' },
-  { name: 'Dimension Calculator',  path: '/manaiyadi/calculator',      desc: 'Check auspicious room dimensions' },
-  { name: 'Dimension Guide',       path: '/manaiyadi/dimension-guide', desc: 'Reference tables & wall heights' },
-  { name: 'சுப முகூர்த்த தினங்கள்', path: '/manaiyadi/muhurtham-dates', desc: 'Auspicious dates for 2026' },
-  { name: 'வாஸ்து செய்யும் நாட்கள்', path: '/manaiyadi/vastu-days',     desc: 'Foundation muhurtham windows' },
-  { name: 'Direction Compass',     path: '/vastu-compass',             desc: "Check your plot's Vastu alignment" },
+  {
+    category: 'Foundations',
+    categoryTa: 'அறிமுகம்',
+    items: [
+      { name: 'Introduction',         path: '/manaiyadi/introduction',    desc: 'Full overview of Manaiyadi Sastram',      icon: FiBook },
+      { name: 'Dimension Guide',      path: '/manaiyadi/dimension-guide', desc: 'Reference tables & wall heights',          icon: FiGrid },
+    ],
+  },
+  {
+    category: 'Tools',
+    categoryTa: 'கருவிகள்',
+    items: [
+      { name: 'Dimension Calculator', path: '/manaiyadi/calculator',      desc: 'Check auspicious room dimensions',         icon: FiTool },
+      { name: 'Direction Compass',    path: '/vastu-compass',             desc: "Check your plot's Vastu alignment",        icon: FiCompass },
+    ],
+  },
+  {
+    category: 'Auspicious Dates',
+    categoryTa: 'நல்ல நாட்கள்',
+    items: [
+      { name: 'சுப முகூர்த்த தினங்கள்', path: '/manaiyadi/muhurtham-dates', desc: 'Auspicious dates for 2026',             icon: FiCalendar },
+      { name: 'வாஸ்து செய்யும் நாட்கள்', path: '/manaiyadi/vastu-days',     desc: 'Foundation muhurtham windows',          icon: FiSun },
+    ],
+  },
 ]
 
 const navLinks = [
@@ -32,6 +50,7 @@ const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const [manaiyaOpen, setManaiyaOpen]   = useState(false)
   const [formOpen, setFormOpen]         = useState(false)
+  const [ddPos, setDdPos]               = useState({ top: 0, left: 0 })
   const dropdownRef = useRef(null)
   const location    = useLocation()
   const { openLogoVideo } = useContext(LogoVideoContext)
@@ -129,10 +148,22 @@ const Navbar = () => {
               if (link.hasDropdown) {
                 return (
                   <div key={link.name} ref={dropdownRef} style={{ position: 'relative' }}
-                    onMouseEnter={() => setDropdownOpen(true)}
+                    onMouseEnter={() => {
+                      if (dropdownRef.current) {
+                        const rect = dropdownRef.current.getBoundingClientRect()
+                        setDdPos({ top: rect.bottom + 10, left: 0 })
+                      }
+                      setDropdownOpen(true)
+                    }}
                     onMouseLeave={() => setDropdownOpen(false)}
                   >
-                    <button onClick={() => setDropdownOpen(v => !v)}
+                    <button onClick={() => {
+                        if (dropdownRef.current) {
+                          const rect = dropdownRef.current.getBoundingClientRect()
+                          setDdPos({ top: rect.bottom + 10, left: 0 })
+                        }
+                        setDropdownOpen(v => !v)
+                      }}
                       style={{ background: 'none', border: 'none', cursor: 'pointer',
                         padding: '0.45rem 0.85rem', display: 'flex', flexDirection: 'column',
                         alignItems: 'center', gap: '3px', position: 'relative' }}
@@ -155,33 +186,142 @@ const Navbar = () => {
                     <AnimatePresence>
                       {dropdownOpen && (
                         <motion.div key="dd"
-                          initial={{ opacity: 0, y: 8, scale: 0.97 }}
+                          initial={{ opacity: 0, y: 10, scale: 0.97 }}
                           animate={{ opacity: 1, y: 0, scale: 1 }}
-                          exit={{ opacity: 0, y: 8, scale: 0.97 }}
-                          transition={{ duration: 0.2 }}
-                          style={{ position: 'absolute', top: 'calc(100% + 8px)', left: '50%',
-                            transform: 'translateX(-50%)', width: '260px', background: '#fff',
-                            borderRadius: '16px', boxShadow: '0 16px 48px rgba(0,0,0,0.12)',
-                            border: '1px solid rgba(0,0,0,0.06)', overflow: 'hidden', zIndex: 200 }}
+                          exit={{ opacity: 0, y: 10, scale: 0.97 }}
+                          transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                          style={{
+                            position: 'fixed',
+                            top: ddPos.top,
+                            left: 'auto',
+                            right: '200px',
+                            transform: 'none',
+                            width: 'min(760px, calc(100vw - 24px))',
+                            background: '#ffffff',
+                            borderRadius: '20px',
+                            boxShadow: '0 24px 64px rgba(0,0,0,0.12), 0 4px 20px rgba(0,0,0,0.07)',
+                            border: '1px solid rgba(0,0,0,0.07)',
+                            overflow: 'hidden',
+                            zIndex: 1100,
+                          }}
                         >
-                          {manaiyadiDropdown.map((item, i) => (
-                            <Link key={item.path} to={item.path}
+                          {/* Top accent strip */}
+                          <div style={{
+                            height: '3px',
+                            background: 'linear-gradient(90deg, #C9754A 0%, #E8956A 50%, #C9754A 100%)',
+                          }} />
+
+                          <div style={{ padding: '1.75rem 2rem 0' }}>
+                            {/* Columns */}
+                            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0' }}>
+                              {manaiyadiDropdown.map((col, ci) => (
+                                <div key={col.category} style={{
+                                  flex: 1,
+                                  paddingRight: ci < manaiyadiDropdown.length - 1 ? '1.75rem' : 0,
+                                  borderRight: ci < manaiyadiDropdown.length - 1
+                                    ? '1px solid rgba(0,0,0,0.07)'
+                                    : 'none',
+                                  paddingLeft: ci > 0 ? '1.75rem' : 0,
+                                }}>
+                                  {/* Column header */}
+                                  <div style={{ marginBottom: '1rem' }}>
+                                    <span style={{
+                                      display: 'inline-flex', alignItems: 'center', gap: '6px',
+                                      fontSize: '0.6rem', fontWeight: '700', letterSpacing: '0.2em',
+                                      textTransform: 'uppercase', color: '#C9754A',
+                                    }}>
+                                      <span style={{
+                                        display: 'inline-block', width: '12px', height: '2px',
+                                        background: '#C9754A', borderRadius: '2px', flexShrink: 0,
+                                      }} />
+                                      {col.category}
+                                    </span>
+                                    <p style={{
+                                      fontSize: '0.6rem', color: 'rgba(0,0,0,0.35)',
+                                      margin: '3px 0 0', letterSpacing: '0.04em', fontWeight: '500',
+                                    }}>{col.categoryTa}</p>
+                                  </div>
+
+                                  {/* Items */}
+                                  {col.items.map((item) => {
+                                    const Icon = item.icon
+                                    const isItemActive = location.pathname === item.path
+                                    return (
+                                      <Link
+                                        key={item.path}
+                                        to={item.path}
+                                        onClick={() => setDropdownOpen(false)}
+                                        className="mega-item"
+                                        style={{
+                                          display: 'flex', alignItems: 'center', gap: '11px',
+                                          padding: '0.7rem 0.6rem', marginBottom: '3px',
+                                          borderRadius: '10px', textDecoration: 'none',
+                                          background: isItemActive ? 'rgba(201,117,74,0.08)' : 'transparent',
+                                          transition: 'background 0.15s ease',
+                                        }}
+                                      >
+                                        <span style={{
+                                          flexShrink: 0,
+                                          width: '32px', height: '32px', borderRadius: '8px',
+                                          background: isItemActive ? 'rgba(201,117,74,0.15)' : '#f4f4f4',
+                                          display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                          color: isItemActive ? '#C9754A' : '#888',
+                                          transition: 'all 0.15s ease',
+                                        }}>
+                                          <Icon size={13} />
+                                        </span>
+                                        <span>
+                                          <span style={{
+                                            display: 'block', fontSize: '0.78rem', fontWeight: '700',
+                                            color: isItemActive ? '#C9754A' : '#1a1a1a',
+                                            marginBottom: '2px', lineHeight: 1.3,
+                                          }}>
+                                            {item.name}
+                                          </span>
+                                          <span style={{
+                                            display: 'block', fontSize: '0.64rem',
+                                            color: 'rgba(0,0,0,0.42)', fontWeight: '500', lineHeight: 1.4,
+                                          }}>
+                                            {item.desc}
+                                          </span>
+                                        </span>
+                                      </Link>
+                                    )
+                                  })}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* Footer bar */}
+                          <div style={{
+                            margin: '1.25rem 2rem 0',
+                            paddingTop: '0.9rem',
+                            paddingBottom: '1rem',
+                            borderTop: '1px solid rgba(0,0,0,0.06)',
+                            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                          }}>
+                            <p style={{
+                              fontSize: '0.6rem', color: 'rgba(0,0,0,0.3)',
+                              letterSpacing: '0.12em', textTransform: 'uppercase',
+                              fontWeight: '600', margin: 0,
+                            }}>
+                              Rooted in tradition. Built for modern homes.
+                            </p>
+                            <Link
+                              to="/manaiyadi/introduction"
                               onClick={() => setDropdownOpen(false)}
-                              style={{ display: 'block', padding: '14px 18px', textDecoration: 'none',
-                                borderBottom: i < manaiyadiDropdown.length - 1 ? '1px solid rgba(0,0,0,0.05)' : 'none' }}
-                              className="dropdown-item"
+                              className="mega-view-all"
+                              style={{
+                                display: 'inline-flex', alignItems: 'center', gap: '5px',
+                                fontSize: '0.65rem', fontWeight: '700', letterSpacing: '0.1em',
+                                textTransform: 'uppercase', color: '#C9754A', textDecoration: 'none',
+                              }}
                             >
-                              <span style={{ display: 'block', fontSize: '0.72rem', fontWeight: '700',
-                                letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '3px',
-                                color: location.pathname === item.path ? '#B85C38' : '#1A1A1A' }}>
-                                {item.name}
-                              </span>
-                              <span style={{ display: 'block', fontSize: '0.62rem',
-                                color: 'rgba(26,26,26,0.60)', fontWeight: '500' }}>
-                                {item.desc}
-                              </span>
+                              View all Manaiyadi
+                              <FiArrowRight size={12} />
                             </Link>
-                          ))}
+                          </div>
                         </motion.div>
                       )}
                     </AnimatePresence>
@@ -327,7 +467,7 @@ const Navbar = () => {
                   {manaiyaOpen && (
                     <div style={{ background: 'rgba(201,117,74,0.04)',
                       borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                      {manaiyadiDropdown.map((sub) => (
+                      {manaiyadiDropdown.flatMap(col => col.items).map((sub) => (
                         <Link
                           key={sub.path}
                           to={sub.path}
@@ -455,6 +595,9 @@ const Navbar = () => {
           transform: translateY(-1px);
         }
         .dropdown-item:hover { background: rgba(184,92,56,0.06) !important; }
+        .mega-item:hover { background: rgba(201,117,74,0.09) !important; }
+        .mega-item:hover span[style] > span:first-child { color: #C9754A !important; }
+        .mega-view-all:hover { opacity: 0.75; }
 
         /* Shimmer sweep on the CTA */
         .btn-shimmer {
